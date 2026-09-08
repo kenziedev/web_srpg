@@ -1,5 +1,5 @@
 import type {
-  ActCommand,
+  Command,
   BattleEvent,
   BattleState,
   Content,
@@ -7,12 +7,13 @@ import type {
 } from "./types";
 import { allied, canStop, distance, samePosition, stepCost } from "./movement";
 import { damage, inAttackRange } from "./combat";
+import { endPhase } from "./phases";
 
 /** Pure preview and reducer share one path. On rejection, no state or log is mutated. */
 export function evaluate(
   content: Content,
   state: BattleState,
-  command: ActCommand,
+  command: Command,
 ): Evaluation {
   const reject = (error: string): Evaluation => ({ ok: false, error });
   if (state.rulesVersion !== content.rulesVersion)
@@ -23,6 +24,7 @@ export function evaluate(
     state.commands.some((c) => c.commandId === command.commandId)
   )
     return reject("이미 처리했거나 오래된 명령입니다.");
+  if (command.type === "endPhase") return endPhase(content, state, command);
   const unit = state.units.find((u) => u.id === command.unitId);
   if (!unit || unit.hp <= 0 || unit.side !== state.activeSide || unit.acted)
     return reject("행동할 수 없는 유닛입니다.");
@@ -115,7 +117,7 @@ export function evaluate(
 export function apply(
   content: Content,
   state: BattleState,
-  command: ActCommand,
+  command: Command,
 ): Evaluation {
   return evaluate(content, state, command);
 }

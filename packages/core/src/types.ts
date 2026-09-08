@@ -4,9 +4,10 @@ export type { Content, Position, Unit } from "@orden/schema";
 export interface BattleState {
   rulesVersion: string;
   revision: number;
-  activeSide: "player" | "enemy";
+  round: number;
+  activeSide: Unit["side"];
   units: Unit[];
-  commands: ActCommand[];
+  commands: Command[];
 }
 export type Action =
   | { type: "wait" }
@@ -22,12 +23,20 @@ export interface ActCommand {
   path: Position[];
   action: Action;
 }
+export interface EndPhaseCommand {
+  type: "endPhase";
+  commandId: string;
+  expectedRevision: number;
+  side: Unit["side"];
+}
+export type Command = ActCommand | EndPhaseCommand;
 export type BattleEvent =
   | { type: "moved"; unitId: string; to: Position }
   | { type: "damaged"; unitId: string; amount: number }
   | { type: "healed"; unitId: string; amount: number }
   | { type: "removed"; unitId: string; reason: "defeated" | "retreated" }
-  | { type: "acted"; unitId: string };
+  | { type: "acted"; unitId: string }
+  | { type: "phaseStarted"; side: Unit["side"]; round: number };
 export type Evaluation =
   | { ok: false; error: string }
   | { ok: true; nextState: BattleState; events: BattleEvent[] };
@@ -36,6 +45,7 @@ export function createBattle(content: Content): BattleState {
   return {
     rulesVersion: content.rulesVersion,
     revision: 0,
+    round: 1,
     activeSide: "player",
     units: structuredClone(content.scenario.units),
     commands: [],

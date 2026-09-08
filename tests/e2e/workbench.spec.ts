@@ -1,16 +1,21 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
+
+async function selectUnit(page: Page, label: string) {
+  await page.getByRole("button", { name: "부대 목록", exact: true }).click();
+  await page.getByRole("button", { name: label, exact: true }).click();
+}
+async function start(page: Page) {
+  await page.goto("/");
+  await expect(page.locator('canvas[data-ready="true"]')).toBeVisible();
+}
 
 test("map input previews movement plus attack and applies predicted damage", async ({
   page,
 }) => {
-  await page.goto("/");
+  await start(page);
   const canvas = page.locator('canvas[data-ready="true"]');
-  await expect(canvas).toBeVisible();
-  await page
-    .getByRole("button", { name: "A21 창병 선택", exact: true })
-    .click();
+  await selectUnit(page, "A21 창병 선택");
   const box = (await canvas.boundingBox())!;
-  // The initial camera centers at world (480, 384) and clamps to the 960×720 map.
   const scrollX = Math.max(0, Math.min(960 - box.width, 480 - box.width / 2));
   const scrollY = Math.max(0, Math.min(720 - box.height, 384 - box.height / 2));
   const tile = (x: number, y: number) => ({
@@ -23,39 +28,123 @@ test("map input previews movement plus attack and applies predicted damage", asy
   await expect(page.getByTestId("prediction")).toContainText("기병 −5 HP");
   await expect(page.getByTestId("prediction")).toContainText("창병 −0 HP");
   await page.getByRole("button", { name: "행동 확정" }).click();
-  await expect(
-    page.getByRole("button", { name: "A21 창병 선택", exact: true }),
-  ).toContainText("✓");
-  // With the actor spent, selecting the defender opens its updated stats.
+  await expect(page.getByTestId("acted")).toContainText("행동 완료");
   await canvas.click({ position: tile(12, 10) });
   await expect(page.locator(".health-line strong")).toHaveText("5");
 });
 
-test("map mounts, preview is cancellable, wait commits once, reset restores", async ({
+test("classic HUD shows selection, cancel, commit and reset without page errors", async ({
   page,
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/");
+  await start(page);
   await expect(
-    page.getByRole("heading", { name: "두 개의 건널목" }),
+    page.getByRole("heading", { name: /두 개의 건널목/ }),
   ).toBeVisible();
-  await expect(page.locator('canvas[data-ready="true"]')).toBeVisible();
-  await page.getByRole("button", { name: "카이엘 선택", exact: true }).click();
+  await selectUnit(page, "카이엘 선택");
   await page.getByRole("button", { name: "대기", exact: true }).click();
   await expect(page.getByRole("button", { name: "행동 확정" })).toBeEnabled();
   await page.getByRole("button", { name: "취소" }).click();
   await expect(page.getByRole("button", { name: "행동 확정" })).toBeDisabled();
   await page.getByRole("button", { name: "대기", exact: true }).click();
   await page.getByRole("button", { name: "행동 확정" }).click();
-  await expect(
-    page.getByRole("button", { name: "카이엘 선택", exact: true }),
-  ).toContainText("행동 완료");
-  await expect(page.getByRole("button", { name: "행동 확정" })).toBeDisabled();
+  await expect(page.getByTestId("acted")).toContainText("행동 완료");
   await page.getByRole("button", { name: "연습 초기화" }).click();
-  await expect(
-    page.getByRole("button", { name: "카이엘 선택", exact: true }),
-  ).not.toContainText("행동 완료");
-  await page.screenshot({ path: "test-results/workbench.png", fullPage: true });
+  await expect(page.getByTestId("acted")).toHaveCount(0);
+  await page.screenshot({
+    path: "test-results/classic-hud.png",
+    fullPage: true,
+  });
   expect(errors).toEqual([]);
+});
+
+test("turn confirmation can cancel, then enemy turn runs and player acts again", async ({
+  page,
+}) => {
+  await start(page);
+  await selectUnit(page, "미라 선택");
+  await page.getByRole("button", { name: "대기", exact: true }).click();
+  await page.getByRole("button", { name: "행동 확정" }).click();
+  await page.getByRole("button", { name: /^턴 종료 E$/ }).click();
+  await expect(page.getByRole("dialog")).toContainText("11기");
+  await page.getByRole("button", { name: "계속 조작" }).click();
+  await expect(page.getByTestId("round")).toHaveText("01");
+  await expect(page.getByTestId("acted")).toHaveText("행동 완료");
+  await page.getByRole("button", { name: /^턴 종료 E$/ }).click();
+  await page.getByRole("button", { name: "턴 종료 확인", exact: true }).click();
+  await expect(page.getByTestId("phase")).toHaveText("적군 턴");
+  await expect(
+    page.getByRole("button", { name: /^턴 종료 E$/ }),
+  ).toBeDisabled();
+  await expect(page.getByRole("button", { name: "행동 확정" })).toBeDisabled();
+  await expect(page.getByTestId("round")).toHaveText("02", { timeout: 15000 });
+  await expect(page.getByTestId("phase")).toHaveText("아군 턴");
+  await expect(page.getByTestId("acted")).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: "대기", exact: true }),
+  ).toBeEnabled();
+  await page.screenshot({
+    path: "test-results/second-turn.png",
+    fullPage: true,
+  });
+});
+
+test("all units spent can end the turn without a redundant confirmation", async ({
+  page,
+}) => {
+  await start(page);
+  await page.getByRole("checkbox", { name: "빠른 진행" }).check();
+  for (const label of [
+    "카이엘 선택",
+    "로엔 선택",
+    "미라 선택",
+    "A11 보병 선택",
+    "A12 보병 선택",
+    "A13 보병 선택",
+    "A21 창병 선택",
+    "A22 창병 선택",
+    "A23 창병 선택",
+    "A31 궁병 선택",
+    "A32 궁병 선택",
+    "A33 궁병 선택",
+  ]) {
+    await selectUnit(page, label);
+    await page.getByRole("button", { name: "대기", exact: true }).click();
+    await page.getByRole("button", { name: "행동 확정" }).click();
+  }
+  await expect(page.locator(".order-buttons")).toContainText("미행동 0기");
+  await page.getByRole("button", { name: /^턴 종료 E$/ }).click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(page.getByTestId("round")).toHaveText("02", { timeout: 15000 });
+});
+
+test("reset cancels pending enemy automation and 1280×720 keeps controls visible", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await start(page);
+  await page.getByRole("button", { name: /^턴 종료 E$/ }).click();
+  await page.getByRole("button", { name: "턴 종료 확인", exact: true }).click();
+  await expect(page.getByTestId("phase")).toHaveText("적군 턴");
+  await page.getByRole("button", { name: "연습 초기화" }).click();
+  // Exceed the old pending callback delay: reset must invalidate it.
+  await page.waitForTimeout(700);
+  await expect(page.getByTestId("round")).toHaveText("01");
+  await expect(page.getByTestId("phase")).toHaveText("아군 턴");
+  await expect(
+    page.getByRole("button", { name: "행동 확정" }),
+  ).toBeInViewport();
+  await expect(
+    page.getByRole("button", { name: /^턴 종료 E$/ }),
+  ).toBeInViewport();
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollHeight <= window.innerHeight,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: "test-results/classic-720p.png",
+    fullPage: true,
+  });
 });

@@ -4,7 +4,7 @@
     {
       "id": "plain",
       "name": "평지",
-      "color": "#63805b",
+      "color": "#7f9d4d",
       "costs": {
         "foot": 1,
         "mounted": 1,
@@ -19,7 +19,7 @@
     {
       "id": "road",
       "name": "도로",
-      "color": "#b5a16f",
+      "color": "#c0aa75",
       "costs": {
         "foot": 1,
         "mounted": 1,
@@ -34,7 +34,7 @@
     {
       "id": "forest",
       "name": "숲",
-      "color": "#345c46",
+      "color": "#436f39",
       "costs": {
         "foot": 2,
         "mounted": 3,
@@ -49,7 +49,7 @@
     {
       "id": "hill",
       "name": "언덕",
-      "color": "#8d9161",
+      "color": "#93a75d",
       "costs": {
         "foot": 2,
         "mounted": 2,
@@ -79,7 +79,7 @@
     {
       "id": "shallow",
       "name": "여울",
-      "color": "#619b9e",
+      "color": "#73b3b2",
       "costs": {
         "foot": 3,
         "mounted": null,
@@ -94,7 +94,7 @@
     {
       "id": "water",
       "name": "깊은 강",
-      "color": "#366a80",
+      "color": "#41859c",
       "costs": {
         "foot": null,
         "mounted": null,
@@ -124,7 +124,7 @@
     {
       "id": "village",
       "name": "거점",
-      "color": "#b8ac7b",
+      "color": "#a79d6f",
       "costs": {
         "foot": 1,
         "mounted": 1,

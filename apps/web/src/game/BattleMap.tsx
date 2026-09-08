@@ -9,6 +9,8 @@ import {
   type ReachableTile,
 } from "@orden/core";
 
+import { drawUnit } from "./pixelUnits";
+
 const TILE = 48;
 interface MapProps {
   state: BattleState;
@@ -137,8 +139,10 @@ class BattleScene extends Phaser.Scene {
         .text(x, y, text, {
           fontFamily: "sans-serif",
           fontSize: size,
+          stroke: "#11182e",
+          strokeThickness: 2,
           color: fill,
-          backgroundColor: "#20332ad9",
+          backgroundColor: "#10204490",
           padding: { x: 3, y: 1 },
         })
         .setDepth(3),
@@ -165,7 +169,7 @@ class BattleScene extends Phaser.Scene {
         const px = x * TILE,
           py = y * TILE;
         this.art.fillStyle(color(t.color)).fillRect(px, py, TILE, TILE);
-        this.art.lineStyle(1, 0x122d27, 0.16).strokeRect(px, py, TILE, TILE);
+        this.art.lineStyle(1, 0x122d27, 0.05).strokeRect(px, py, TILE, TILE);
         // Deterministic, code-drawn placeholder pixel art. No random or external assets.
         if (t.id === "forest") {
           this.art.fillStyle(0x263f32).fillRect(px + 21, py + 20, 6, 20);
@@ -214,7 +218,7 @@ class BattleScene extends Phaser.Scene {
             .strokeRect(px + 2, py + 2, TILE - 4, TILE - 4);
         if (reachable.some((r) => r.pos.x === x && r.pos.y === y))
           this.art
-            .fillStyle(0xadd3b5, 0.17)
+            .fillStyle(0x345fde, 0.28)
             .fillRect(px + 3, py + 3, TILE - 6, TILE - 6);
       }
     for (const marker of s.markers)
@@ -228,47 +232,8 @@ class BattleScene extends Phaser.Scene {
     for (const unit of state.units) {
       const x = unit.pos.x * TILE,
         y = unit.pos.y * TILE;
-      const ink =
-        unit.side === "player"
-          ? 0xb8dec9
-          : unit.side === "enemy"
-            ? 0xeea38b
-            : 0xe4cc82;
-      this.art.fillStyle(0x122820, 0.7).fillRect(x + 7, y + 33, 34, 8);
-      this.art
-        .lineStyle(unit.kind === "commander" ? 3 : 1, ink)
-        .strokeRect(x + 6, y + 8, 36, 33);
-      if (unit.kind === "escort") {
-        this.art.fillStyle(0xb79b6b).fillRect(x + 10, y + 15, 28, 18);
-        this.art
-          .fillStyle(0x302e25)
-          .fillRect(x + 12, y + 33, 6, 6)
-          .fillRect(x + 30, y + 33, 6, 6);
-      } else {
-        this.art.fillStyle(0x243e38).fillRect(x + 16, y + 11, 16, 24);
-        this.art
-          .fillStyle(unit.acted ? 0x82958a : ink)
-          .fillRect(x + 18, y + 12, 12, 8)
-          .fillRect(x + 14, y + 22, 20, 11);
-        this.art
-          .fillStyle(0xddd7b7)
-          .fillRect(
-            x + 30,
-            y + (unit.unitType === "pike" ? 2 : 13),
-            3,
-            unit.unitType === "pike" ? 30 : 19,
-          );
-        if (unit.unitType === "cavalry")
-          this.art.fillStyle(0x53483a).fillRect(x + 8, y + 30, 29, 7);
-        if (unit.unitType === "archer")
-          this.art.lineStyle(2, 0x594935).strokeRect(x + 31, y + 14, 6, 17);
-        if (unit.kind === "commander")
-          this.art
-            .fillStyle(0xe7c36f)
-            .fillRect(x + 4, y + 2, 3, 15)
-            .fillRect(x + 7, y + 2, 10, 7);
-      }
-      this.label(x + 28, y + 32, `${unit.hp}`, "#fff8df", 11);
+      drawUnit(this.art, unit, x, y);
+      this.label(x + 33, y + 31, `${unit.hp}`, "#fff8df", 13);
       if (unit.acted) this.label(x + 2, y + 30, "✓");
       if (unit.kind === "mercenary" && !commandBonus(state, unit).active)
         this.label(x + 1, y - 4, "! 범위 밖", "#efb296", 9);
