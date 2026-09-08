@@ -1,0 +1,29 @@
+{
+  "name": "orden-chronicles",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.1.2",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @orden/web dev",
+    "build": "pnpm typecheck && pnpm --filter @orden/web build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "content:check": "tsx packages/content/src/check.ts",
+    "sim:smoke": "tsx packages/sim/src/smoke.ts",
+    "test:e2e": "playwright test",
+    "check": "pnpm typecheck && pnpm test && pnpm content:check && pnpm sim:smoke && pnpm boundaries:check",
+    "boundaries:check": "node tools/check-boundaries.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "^24.13.3",
+    "prettier": "3.9.6",
+    "tsx": "4.23.13",
+    "typescript": "7.0.2",
+    "vitest": "5.0.0"
+  }
+}

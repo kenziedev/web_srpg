@@ -1,0 +1,1226 @@
+{
+  "rulesVersion": "0.2",
+  "terrains": [
+    {
+      "id": "plain",
+      "name": "평지",
+      "color": "#63805b",
+      "costs": {
+        "foot": 1,
+        "mounted": 1,
+        "flying": 1,
+        "amphibious": 1
+      },
+      "defense": 0,
+      "recovery": 0,
+      "noLanding": false,
+      "water": false
+    },
+    {
+      "id": "road",
+      "name": "도로",
+      "color": "#b5a16f",
+      "costs": {
+        "foot": 1,
+        "mounted": 1,
+        "flying": 1,
+        "amphibious": 1
+      },
+      "defense": 0,
+      "recovery": 0,
+      "noLanding": false,
+      "water": false
+    },
+    {
+      "id": "forest",
+      "name": "숲",
+      "color": "#345c46",
+      "costs": {
+        "foot": 2,
+        "mounted": 3,
+        "flying": 1,
+        "amphibious": 2
+      },
+      "defense": 2,
+      "recovery": 0,
+      "noLanding": false,
+      "water": false
+    },
+    {
+      "id": "hill",
+      "name": "언덕",
+      "color": "#8d9161",
+      "costs": {
+        "foot": 2,
+        "mounted": 2,
+        "flying": 1,
+        "amphibious": 2
+      },
+      "defense": 1,
+      "recovery": 0,
+      "noLanding": false,
+      "water": false
+    },
+    {
+      "id": "mountain",
+      "name": "산",
+      "color": "#71776c",
+      "costs": {
+        "foot": 3,
+        "mounted": null,
+        "flying": 1,
+        "amphibious": 3
+      },
+      "defense": 3,
+      "recovery": 0,
+      "noLanding": false,
+      "water": false
+    },
+    {
+      "id": "shallow",
+      "name": "여울",
+      "color": "#619b9e",
+      "costs": {
+        "foot": 3,
+        "mounted": null,
+        "flying": 1,
+        "amphibious": 1
+      },
+      "defense": 0,
+      "recovery": 0,
+      "noLanding": false,
+      "water": true
+    },
+    {
+      "id": "water",
+      "name": "깊은 강",
+      "color": "#366a80",
+      "costs": {
+        "foot": null,
+        "mounted": null,
+        "flying": 1,
+        "amphibious": 1
+      },
+      "defense": 0,
+      "recovery": 0,
+      "noLanding": false,
+      "water": true
+    },
+    {
+      "id": "bridge",
+      "name": "다리",
+      "color": "#a08458",
+      "costs": {
+        "foot": 1,
+        "mounted": 1,
+        "flying": 1,
+        "amphibious": 1
+      },
+      "defense": 0,
+      "recovery": 0,
+      "noLanding": false,
+      "water": false
+    },
+    {
+      "id": "village",
+      "name": "거점",
+      "color": "#b8ac7b",
+      "costs": {
+        "foot": 1,
+        "mounted": 1,
+        "flying": 1,
+        "amphibious": 1
+      },
+      "defense": 2,
+      "recovery": 2,
+      "noLanding": false,
+      "water": false
+    },
+    {
+      "id": "rampart",
+      "name": "성문",
+      "color": "#8b8a79",
+      "costs": {
+        "foot": 1,
+        "mounted": 1,
+        "flying": 1,
+        "amphibious": 1
+      },
+      "defense": 3,
+      "recovery": 0,
+      "noLanding": false,
+      "water": false
+    },
+    {
+      "id": "wall",
+      "name": "성벽",
+      "color": "#585e59",
+      "costs": {
+        "foot": null,
+        "mounted": null,
+        "flying": 1,
+        "amphibious": null
+      },
+      "defense": 0,
+      "recovery": 0,
+      "noLanding": true,
+      "water": false
+    }
+  ],
+  "affinities": [
+    {
+      "from": "infantry",
+      "to": "pike",
+      "percent": 125
+    },
+    {
+      "from": "pike",
+      "to": "cavalry",
+      "percent": 125
+    },
+    {
+      "from": "cavalry",
+      "to": "infantry",
+      "percent": 125
+    },
+    {
+      "from": "pike",
+      "to": "infantry",
+      "percent": 75
+    },
+    {
+      "from": "cavalry",
+      "to": "pike",
+      "percent": 75
+    },
+    {
+      "from": "infantry",
+      "to": "cavalry",
+      "percent": 75
+    },
+    {
+      "from": "archer",
+      "to": "flier",
+      "percent": 150
+    },
+    {
+      "from": "cleric",
+      "to": "undead",
+      "percent": 150
+    }
+  ],
+  "scenario": {
+    "id": "two-crossings",
+    "title": "두 개의 건널목",
+    "description": "남쪽 다리를 지키며 북쪽 봉화로 향하세요.",
+    "width": 20,
+    "height": 15,
+    "tiles": [
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "water",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "hill",
+      "hill",
+      "hill",
+      "plain",
+      "plain",
+      "water",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "hill",
+      "hill",
+      "village",
+      "plain",
+      "plain",
+      "water",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "hill",
+      "hill",
+      "hill",
+      "plain",
+      "plain",
+      "shallow",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "water",
+      "plain",
+      "forest",
+      "forest",
+      "forest",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "forest",
+      "forest",
+      "forest",
+      "plain",
+      "water",
+      "plain",
+      "forest",
+      "forest",
+      "forest",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "forest",
+      "forest",
+      "forest",
+      "plain",
+      "water",
+      "plain",
+      "forest",
+      "forest",
+      "forest",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "forest",
+      "forest",
+      "forest",
+      "plain",
+      "water",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "water",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "village",
+      "plain",
+      "water",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "bridge",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "road",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "water",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "water",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "water",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "water",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain",
+      "plain"
+    ],
+    "units": [
+      {
+        "id": "A1",
+        "name": "카이엘",
+        "side": "player",
+        "kind": "commander",
+        "commanderId": null,
+        "unitType": "infantry",
+        "moveType": "foot",
+        "pos": {
+          "x": 6,
+          "y": 10
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 10,
+          "df": 8,
+          "mag": 0,
+          "res": 4,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [1, 1],
+        "command": {
+          "radius": 3,
+          "at": 2,
+          "df": 2
+        },
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "A2",
+        "name": "로엔",
+        "side": "player",
+        "kind": "commander",
+        "commanderId": null,
+        "unitType": "pike",
+        "moveType": "foot",
+        "pos": {
+          "x": 8,
+          "y": 10
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 9,
+          "df": 9,
+          "mag": 0,
+          "res": 3,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [1, 1],
+        "command": {
+          "radius": 3,
+          "at": 2,
+          "df": 2
+        },
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "A3",
+        "name": "미라",
+        "side": "player",
+        "kind": "commander",
+        "commanderId": null,
+        "unitType": "archer",
+        "moveType": "foot",
+        "pos": {
+          "x": 5,
+          "y": 4
+        },
+        "hp": 10,
+        "mp": 9,
+        "stats": {
+          "at": 8,
+          "df": 5,
+          "mag": 4,
+          "res": 5,
+          "maxMp": 9,
+          "move": 4
+        },
+        "range": [2, 3],
+        "command": {
+          "radius": 3,
+          "at": 2,
+          "df": 2
+        },
+        "acted": false,
+        "canHeal": true
+      },
+      {
+        "id": "E1",
+        "name": "적 대장",
+        "side": "enemy",
+        "kind": "commander",
+        "commanderId": null,
+        "unitType": "cavalry",
+        "moveType": "mounted",
+        "pos": {
+          "x": 14,
+          "y": 10
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 11,
+          "df": 8,
+          "mag": 0,
+          "res": 3,
+          "maxMp": 0,
+          "move": 6
+        },
+        "range": [1, 1],
+        "command": {
+          "radius": 3,
+          "at": 2,
+          "df": 2
+        },
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "E2",
+        "name": "경비대장",
+        "side": "enemy",
+        "kind": "commander",
+        "commanderId": null,
+        "unitType": "infantry",
+        "moveType": "foot",
+        "pos": {
+          "x": 14,
+          "y": 5
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 10,
+          "df": 7,
+          "mag": 0,
+          "res": 3,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [1, 1],
+        "command": {
+          "radius": 3,
+          "at": 2,
+          "df": 2
+        },
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "A11",
+        "name": "보병",
+        "side": "player",
+        "kind": "mercenary",
+        "commanderId": "A1",
+        "unitType": "infantry",
+        "moveType": "foot",
+        "pos": {
+          "x": 5,
+          "y": 9
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 9,
+          "df": 6,
+          "res": 3,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [1, 1],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "A12",
+        "name": "보병",
+        "side": "player",
+        "kind": "mercenary",
+        "commanderId": "A1",
+        "unitType": "infantry",
+        "moveType": "foot",
+        "pos": {
+          "x": 5,
+          "y": 10
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 9,
+          "df": 6,
+          "res": 3,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [1, 1],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "A13",
+        "name": "보병",
+        "side": "player",
+        "kind": "mercenary",
+        "commanderId": "A1",
+        "unitType": "infantry",
+        "moveType": "foot",
+        "pos": {
+          "x": 6,
+          "y": 11
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 9,
+          "df": 6,
+          "res": 3,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [1, 1],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "A21",
+        "name": "창병",
+        "side": "player",
+        "kind": "mercenary",
+        "commanderId": "A2",
+        "unitType": "pike",
+        "moveType": "foot",
+        "pos": {
+          "x": 9,
+          "y": 10
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 8,
+          "df": 7,
+          "res": 3,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [1, 1],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "A22",
+        "name": "창병",
+        "side": "player",
+        "kind": "mercenary",
+        "commanderId": "A2",
+        "unitType": "pike",
+        "moveType": "foot",
+        "pos": {
+          "x": 8,
+          "y": 11
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 8,
+          "df": 7,
+          "res": 3,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [1, 1],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "A23",
+        "name": "창병",
+        "side": "player",
+        "kind": "mercenary",
+        "commanderId": "A2",
+        "unitType": "pike",
+        "moveType": "foot",
+        "pos": {
+          "x": 7,
+          "y": 11
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 8,
+          "df": 7,
+          "res": 3,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [1, 1],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "A31",
+        "name": "궁병",
+        "side": "player",
+        "kind": "mercenary",
+        "commanderId": "A3",
+        "unitType": "archer",
+        "moveType": "foot",
+        "pos": {
+          "x": 4,
+          "y": 6
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 8,
+          "df": 4,
+          "res": 3,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [2, 3],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "A32",
+        "name": "궁병",
+        "side": "player",
+        "kind": "mercenary",
+        "commanderId": "A3",
+        "unitType": "archer",
+        "moveType": "foot",
+        "pos": {
+          "x": 5,
+          "y": 5
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 8,
+          "df": 4,
+          "res": 3,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [2, 3],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "A33",
+        "name": "궁병",
+        "side": "player",
+        "kind": "mercenary",
+        "commanderId": "A3",
+        "unitType": "archer",
+        "moveType": "foot",
+        "pos": {
+          "x": 6,
+          "y": 6
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 8,
+          "df": 4,
+          "res": 3,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [2, 3],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "E11",
+        "name": "기병",
+        "side": "enemy",
+        "kind": "mercenary",
+        "commanderId": "E1",
+        "unitType": "cavalry",
+        "moveType": "mounted",
+        "pos": {
+          "x": 12,
+          "y": 10
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 10,
+          "df": 6,
+          "res": 2,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 6
+        },
+        "range": [1, 1],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "E12",
+        "name": "기병",
+        "side": "enemy",
+        "kind": "mercenary",
+        "commanderId": "E1",
+        "unitType": "cavalry",
+        "moveType": "mounted",
+        "pos": {
+          "x": 13,
+          "y": 9
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 10,
+          "df": 6,
+          "res": 2,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 6
+        },
+        "range": [1, 1],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "E13",
+        "name": "기병",
+        "side": "enemy",
+        "kind": "mercenary",
+        "commanderId": "E1",
+        "unitType": "cavalry",
+        "moveType": "mounted",
+        "pos": {
+          "x": 13,
+          "y": 11
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 10,
+          "df": 6,
+          "res": 2,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 6
+        },
+        "range": [1, 1],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "E21",
+        "name": "보병",
+        "side": "enemy",
+        "kind": "mercenary",
+        "commanderId": "E2",
+        "unitType": "infantry",
+        "moveType": "foot",
+        "pos": {
+          "x": 13,
+          "y": 5
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 9,
+          "df": 6,
+          "res": 3,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [1, 1],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "E22",
+        "name": "보병",
+        "side": "enemy",
+        "kind": "mercenary",
+        "commanderId": "E2",
+        "unitType": "infantry",
+        "moveType": "foot",
+        "pos": {
+          "x": 14,
+          "y": 4
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 9,
+          "df": 6,
+          "res": 3,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [1, 1],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "E23",
+        "name": "궁병",
+        "side": "enemy",
+        "kind": "mercenary",
+        "commanderId": "E2",
+        "unitType": "archer",
+        "moveType": "foot",
+        "pos": {
+          "x": 15,
+          "y": 5
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 8,
+          "df": 4,
+          "res": 3,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 4
+        },
+        "range": [2, 3],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      },
+      {
+        "id": "N1",
+        "name": "호송대",
+        "side": "npc",
+        "kind": "escort",
+        "commanderId": null,
+        "unitType": "neutral",
+        "moveType": "foot",
+        "pos": {
+          "x": 1,
+          "y": 10
+        },
+        "hp": 10,
+        "mp": 0,
+        "stats": {
+          "at": 0,
+          "df": 7,
+          "res": 4,
+          "mag": 0,
+          "maxMp": 0,
+          "move": 2
+        },
+        "range": [0, 0],
+        "command": null,
+        "acted": false,
+        "canHeal": false
+      }
+    ],
+    "reinforcement": {
+      "round": 3,
+      "units": [
+        {
+          "id": "E3",
+          "name": "비행대장",
+          "side": "enemy",
+          "kind": "commander",
+          "commanderId": null,
+          "unitType": "flier",
+          "moveType": "flying",
+          "pos": {
+            "x": 13,
+            "y": 1
+          },
+          "hp": 10,
+          "mp": 0,
+          "stats": {
+            "at": 10,
+            "df": 6,
+            "mag": 0,
+            "res": 3,
+            "maxMp": 0,
+            "move": 6
+          },
+          "range": [1, 1],
+          "command": {
+            "radius": 3,
+            "at": 2,
+            "df": 2
+          },
+          "acted": false,
+          "canHeal": false
+        },
+        {
+          "id": "E31",
+          "name": "비병",
+          "side": "enemy",
+          "kind": "mercenary",
+          "commanderId": "E3",
+          "unitType": "flier",
+          "moveType": "flying",
+          "pos": {
+            "x": 12,
+            "y": 1
+          },
+          "hp": 10,
+          "mp": 0,
+          "stats": {
+            "at": 9,
+            "df": 5,
+            "res": 3,
+            "mag": 0,
+            "maxMp": 0,
+            "move": 6
+          },
+          "range": [1, 1],
+          "command": null,
+          "acted": false,
+          "canHeal": false
+        },
+        {
+          "id": "E32",
+          "name": "비병",
+          "side": "enemy",
+          "kind": "mercenary",
+          "commanderId": "E3",
+          "unitType": "flier",
+          "moveType": "flying",
+          "pos": {
+            "x": 14,
+            "y": 1
+          },
+          "hp": 10,
+          "mp": 0,
+          "stats": {
+            "at": 9,
+            "df": 5,
+            "res": 3,
+            "mag": 0,
+            "maxMp": 0,
+            "move": 6
+          },
+          "range": [1, 1],
+          "command": null,
+          "acted": false,
+          "canHeal": false
+        }
+      ]
+    },
+    "markers": [
+      {
+        "id": "beacon",
+        "label": "북쪽 봉화",
+        "pos": {
+          "x": 7,
+          "y": 2
+        }
+      },
+      {
+        "id": "recovery",
+        "label": "회복 거점",
+        "pos": {
+          "x": 8,
+          "y": 9
+        }
+      },
+      {
+        "id": "exit",
+        "label": "호송대 탈출 지점",
+        "pos": {
+          "x": 19,
+          "y": 10
+        }
+      }
+    ]
+  }
+}

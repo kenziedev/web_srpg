@@ -1,0 +1,10 @@
+{
+  "name": "@orden/sim",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@orden/core": "workspace:*",
+    "@orden/content": "workspace:*"
+  }
+}

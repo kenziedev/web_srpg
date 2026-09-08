@@ -1,0 +1,491 @@
+:root {
+  font-family: Inter, "Segoe UI", "Malgun Gothic", sans-serif;
+  color: #e6eadf;
+  background: #14251f;
+  font-synthesis: none;
+  font-weight: 400;
+  font-size: 14px;
+  color-scheme: dark;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+  color: inherit;
+  background: #263a30;
+  border: 1px solid #48604c;
+  border-radius: 5px;
+  padding: 9px 12px;
+  transition: background 0.15s;
+}
+button:hover:not(:disabled) {
+  background: #395240;
+}
+button:focus-visible {
+  outline: 2px solid #f4d18c;
+  outline-offset: 3px;
+}
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+p,
+h1,
+h2 {
+  margin: 0;
+}
+small {
+  font-size: 11px;
+}
+kbd {
+  font: 10px monospace;
+  color: #b6c1ad;
+  margin-left: 8px;
+}
+.topbar {
+  height: 82px;
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+  gap: 42px;
+  background: #192c24;
+  border-bottom: 1px solid #3b4d38;
+}
+.brand {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  font-family: Georgia, "Malgun Gothic", serif;
+  font-weight: 700;
+  font-size: 21px;
+  letter-spacing: 2px;
+}
+.brand small {
+  display: block;
+  font: 9px sans-serif;
+  letter-spacing: 3px;
+  color: #a5b299;
+  margin-top: 6px;
+}
+.brand-mark {
+  color: #e4c787;
+  font-size: 37px;
+}
+.section-title {
+  font-size: 13px;
+  color: #cccfbb;
+  border-left: 1px solid #45513d;
+  padding-left: 32px;
+}
+.build-label {
+  margin-left: auto;
+  color: #cec79d;
+  border: 1px solid #646648;
+  padding: 5px 10px;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+main {
+  max-width: 1600px;
+  margin: auto;
+  padding: 28px 32px;
+}
+.mission-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #b6b184;
+  font-weight: 600;
+  margin-bottom: 9px;
+}
+h1 {
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+}
+.mission-heading p:not(.eyebrow) {
+  color: #9eac98;
+  font-size: 13px;
+}
+.phase {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid #486147;
+  background: #243b2c;
+  padding: 13px 18px;
+  border-radius: 5px;
+}
+.phase small {
+  color: #a9b49e;
+  margin-left: 16px;
+}
+.phase-dot {
+  width: 7px;
+  height: 7px;
+  background: #b8d4a7;
+  border-radius: 50%;
+}
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 20px;
+  align-items: start;
+}
+.battle-panel {
+  border: 1px solid #496047;
+  background: #1b2c25;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 15px 50px #0a151a33;
+}
+.map-toolbar {
+  height: 54px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 18px;
+  font-size: 12px;
+  color: #c6cbb5;
+}
+.map-toolbar button {
+  font-size: 11px;
+  padding: 6px 9px;
+}
+.map-canvas {
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  background: #263d35;
+  touch-action: none;
+}
+.map-canvas canvas {
+  display: block;
+  image-rendering: pixelated;
+}
+.map-legend {
+  display: flex;
+  align-items: center;
+  gap: 19px;
+  padding: 13px 18px;
+  border-bottom: 1px solid #364b3b;
+  color: #b4bfa9;
+  font-size: 11px;
+}
+.map-legend span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.map-legend i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+}
+.ally {
+  background: #b8dec9;
+}
+.enemy {
+  background: #eea38b;
+}
+.command {
+  border: 1px solid #edcc81;
+}
+.pan-hint {
+  margin-left: auto;
+  color: #879b88;
+}
+.order-panel {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  min-height: 108px;
+  padding: 20px;
+}
+.order-panel p[role="status"] {
+  font-size: 13px;
+  line-height: 1.6;
+}
+.order-buttons {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.primary {
+  background: #d8c18b;
+  color: #21362c;
+  border-color: #d8c18b;
+  font-weight: 700;
+}
+.primary:hover:not(:disabled) {
+  background: #eddaa9;
+}
+.primary kbd {
+  color: #536349;
+}
+.prediction {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+  color: #e9c8aa;
+  font-size: 12px;
+}
+aside {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.card {
+  padding: 20px;
+  border: 1px solid #3e5140;
+  background: #1e3027;
+  border-radius: 7px;
+}
+h2 {
+  font-size: 16px;
+  font-weight: 600;
+}
+.unit-title {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin: 16px 0 20px;
+}
+.unit-title p {
+  font-size: 11px;
+  color: #a9b29b;
+  margin-top: 7px;
+}
+.unit-emblem {
+  display: grid;
+  place-items: center;
+  width: 47px;
+  height: 51px;
+  background: #3d5544;
+  border: 1px solid #8f9e71;
+  color: #e6d39c;
+  font-size: 29px;
+}
+.unit-emblem.enemy {
+  background: #623f36;
+}
+.health-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #a4b19d;
+  align-items: center;
+}
+.health-line strong {
+  font-size: 22px;
+  color: #dce8ca;
+  margin-left: 7px;
+}
+.health-track {
+  height: 4px;
+  background: #3d4b37;
+  margin: 9px 0 19px;
+}
+.health-track i {
+  display: block;
+  height: 100%;
+  background: #b1c693;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0 0 17px;
+  gap: 7px;
+}
+.stats dt {
+  color: #93a28c;
+  font-size: 11px;
+  margin-bottom: 7px;
+}
+.stats dd {
+  margin: 0;
+  font-size: 18px;
+}
+.stats small {
+  color: #b3c897;
+}
+.command-status {
+  border-top: 1px solid #3d4e3a;
+  padding-top: 13px;
+  font-size: 11px;
+  color: #c1cda6;
+}
+.unit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+.unit-actions button {
+  flex: 1;
+  font-size: 12px;
+}
+.card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.card-heading span {
+  color: #869b85;
+  font-size: 11px;
+}
+.squad + .squad {
+  margin-top: 14px;
+}
+.squad-leader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  border-color: transparent;
+  padding: 6px 8px;
+}
+.squad-leader small {
+  color: #8d9e87;
+}
+.soldiers {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+}
+.soldiers button {
+  padding: 7px 8px;
+  font-size: 11px;
+  flex: 1;
+  background: #263a2f;
+  border-color: #3c5140;
+}
+.soldiers span {
+  color: #a5bba0;
+  margin-left: 4px;
+}
+button.selected {
+  border-color: #c3b885 !important;
+  background: #3b4c37 !important;
+}
+.objective p:not(.eyebrow) {
+  line-height: 1.8;
+  font-size: 12px;
+  margin-top: 12px;
+  color: #c4c8b4;
+}
+.objective .muted {
+  font-size: 11px !important;
+  color: #8b9d87 !important;
+}
+.reset {
+  margin-top: 16px;
+  width: 100%;
+  font-size: 12px;
+  background: transparent;
+}
+footer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 0;
+  color: #87977f;
+  font-size: 11px;
+}
+footer > span:first-child {
+  color: #c6bb8d;
+  flex-shrink: 0;
+}
+footer p {
+  flex: 1;
+  line-height: 1.8;
+}
+footer > span:last-child {
+  letter-spacing: 2px;
+  font-size: 9px;
+}
+@media (min-width: 1450px) {
+  .map-canvas {
+    height: 690px;
+  }
+}
+@media (max-width: 1000px) {
+  main {
+    padding: 20px;
+  }
+  .topbar {
+    padding: 0 20px;
+  }
+  .workspace {
+    grid-template-columns: minmax(0, 1fr) 260px;
+  }
+  .map-canvas {
+    height: 590px;
+  }
+  .order-panel {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .phase small {
+    display: none;
+  }
+  .card {
+    padding: 15px;
+  }
+}
+@media (max-width: 740px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+  .topbar {
+    height: 70px;
+    gap: 15px;
+  }
+  .brand {
+    font-size: 17px;
+  }
+  .section-title {
+    display: none;
+  }
+  .mission-heading {
+    align-items: flex-start;
+    gap: 15px;
+  }
+  h1 {
+    font-size: 26px;
+  }
+  .phase {
+    padding: 10px;
+    font-size: 11px;
+  }
+  .map-canvas {
+    height: 470px;
+  }
+  aside {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .objective {
+    grid-column: 1/-1;
+  }
+  .pan-hint {
+    display: none;
+  }
+  footer > span:last-child {
+    display: none;
+  }
+}
