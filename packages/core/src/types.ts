@@ -8,6 +8,16 @@ export interface BattleState {
   activeSide: Unit["side"];
   units: Unit[];
   commands: Command[];
+  mission: {
+    capturedRound: number | null;
+    reinforcement: "scheduled" | "deferred" | "spawned" | "cancelled";
+  };
+  outcome: {
+    status: "victory" | "defeat";
+    reason: string;
+    round: number;
+    bonuses: string[];
+  } | null;
 }
 export type Action =
   | { type: "wait" }
@@ -36,7 +46,8 @@ export type BattleEvent =
   | { type: "healed"; unitId: string; amount: number }
   | { type: "removed"; unitId: string; reason: "defeated" | "retreated" }
   | { type: "acted"; unitId: string }
-  | { type: "phaseStarted"; side: Unit["side"]; round: number };
+  | { type: "phaseStarted"; side: Unit["side"]; round: number }
+  | { type: "scenario"; message: string };
 export type Evaluation =
   | { ok: false; error: string }
   | { ok: true; nextState: BattleState; events: BattleEvent[] };
@@ -49,5 +60,7 @@ export function createBattle(content: Content): BattleState {
     activeSide: "player",
     units: structuredClone(content.scenario.units),
     commands: [],
+    mission: { capturedRound: null, reinforcement: "scheduled" },
+    outcome: null,
   };
 }

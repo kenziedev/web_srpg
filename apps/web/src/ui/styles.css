@@ -571,3 +571,20 @@ button:disabled kbd {
     font-size: 9px;
   }
 }
+.mission-panel {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  max-width: calc(100% - 16px);
+  padding: 8px 12px;
+  pointer-events: none;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.mission-panel strong {
+  color: #ffedb3;
+  font-size: 12px;
+}
+.blocked-route {
+  color: #ffbf97;
+}

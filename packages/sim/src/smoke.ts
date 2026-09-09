@@ -23,5 +23,5 @@ assert(first.ok && replay.ok);
 assert.deepEqual(first, replay);
 assert.equal(initial.units.find((u) => u.id === unit.id)!.pos.y, 4);
 console.log(
-  "Smoke passed: map path + atomic command + deterministic replay. Full battle AI/clear simulation is not implemented.",
+  "Smoke passed: map path + atomic command + deterministic replay. Full battle clear is checked separately by sim:mission.",
 );

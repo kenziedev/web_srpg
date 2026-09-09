@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { content } from "@orden/content";
 import { commandBonus, terrainAt } from "@orden/core";
 import { BattleMap } from "../game/BattleMap";
+import { MissionPanel, BattleResult } from "./MissionPanel";
 import { useBattle } from "./useBattle";
 
 const names: Record<string, string> = {
@@ -31,7 +32,7 @@ export function App() {
         setShowRoster(false);
         setShowInfo(false);
       }
-      if (battle.confirmEnd || showInfo || showRoster) return;
+      if (battle.confirmEnd || showInfo || showRoster || state.outcome) return;
       if (event.key.toLowerCase() === "c") setShowCommand((v) => !v);
       if (event.key.toLowerCase() === "e" && !showInfo && !showRoster)
         battle.requestEnd();
@@ -148,11 +149,12 @@ export function App() {
             빠른 진행
           </label>
         </div>
-        {busy && (
+        {busy && !state.outcome && (
           <div className="phase-banner" aria-hidden="true">
             {state.activeSide === "enemy" ? "ENEMY PHASE" : "NEXT TURN"}
           </div>
         )}
+        <MissionPanel state={state} />
         {showRoster && (
           <section
             className="roster-window classic-window"
@@ -313,6 +315,7 @@ export function App() {
         </span>
         <span>전투 연습판 · 적 자동 행동 / 저장 없음</span>
       </div>
+      <BattleResult state={state} restart={battle.reset} />
       {battle.confirmEnd && (
         <div className="modal-scrim">
           <section
@@ -348,8 +351,20 @@ export function App() {
               2를 회복합니다. 두 회복은 중첩되지 않습니다.
             </p>
             <p>
-              현재는 부대 전투 연습판입니다. 호송대 이동·봉화 점령·증원·시나리오
-              승패는 다음 개발 단계이며, 새로고침하면 초기화됩니다.
+              10라운드 내 호송대를 동쪽 탈출 지점으로 보내십시오. 카이엘 또는
+              호송대가 쓰러지면 패배합니다. 호송대는 NPC 턴마다 도로를 2칸
+              이동하며 아군은 통과하지만 점유 칸에는 멈추지 못합니다.
+              새로고침하면 초기화됩니다.
+            </p>
+            <p>
+              봉화 (7, 2)는 아군 지휘관이 라운드 끝까지 점유해야 합니다.
+              2라운드까지 점령하면 보너스, 증원 전 점령하면 비병 등장이
+              취소됩니다. 호송 HP 7 이상 탈출도 보너스입니다.
+            </p>
+            <p>
+              비병 3기는 3라운드 종료에 (13, 1), (12, 1), (14, 1)로 등장합니다.
+              예비 칸은 각 위치의 바로 위입니다. 공간 부족 시 전체 부대가
+              보류되며 등장 다음 적 턴부터 행동합니다.
             </p>
             <details>
               <summary>최근 전투 기록</summary>

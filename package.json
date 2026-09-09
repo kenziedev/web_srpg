@@ -15,8 +15,9 @@
     "content:check": "tsx packages/content/src/check.ts",
     "sim:smoke": "tsx packages/sim/src/smoke.ts",
     "test:e2e": "playwright test",
-    "check": "pnpm typecheck && pnpm test && pnpm content:check && pnpm sim:smoke && pnpm boundaries:check",
-    "boundaries:check": "node tools/check-boundaries.mjs"
+    "check": "pnpm typecheck && pnpm test && pnpm content:check && pnpm sim:smoke && pnpm sim:mission && pnpm boundaries:check",
+    "boundaries:check": "node tools/check-boundaries.mjs",
+    "sim:mission": "tsx packages/sim/src/mission.ts"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",

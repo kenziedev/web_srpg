@@ -148,3 +148,56 @@ test("reset cancels pending enemy automation and 1280×720 keeps controls visibl
     fullPage: true,
   });
 });
+test("mission announces escort movement, ends in defeat and restarts cleanly", async ({
+  page,
+}) => {
+  test.setTimeout(60000);
+  await start(page);
+  await expect(page.getByTestId("escort-status")).toContainText(
+    "현재 (1, 10) → 다음 (3, 10)",
+  );
+  await expect(page.getByTestId("reinforcement-status")).toContainText(
+    "3라운드 종료",
+  );
+  await page.getByLabel("빠른 진행").check();
+  for (let round = 1; round <= 10; round++) {
+    await page.getByRole("button", { name: /^턴 종료 E$/ }).click();
+    if (
+      await page
+        .getByRole("button", { name: "턴 종료 확인", exact: true })
+        .isVisible()
+    )
+      await page
+        .getByRole("button", { name: "턴 종료 확인", exact: true })
+        .click();
+    await expect
+      .poll(
+        async () =>
+          (await page
+            .getByRole("heading", { name: "작전 실패" })
+            .isVisible()) ||
+          (await page.getByTestId("round").textContent()) !==
+            String(round).padStart(2, "0"),
+        { timeout: 15000 },
+      )
+      .toBe(true);
+    if (await page.getByRole("heading", { name: "작전 실패" }).isVisible())
+      break;
+    if (round === 1)
+      await expect(page.getByTestId("escort-status")).toContainText(
+        "현재 (3, 10)",
+      );
+  }
+  await expect(page.getByRole("heading", { name: "작전 실패" })).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /^턴 종료 E$/ }),
+  ).toBeDisabled();
+  await page.screenshot({
+    path: "test-results/mission-defeat.png",
+    fullPage: true,
+  });
+  await page.getByRole("button", { name: "다시 도전" }).click();
+  await expect(page.getByTestId("round")).toHaveText("01");
+  await expect(page.getByTestId("escort-status")).toContainText("현재 (1, 10)");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+});

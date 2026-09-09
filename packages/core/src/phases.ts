@@ -6,6 +6,7 @@ import type {
   BattleEvent,
 } from "./types";
 import { distance, terrainAt } from "./movement";
+import { finishRound, moveEscort, resolveOutcome } from "./scenario";
 
 /** Called only after shared command/version validation. No wall-clock or UI dependencies. */
 export function endPhase(
@@ -16,6 +17,14 @@ export function endPhase(
   if (command.side !== state.activeSide)
     return { ok: false, error: "현재 진영의 턴만 종료할 수 있습니다." };
   const nextState = structuredClone(state);
+  const events: BattleEvent[] = [];
+  resolveOutcome(content, nextState, events);
+  if (state.activeSide === "npc") finishRound(content, nextState, events);
+  if (nextState.outcome) {
+    nextState.revision += 1;
+    nextState.commands.push(structuredClone(command));
+    return { ok: true, nextState, events };
+  }
   for (const unit of nextState.units)
     if (unit.side === state.activeSide) unit.acted = true;
   nextState.activeSide =
@@ -25,13 +34,11 @@ export function endPhase(
         ? "npc"
         : "player";
   if (nextState.activeSide === "player") nextState.round += 1;
-  const events: BattleEvent[] = [
-    {
-      type: "phaseStarted",
-      side: nextState.activeSide,
-      round: nextState.round,
-    },
-  ];
+  events.push({
+    type: "phaseStarted",
+    side: nextState.activeSide,
+    round: nextState.round,
+  });
   // Poison/death-at-start is deferred until statuses exist. Never restore removed units.
   for (const unit of nextState.units) {
     if (unit.side !== nextState.activeSide || unit.hp <= 0) continue;
@@ -59,6 +66,7 @@ export function endPhase(
       events.push({ type: "healed", unitId: unit.id, amount });
     }
   }
+  if (nextState.activeSide === "npc") moveEscort(content, nextState, events);
   nextState.revision += 1;
   nextState.commands.push(structuredClone(command));
   return { ok: true, nextState, events };

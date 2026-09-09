@@ -8,6 +8,7 @@ import type {
 import { allied, canStop, distance, samePosition, stepCost } from "./movement";
 import { damage, inAttackRange } from "./combat";
 import { endPhase } from "./phases";
+import { resolveOutcome } from "./scenario";
 
 /** Pure preview and reducer share one path. On rejection, no state or log is mutated. */
 export function evaluate(
@@ -16,6 +17,7 @@ export function evaluate(
   command: Command,
 ): Evaluation {
   const reject = (error: string): Evaluation => ({ ok: false, error });
+  if (state.outcome) return reject("이미 종료된 전투입니다.");
   if (state.rulesVersion !== content.rulesVersion)
     return reject("규칙 버전이 일치하지 않습니다.");
   if (
@@ -28,6 +30,8 @@ export function evaluate(
   const unit = state.units.find((u) => u.id === command.unitId);
   if (!unit || unit.hp <= 0 || unit.side !== state.activeSide || unit.acted)
     return reject("행동할 수 없는 유닛입니다.");
+  if (unit.kind === "escort")
+    return reject("호송대는 NPC 페이즈에 경로를 따라 자동 이동합니다.");
   let from = unit.pos;
   let cost = 0;
   for (const pos of command.path) {
@@ -109,6 +113,7 @@ export function evaluate(
   });
   actor.acted = true;
   events.push({ type: "acted", unitId: actor.id });
+  resolveOutcome(content, nextState, events);
   nextState.revision += 1;
   nextState.commands.push(structuredClone(command));
   return { ok: true, nextState, events };

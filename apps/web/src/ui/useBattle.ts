@@ -28,7 +28,7 @@ export function useBattle() {
   const [enemyActor, setEnemyActor] = useState<string | null>(null);
   const [confirmEnd, setConfirmEnd] = useState(false);
   const unit = state.units.find((u) => u.id === selectedId);
-  const busy = state.activeSide !== "player";
+  const busy = state.activeSide !== "player" || !!state.outcome;
   const canAct = !busy && unit?.side === "player" && !unit.acted;
   const remaining = state.units.filter(
     (u) => u.side === "player" && !u.acted,
@@ -58,6 +58,7 @@ export function useBattle() {
   };
   const recordEvents = (before: BattleState, events: BattleEvent[]) => {
     const lines = events.flatMap((event) => {
+      if (event.type === "scenario") return [event.message];
       if (event.type === "phaseStarted")
         return [
           `제 ${event.round} 턴 · ${event.side === "player" ? "아군" : event.side === "enemy" ? "적군" : "중립"} 페이즈`,
@@ -91,7 +92,7 @@ export function useBattle() {
     return true;
   };
   useEffect(() => {
-    if (state.activeSide === "player") {
+    if (state.activeSide === "player" || state.outcome) {
       setEnemyActor(null);
       return;
     }
@@ -135,7 +136,8 @@ export function useBattle() {
     }
   };
   const finishTurn = () => {
-    if (current.current.activeSide !== "player") return;
+    if (current.current.activeSide !== "player" || current.current.outcome)
+      return;
     cancel();
     setConfirmEnd(false);
     dispatch(phaseEndCommand(current.current));

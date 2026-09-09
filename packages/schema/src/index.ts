@@ -82,7 +82,22 @@ export const scenarioSchema = z.object({
   reinforcement: z.object({
     round: z.number().int().positive(),
     units: z.array(unitSchema),
+    reserves: z.record(z.string(), z.array(positionSchema).min(1)).default({}),
   }),
+  mission: z
+    .object({
+      protectedIds: z.array(z.string()).min(1),
+      escortId: z.string(),
+      route: z.array(positionSchema).min(2),
+      escapeTiming: z.literal("immediate"),
+      captureTiming: z.literal("roundEnd"),
+      beacon: positionSchema,
+      bonusDeadline: z.number().int().positive(),
+      healthyEscapeHp: z.number().int().min(1).max(10),
+      maxRounds: z.number().int().positive(),
+      unitLimit: z.number().int().positive().max(42),
+    })
+    .optional(),
   markers: z.array(
     z.object({ id: z.string(), label: z.string(), pos: positionSchema }),
   ),
@@ -111,6 +126,74 @@ export const contentSchema = z
     if (new Set(all.map((u) => u.id)).size !== all.length) fail("유닛 ID 중복");
     if (all.length > 42) fail("동시 유닛 상한 초과");
     const inside = (p: Position) => p.x < s.width && p.y < s.height;
+    for (const [id, positions] of Object.entries(s.reinforcement.reserves)) {
+      const unit = s.reinforcement.units.find((u) => u.id === id);
+      if (!unit) fail(`예비 배치 유닛 참조 오류: ${id}`);
+      for (const pos of positions) {
+        const tile = content.terrains.find(
+          (t) => t.id === s.tiles[pos.y * s.width + pos.x],
+        );
+        if (
+          !inside(pos) ||
+          !tile ||
+          tile.noLanding ||
+          (unit && tile.costs[unit.moveType] === null)
+        )
+          fail(`예비 배치 좌표 오류: ${id}`);
+      }
+    }
+    if (s.mission) {
+      const m = s.mission;
+      const escort = s.units.find(
+        (u) => u.id === m.escortId && u.kind === "escort" && u.side === "npc",
+      );
+      if (
+        !escort ||
+        escort.pos.x !== m.route[0]!.x ||
+        escort.pos.y !== m.route[0]!.y
+      )
+        fail("호송대 출발점 오류");
+      if (
+        !m.protectedIds.includes(m.escortId) ||
+        new Set(m.protectedIds).size !== m.protectedIds.length ||
+        m.protectedIds.some(
+          (id) => !s.units.some((u) => u.id === id && u.side !== "enemy"),
+        )
+      )
+        fail("보호 대상 참조 오류");
+      if (
+        !inside(m.beacon) ||
+        m.bonusDeadline > m.maxRounds ||
+        s.reinforcement.round >= m.maxRounds ||
+        s.units.length > m.unitLimit
+      )
+        fail("목표 시간·배치 오류");
+      const beaconTerrain = content.terrains.find(
+        (t) => t.id === s.tiles[m.beacon.y * s.width + m.beacon.x],
+      );
+      if (
+        !beaconTerrain ||
+        beaconTerrain.noLanding ||
+        beaconTerrain.costs.foot === null
+      )
+        fail("점령 불가 봉화");
+      if (new Set(m.route.map((p) => `${p.x},${p.y}`)).size !== m.route.length)
+        fail("호송 경로 중복");
+      m.route.forEach((pos, i) => {
+        const tile = content.terrains.find(
+          (t) => t.id === s.tiles[pos.y * s.width + pos.x],
+        );
+        const prev = m.route[i - 1];
+        if (
+          !inside(pos) ||
+          !tile ||
+          tile.noLanding ||
+          (escort && tile.costs[escort.moveType] === null) ||
+          (prev && Math.abs(prev.x - pos.x) + Math.abs(prev.y - pos.y) !== 1)
+        )
+          fail("호송 경로 오류");
+      });
+    }
     for (const group of [s.units, s.reinforcement.units]) {
       if (
         new Set(group.map((u) => `${u.pos.x},${u.pos.y}`)).size !== group.length

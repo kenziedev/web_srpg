@@ -19,3 +19,18 @@ it.each(["position", "commander", "terrain"])(
     expect(contentSchema.safeParse(broken).success).toBe(false);
   },
 );
+it.each(["escort", "route", "deadline", "reserve", "protected", "capacity"])(
+  "rejects invalid mission %s data",
+  (mutation) => {
+    const broken = structuredClone(content);
+    const m = broken.scenario.mission!;
+    if (mutation === "escort") m.escortId = "missing";
+    if (mutation === "route") m.route[1] = { x: 5, y: 5 };
+    if (mutation === "deadline") m.bonusDeadline = 11;
+    if (mutation === "reserve")
+      broken.scenario.reinforcement.reserves.E3 = [{ x: 20, y: 0 }];
+    if (mutation === "protected") m.protectedIds = ["missing"];
+    if (mutation === "capacity") m.unitLimit = 20;
+    expect(contentSchema.safeParse(broken).success).toBe(false);
+  },
+);

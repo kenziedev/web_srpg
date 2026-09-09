@@ -4,6 +4,7 @@ import { content } from "@orden/content";
 import {
   commandBonus,
   distance,
+  escortForecast,
   type BattleState,
   type Position,
   type ReachableTile,
@@ -223,12 +224,62 @@ class BattleScene extends Phaser.Scene {
       }
     for (const marker of s.markers)
       this.label(
-        marker.pos.x * TILE,
+        Math.min(
+          marker.pos.x * TILE,
+          s.width * TILE - marker.label.length * 12 - 6,
+        ),
         marker.pos.y * TILE - 16,
         marker.label,
         "#f8df9f",
         11,
       );
+    if (!state.outcome) {
+      const forecast = escortForecast(content, state);
+      if (forecast) {
+        this.art
+          .lineStyle(2, 0xa3f3e2, 0.85)
+          .strokeRect(
+            forecast.to.x * TILE + 8,
+            forecast.to.y * TILE + 8,
+            TILE - 16,
+            TILE - 16,
+          );
+        this.label(
+          forecast.to.x * TILE,
+          forecast.to.y * TILE - 15,
+          "호송 예정",
+          "#a3f3e2",
+          10,
+        );
+      }
+      if (
+        state.mission.reinforcement === "scheduled" ||
+        state.mission.reinforcement === "deferred"
+      ) {
+        for (const unit of s.reinforcement.units) {
+          for (const [index, pos] of [
+            unit.pos,
+            ...(s.reinforcement.reserves[unit.id] ?? []),
+          ].entries()) {
+            this.art
+              .lineStyle(2, 0xffb080, index === 0 ? 0.8 : 0.35)
+              .strokeRect(
+                pos.x * TILE + 4,
+                pos.y * TILE + 4,
+                TILE - 8,
+                TILE - 8,
+              );
+            this.label(
+              pos.x * TILE + 5,
+              pos.y * TILE + 15,
+              index === 0 ? "증원" : "예비",
+              "#ffcc9c",
+              10,
+            );
+          }
+        }
+      }
+    }
     for (const unit of state.units) {
       const x = unit.pos.x * TILE,
         y = unit.pos.y * TILE;

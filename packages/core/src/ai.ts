@@ -24,7 +24,7 @@ export function nextEnemyCommand(
   content: Content,
   state: BattleState,
 ): Command | null {
-  if (state.activeSide !== "enemy") return null;
+  if (state.activeSide !== "enemy" || state.outcome) return null;
   const actor = state.units
     .filter((u) => u.side === "enemy" && !u.acted)
     .sort(
