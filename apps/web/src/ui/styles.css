@@ -1098,3 +1098,36 @@ body {
     transition: none;
   }
 }
+.duel-stage.phase-attack .duel-fighter {
+  filter: drop-shadow(3px 5px 0 #26392966) brightness(1.12);
+}
+.duel-stage.phase-hit .duel-fighter.fallen {
+  transform: translateY(18px);
+  transition:
+    opacity 350ms steps(3),
+    transform 350ms steps(3);
+}
+.duel-stage.phase-run .duel-ground:before {
+  content: "";
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  top: 80px;
+  height: 20px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 15px,
+    #d6bf8466 15px 22px,
+    transparent 22px 37px
+  );
+  filter: blur(1px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .duel-stage.phase-hit .duel-fighter.fallen {
+    transform: none;
+    transition: none;
+  }
+  .duel-stage.phase-run .duel-ground:before {
+    display: none;
+  }
+}

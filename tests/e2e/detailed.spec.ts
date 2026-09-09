@@ -75,3 +75,59 @@ test("render preference survives reload and Escape skips only the active detaile
   await checkDamage(page);
   await expect(page.getByTestId("round")).toHaveText("01");
 });
+for (const reducedMotion of ["no-preference", "reduce"] as const) {
+  test(`detailed fighters actually change running and weapon poses (${reducedMotion})`, async ({
+    page,
+  }) => {
+    await page.emulateMedia({ reducedMotion });
+    await start(page);
+    await page.getByLabel("전투 연출").selectOption("detailed");
+    // Observe every committed SVG pose in the browser so short phases cannot
+    // be missed by cross-process locator polling on a busy machine.
+    await page.evaluate(() => {
+      const samples = { legs: [] as string[], weapons: [] as string[] };
+      const observer = new MutationObserver(() => {
+        const phase = document
+          .querySelector(".duel-stage")
+          ?.getAttribute("data-phase");
+        const selector = phase === "run" ? ".fighter-legs" : ".fighter-weapon";
+        if (phase !== "run" && phase !== "attack") return;
+        const value = document
+          .querySelector(".army-0 " + selector)
+          ?.getAttribute("transform");
+        if (value) samples[phase === "run" ? "legs" : "weapons"].push(value);
+      });
+      observer.observe(document.body, {
+        subtree: true,
+        attributes: true,
+        childList: true,
+      });
+      Object.assign(window, {
+        combatPoseSamples: samples,
+        combatPoseObserver: observer,
+      });
+    });
+    await attack(page);
+    await expect(page.locator(".duel-stage")).toBeVisible();
+    await page.screenshot({
+      path: `test-results/detailed-action-${reducedMotion}.png`,
+    });
+    await expect(
+      page.getByRole("dialog", { name: "상세 전투", exact: true }),
+    ).toHaveCount(0, { timeout: 6000 });
+    const counts = await page.evaluate(() => {
+      const observed = window as typeof window & {
+        combatPoseSamples: { legs: string[]; weapons: string[] };
+        combatPoseObserver: MutationObserver;
+      };
+      observed.combatPoseObserver.disconnect();
+      return {
+        legs: new Set(observed.combatPoseSamples.legs).size,
+        weapons: new Set(observed.combatPoseSamples.weapons).size,
+      };
+    });
+    expect(counts.legs).toBeGreaterThan(1);
+    expect(counts.weapons).toBeGreaterThan(1);
+    await checkDamage(page);
+  });
+}
