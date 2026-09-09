@@ -80,6 +80,7 @@ export function App() {
       >
         <BattleMap
           state={state}
+          animation={battle.animation}
           selectedId={busy ? (battle.enemyActor ?? "") : battle.selectedId}
           destination={destination}
           reachable={battle.moves}
@@ -87,7 +88,7 @@ export function App() {
           onTile={battle.onTile}
         />
         <div
-          className={`turn-window classic-window ${busy ? "enemy-turn" : ""}`}
+          className={`turn-window classic-window ${state.activeSide === "enemy" ? "enemy-turn" : ""}`}
           aria-live="polite"
         >
           <span>
@@ -144,15 +145,37 @@ export function App() {
           <label className="speed-option">
             <input
               type="checkbox"
+              checked={battle.autoFollow}
+              disabled={busy}
+              onChange={(e) => battle.setAutoFollow(e.target.checked)}
+            />
+            용병 자동 행동
+          </label>
+          <label className="speed-option">
+            <input
+              type="checkbox"
               checked={battle.fast}
               onChange={(e) => battle.setFast(e.target.checked)}
             />{" "}
             빠른 진행
           </label>
         </div>
-        {busy && !state.outcome && (
+        {busy && !state.outcome && !battle.animation && (
           <div className="phase-banner" aria-hidden="true">
-            {state.activeSide === "enemy" ? "ENEMY PHASE" : "NEXT TURN"}
+            {battle.finishing
+              ? "FOLLOW ORDERS"
+              : state.activeSide === "enemy"
+                ? "ENEMY PHASE"
+                : "NEXT TURN"}
+          </div>
+        )}
+        {battle.animation && (
+          <div
+            className="battle-feedback classic-window"
+            data-testid="battle-feedback"
+            aria-live="polite"
+          >
+            {battle.feedback}
           </div>
         )}
         <MissionPanel state={state} />
@@ -312,7 +335,9 @@ export function App() {
         </span>
         <span>전투 연습판 · 적 자동 행동 / 저장 없음</span>
       </div>
-      <BattleResult state={state} restart={battle.reset} />
+      {!battle.animation && (
+        <BattleResult state={state} restart={battle.reset} />
+      )}
       {battle.confirmEnd && (
         <div className="modal-scrim">
           <section
@@ -323,7 +348,11 @@ export function App() {
           >
             <h2 id="end-title">아군 턴을 종료합니까?</h2>
             <p>아직 행동하지 않은 부대가 {battle.remaining}기 있습니다.</p>
-            <p>남은 행동을 포기하고 적군 턴으로 넘어갑니다.</p>
+            <p>
+              {battle.autoFollow
+                ? "미행동 용병은 지휘관을 따라 이동·공격한 뒤 적군 턴으로 넘어갑니다. 미행동 지휘관은 대기합니다."
+                : "남은 행동을 포기하고 적군 턴으로 넘어갑니다."}
+            </p>
             <div>
               <button autoFocus onClick={() => battle.setConfirmEnd(false)}>
                 계속 조작
@@ -343,7 +372,8 @@ export function App() {
           >
             <h2>전투 연습 안내</h2>
             <p>
-              턴 종료 → 적군 이동·공격 → 다음 아군 턴 순서로 진행됩니다. 아군 턴
+              턴 종료 → 미행동 용병 추종·공격 → 적군 행동 → 다음 아군 턴 순서입니다.
+              직접 대기·공격한 용병은 자동 행동하지 않습니다. 아군 턴
               시작에 지휘관과 인접한 소속 용병은 HP 3, 거점 위 지상 유닛은 HP
               2를 회복합니다. 두 회복은 중첩되지 않습니다.
             </p>

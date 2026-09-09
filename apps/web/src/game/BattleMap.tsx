@@ -1,3 +1,5 @@
+import type { BattleAnimation } from "./BattleAnimation";
+import { playBattleAnimation } from "./playBattleAnimation";
 import { useEffect, useRef } from "react";
 import Phaser from "phaser";
 import { content } from "@orden/content";
@@ -16,6 +18,7 @@ import { drawUnit } from "./pixelUnits";
 const TILE = 48;
 interface MapProps {
   state: BattleState;
+  animation: BattleAnimation | null;
   selectedId: string;
   destination: Position | null;
   reachable: ReachableTile[];
@@ -57,6 +60,7 @@ export function BattleMap(props: MapProps) {
     if (sceneRef.current?.sys.isActive()) sceneRef.current.paint();
   }, [
     props.state,
+    props.animation,
     props.selectedId,
     props.destination,
     props.reachable,
@@ -73,6 +77,9 @@ export function BattleMap(props: MapProps) {
 }
 
 class BattleScene extends Phaser.Scene {
+  private playing: BattleAnimation | null = null;
+  private lastState: BattleState | null = null;
+  private stopAnimation: (() => void) | null = null;
   private art!: Phaser.GameObjects.Graphics;
   private labels: Phaser.GameObjects.Text[] = [];
   private drag: { x: number; y: number; sx: number; sy: number } | null = null;
@@ -135,6 +142,7 @@ class BattleScene extends Phaser.Scene {
         );
       },
     );
+    this.events.once("shutdown", () => this.stopAnimation?.());
     this.paint();
   }
   private label(
@@ -160,8 +168,28 @@ class BattleScene extends Phaser.Scene {
   }
   paint() {
     if (!this.art) return;
-    const { state, selectedId, destination, reachable, showCommand } =
-      this.read();
+    const {
+      state,
+      selectedId,
+      destination,
+      reachable,
+      showCommand,
+      animation,
+    } = this.read();
+    if (this.playing !== animation) {
+      this.stopAnimation?.();
+      this.playing = animation;
+      this.stopAnimation = animation
+        ? playBattleAnimation(this, animation)
+        : null;
+    }
+    if (state.revision === 0 && state !== this.lastState)
+      this.cameras.main.centerOn(10 * TILE, 8 * TILE);
+    this.lastState = state;
+    const animatedId =
+      animation?.command.type === "act"
+        ? animation.command.unitId
+        : animation?.events.find((e) => e.type === "moved")?.unitId;
     const selected = state.units.find((u) => u.id === selectedId);
     const leader =
       selected?.kind === "commander"
@@ -247,6 +275,7 @@ class BattleScene extends Phaser.Scene {
       }
     }
     for (const unit of state.units) {
+      if (unit.id === animatedId) continue;
       const x = unit.pos.x * TILE,
         y = unit.pos.y * TILE;
       drawUnit(this.art, unit, x, y);

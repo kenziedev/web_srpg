@@ -1,3 +1,4 @@
+import type { BattleAnimation } from "../game/BattleAnimation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { content } from "@orden/content";
 import {
@@ -5,6 +6,7 @@ import {
   createBattle,
   evaluate,
   nextEnemyCommand,
+  nextFollowerCommand,
   phaseEndCommand,
   reachable,
   samePosition,
@@ -23,12 +25,20 @@ export function useBattle() {
   const [destination, setDestination] = useState<Position | null>(null);
   const [action, setAction] = useState<Action>({ type: "wait" });
   const [message, setMessage] = useState("부대를 선택하십시오.");
+  const [feedback, setFeedback] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [fast, setFast] = useState(false);
   const [enemyActor, setEnemyActor] = useState<string | null>(null);
+  const [finishing, setFinishing] = useState(false);
+  const [autoFollow, setAutoFollow] = useState(true);
+  const [animation, setAnimation] = useState<BattleAnimation | null>(null);
   const [confirmEnd, setConfirmEnd] = useState(false);
   const unit = state.units.find((u) => u.id === selectedId);
-  const busy = state.activeSide !== "player" || !!state.outcome;
+  const busy =
+    state.activeSide !== "player" ||
+    !!state.outcome ||
+    finishing ||
+    !!animation;
   const canAct = !busy && unit?.side === "player" && !unit.acted;
   const remaining = state.units.filter(
     (u) => u.side === "player" && !u.acted,
@@ -76,7 +86,7 @@ export function useBattle() {
       return [];
     });
     if (lines.length)
-      setHistory((old) => [...lines.reverse(), ...old].slice(0, 30));
+      setHistory((old) => [...lines.reverse(), ...old].slice(0, 60));
   };
   // The synchronous ref prevents duplicate clicks and old timers from applying to a stale render.
   const dispatch = (cmd: Command) => {
@@ -89,10 +99,59 @@ export function useBattle() {
     current.current = result.nextState;
     setState(result.nextState);
     recordEvents(before, result.events);
+    if (cmd.type === "act" && cmd.commandId.startsWith("follow-")) {
+      const name =
+        before.units.find((u) => u.id === cmd.unitId)?.name ?? cmd.unitId;
+      setHistory((old) =>
+        [
+          `${name} 자동 ${cmd.action.type === "attack" ? "공격" : cmd.path.length ? "추종 이동" : "대기"}`,
+          ...old,
+        ].slice(0, 60),
+      );
+    }
+    setFeedback(
+      result.events
+        .flatMap((e) => {
+          if (e.type !== "damaged" && e.type !== "healed") return [];
+          const name =
+            before.units.find((u) => u.id === e.unitId)?.name ?? e.unitId;
+          return [
+            `${name} ${e.type === "damaged" ? `피해 ${e.amount}` : `회복 +${e.amount}`}`,
+          ];
+        })
+        .join(" · ") || "부대 이동",
+    );
+    if (
+      result.events.some(
+        (e) =>
+          e.type === "moved" ||
+          e.type === "damaged" ||
+          (e.type === "healed" && e.amount > 0),
+      )
+    ) {
+      const moved = result.events.some((e) => e.type === "moved");
+      setAnimation({
+        id: result.nextState.revision,
+        before,
+        command: cmd,
+        events: result.events,
+        moveMs: moved ? (fast ? 80 : 240) : 0,
+        impactMs: fast ? 140 : 420,
+      });
+    }
     return true;
   };
   useEffect(() => {
-    if (state.activeSide === "player" || state.outcome) {
+    if (!animation) return;
+    const timer = window.setTimeout(
+      () => setAnimation((old) => (old === animation ? null : old)),
+      animation.moveMs + animation.impactMs + 60,
+    );
+    return () => window.clearTimeout(timer);
+  }, [animation]);
+  useEffect(() => {
+    if (animation) return;
+    if ((state.activeSide === "player" && !finishing) || state.outcome) {
       setEnemyActor(null);
       return;
     }
@@ -100,10 +159,14 @@ export function useBattle() {
       () => {
         if (current.current !== state) return;
         const cmd =
-          state.activeSide === "enemy"
-            ? nextEnemyCommand(content, state)
-            : phaseEndCommand(state);
+          state.activeSide === "player" && autoFollow
+            ? (nextFollowerCommand(content, state) ?? phaseEndCommand(state))
+            : state.activeSide === "enemy"
+              ? nextEnemyCommand(content, state)
+              : phaseEndCommand(state);
         if (!cmd) return;
+        if (cmd.type === "endPhase" && state.activeSide === "player")
+          setFinishing(false);
         if (cmd.type === "act") {
           setEnemyActor(cmd.unitId);
           setMessage(
@@ -121,7 +184,7 @@ export function useBattle() {
     );
     return () => window.clearTimeout(timer);
     // Only state and speed restart the timer; selection and transient UI do not.
-  }, [state, fast]);
+  }, [state, fast, finishing, autoFollow, animation]);
   const select = (id: string) => {
     if (busy) return;
     setSelectedId(id);
@@ -140,8 +203,12 @@ export function useBattle() {
       return;
     cancel();
     setConfirmEnd(false);
-    dispatch(phaseEndCommand(current.current));
-    setMessage("적군 턴입니다.");
+    setFinishing(true);
+    setMessage(
+      autoFollow
+        ? "미행동 용병이 지휘관을 따라 행동합니다."
+        : "아군 턴을 종료합니다.",
+    );
   };
   const requestEnd = () => {
     if (busy) return;
@@ -153,6 +220,8 @@ export function useBattle() {
     const initial = createBattle(content);
     current.current = initial;
     setState(initial);
+    setAnimation(null);
+    setFinishing(false);
     setSelectedId("A2");
     cancel();
     setHistory([]);
@@ -202,9 +271,14 @@ export function useBattle() {
     moves,
     preview,
     busy,
+    finishing,
+    animation,
+    autoFollow,
+    setAutoFollow,
     canAct,
     remaining,
     message,
+    feedback,
     history,
     fast,
     setFast,
