@@ -27,6 +27,22 @@ export function useBattle() {
   const [message, setMessage] = useState("부대를 선택하십시오.");
   const [feedback, setFeedback] = useState("");
   const [history, setHistory] = useState<string[]>([]);
+  const [combatMode, setCombatMode] = useState<"simple" | "detailed">(() => {
+    try {
+      return localStorage.getItem("orden-combat-mode") === "detailed"
+        ? "detailed"
+        : "simple";
+    } catch {
+      return "simple";
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem("orden-combat-mode", combatMode);
+    } catch {
+      /* Rendering preferences are optional when storage is unavailable. */
+    }
+  }, [combatMode]);
   const [fast, setFast] = useState(false);
   const [enemyActor, setEnemyActor] = useState<string | null>(null);
   const [finishing, setFinishing] = useState(false);
@@ -129,14 +145,20 @@ export function useBattle() {
           (e.type === "healed" && e.amount > 0),
       )
     ) {
+      const detailed =
+        combatMode === "detailed" &&
+        cmd.type === "act" &&
+        cmd.action.type === "attack";
       const moved = result.events.some((e) => e.type === "moved");
       setAnimation({
         id: result.nextState.revision,
         before,
+        after: result.nextState,
+        detailed,
         command: cmd,
         events: result.events,
-        moveMs: moved ? (fast ? 80 : 240) : 0,
-        impactMs: fast ? 140 : 420,
+        moveMs: !detailed && moved ? (fast ? 80 : 240) : 0,
+        impactMs: detailed ? (fast ? 1000 : 2600) : fast ? 140 : 420,
       });
     }
     return true;
@@ -273,6 +295,10 @@ export function useBattle() {
     busy,
     finishing,
     animation,
+    combatMode,
+    setCombatMode,
+    skipAnimation: () =>
+      setAnimation((old) => (old === animation ? null : old)),
     autoFollow,
     setAutoFollow,
     canAct,

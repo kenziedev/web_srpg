@@ -1,7 +1,7 @@
 import type Phaser from "phaser";
 import type { Unit } from "@orden/core";
 
-const soldier = [
+export const soldier = [
   "....hhhh....",
   "...hllllh...",
   "...hssssh...",
@@ -16,7 +16,7 @@ const soldier = [
   "....d.dd....",
   "...dd..dd...",
 ];
-const rider = [
+export const rider = [
   "......hhhh......",
   ".....hllllh.....",
   ".....hssssh.....",

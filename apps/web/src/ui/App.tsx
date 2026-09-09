@@ -1,3 +1,4 @@
+import { DetailedBattle } from "./DetailedBattle";
 import { useEffect, useState } from "react";
 import { content } from "@orden/content";
 import { commandBonus, terrainAt } from "@orden/core";
@@ -27,6 +28,7 @@ export function App() {
     const handle = (event: KeyboardEvent) => {
       if ((event.target as HTMLElement).closest("input, textarea, select"))
         return;
+      if (battle.animation?.detailed) return;
       if (event.key === "Escape") {
         battle.cancel();
         battle.setConfirmEnd(false);
@@ -52,6 +54,13 @@ export function App() {
   });
   return (
     <main className="game-shell">
+      {battle.animation?.detailed && (
+        <DetailedBattle
+          key={battle.animation.id}
+          animation={battle.animation}
+          skip={battle.skipAnimation}
+        />
+      )}
       <header className="system-bar">
         <h1>
           오르덴 연대기 <span>― 두 개의 건널목 ―</span>
@@ -80,7 +89,7 @@ export function App() {
       >
         <BattleMap
           state={state}
-          animation={battle.animation}
+          animation={battle.animation?.detailed ? null : battle.animation}
           selectedId={busy ? (battle.enemyActor ?? "") : battle.selectedId}
           destination={destination}
           reachable={battle.moves}
@@ -142,6 +151,20 @@ export function App() {
           >
             턴 종료 <kbd>E</kbd>
           </button>
+          <label className="combat-mode">
+            전투 연출
+            <select
+              aria-label="전투 연출"
+              disabled={busy}
+              value={battle.combatMode}
+              onChange={(e) =>
+                battle.setCombatMode(e.target.value as "simple" | "detailed")
+              }
+            >
+              <option value="simple">간략</option>
+              <option value="detailed">상세</option>
+            </select>
+          </label>
           <label className="speed-option">
             <input
               type="checkbox"
@@ -169,7 +192,7 @@ export function App() {
                 : "NEXT TURN"}
           </div>
         )}
-        {battle.animation && (
+        {battle.animation && !battle.animation.detailed && (
           <div
             className="battle-feedback classic-window"
             data-testid="battle-feedback"
@@ -372,9 +395,9 @@ export function App() {
           >
             <h2>전투 연습 안내</h2>
             <p>
-              턴 종료 → 미행동 용병 추종·공격 → 적군 행동 → 다음 아군 턴 순서입니다.
-              직접 대기·공격한 용병은 자동 행동하지 않습니다. 아군 턴
-              시작에 지휘관과 인접한 소속 용병은 HP 3, 거점 위 지상 유닛은 HP
+              턴 종료 → 미행동 용병 추종·공격 → 적군 행동 → 다음 아군 턴
+              순서입니다. 직접 대기·공격한 용병은 자동 행동하지 않습니다. 아군
+              턴 시작에 지휘관과 인접한 소속 용병은 HP 3, 거점 위 지상 유닛은 HP
               2를 회복합니다. 두 회복은 중첩되지 않습니다.
             </p>
             <p>

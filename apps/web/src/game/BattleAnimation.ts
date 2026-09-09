@@ -2,6 +2,8 @@ import type { BattleState, BattleEvent, Command } from "@orden/core";
 export interface BattleAnimation {
   id: number;
   before: BattleState;
+  after: BattleState;
+  detailed: boolean;
   command: Command;
   events: BattleEvent[];
   moveMs: number;
