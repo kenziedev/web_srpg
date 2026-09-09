@@ -10,6 +10,7 @@ import {
   type ReachableTile,
 } from "@orden/core";
 
+import { drawTerrain } from "./pixelTerrain";
 import { drawUnit } from "./pixelUnits";
 
 const TILE = 48;
@@ -21,7 +22,6 @@ interface MapProps {
   showCommand: boolean;
   onTile: (position: Position) => void;
 }
-const color = (hex: string) => Number.parseInt(hex.slice(1), 16);
 
 /** Rendering only: every rule query comes from core; pointer input returns tile coordinates. */
 export function BattleMap(props: MapProps) {
@@ -80,6 +80,15 @@ class BattleScene extends Phaser.Scene {
     super("battle");
   }
   create() {
+    const terrain = this.add.graphics();
+    drawTerrain(terrain, content);
+    terrain.generateTexture(
+      "battle-terrain",
+      content.scenario.width * TILE,
+      content.scenario.height * TILE,
+    );
+    terrain.destroy();
+    this.add.image(0, 0, "battle-terrain").setOrigin(0);
     this.art = this.add.graphics();
     this.cameras.main.setBounds(
       0,
@@ -164,51 +173,8 @@ class BattleScene extends Phaser.Scene {
     const s = content.scenario;
     for (let y = 0; y < s.height; y++)
       for (let x = 0; x < s.width; x++) {
-        const t = content.terrains.find(
-          (t) => t.id === s.tiles[y * s.width + x],
-        )!;
         const px = x * TILE,
           py = y * TILE;
-        this.art.fillStyle(color(t.color)).fillRect(px, py, TILE, TILE);
-        this.art.lineStyle(1, 0x122d27, 0.05).strokeRect(px, py, TILE, TILE);
-        // Deterministic, code-drawn placeholder pixel art. No random or external assets.
-        if (t.id === "forest") {
-          this.art.fillStyle(0x263f32).fillRect(px + 21, py + 20, 6, 20);
-          this.art
-            .fillStyle(0x254a35)
-            .fillRect(px + 8, py + 17, 32, 15)
-            .fillRect(px + 14, py + 9, 22, 20);
-          this.art.fillStyle(0x527849).fillRect(px + 16, py + 11, 10, 6);
-        } else if (t.water) {
-          this.art
-            .fillStyle(0x8bc0b8, 0.35)
-            .fillRect(px + 5, py + 12, 16, 2)
-            .fillRect(px + 25, py + 32, 16, 2);
-        } else if (t.id === "bridge") {
-          this.art
-            .fillStyle(0x514536)
-            .fillRect(px, py + 5, TILE, 4)
-            .fillRect(px, py + 39, TILE, 4);
-          this.art.lineStyle(2, 0x665039);
-          for (let i = 8; i < TILE; i += 8)
-            this.art.lineBetween(px + i, py + 9, px + i, py + 39);
-        } else if (t.id === "hill") {
-          this.art
-            .fillStyle(0xb0ae73)
-            .fillRect(px + 8, py + 25, 28, 4)
-            .fillRect(px + 14, py + 19, 16, 4);
-        } else if (t.id === "village") {
-          this.art.fillStyle(0xd9c5a0).fillRect(px + 13, py + 20, 24, 21);
-          this.art
-            .fillStyle(0x725943)
-            .fillRect(px + 9, py + 16, 32, 7)
-            .fillRect(px + 17, py + 11, 16, 6);
-        } else if (t.id === "plain" && (x + y) % 3 === 0) {
-          this.art
-            .fillStyle(0x94a66c, 0.45)
-            .fillRect(px + 8, py + 32, 4, 4)
-            .fillRect(px + 33, py + 11, 2, 6);
-        }
         if (
           showCommand &&
           leader?.command &&
@@ -219,7 +185,7 @@ class BattleScene extends Phaser.Scene {
             .strokeRect(px + 2, py + 2, TILE - 4, TILE - 4);
         if (reachable.some((r) => r.pos.x === x && r.pos.y === y))
           this.art
-            .fillStyle(0x345fde, 0.28)
+            .fillStyle(0x4968ce, 0.18)
             .fillRect(px + 3, py + 3, TILE - 6, TILE - 6);
       }
     for (const marker of s.markers)

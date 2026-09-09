@@ -44,8 +44,8 @@ function figure(
   faded: boolean,
 ) {
   const palette: Record<string, number> = {
-    h: 0x738eae,
-    l: 0xe0e8d8,
+    h: 0x506c89,
+    l: 0xd7dec9,
     s: 0xedbd8e,
     o: 0x202a46,
     a: uniform,
@@ -55,7 +55,7 @@ function figure(
   pattern.forEach((row, py) =>
     [...row].forEach((ink, px) => {
       if (ink === ".") return;
-      g.fillStyle(palette[ink]!, faded ? 0.52 : 1).fillRect(
+      g.fillStyle(palette[ink]!, faded ? 0.68 : 1).fillRect(
         x + (flip ? row.length - 1 - px : px) * scale,
         y + py * scale,
         scale,
@@ -71,7 +71,7 @@ export function drawUnit(
   x: number,
   y: number,
 ) {
-  const uniform = unit.side === "enemy" ? 0xb23e4b : 0x476acd;
+  const uniform = unit.side === "enemy" ? 0xa64e49 : 0x416b9d;
   const flip = unit.side === "enemy";
   g.fillStyle(0x203921, 0.3).fillEllipse(x + 24, y + 38, 34, 9);
   if (unit.kind === "escort") {
@@ -83,6 +83,15 @@ export function drawUnit(
       .fillRect(x + 11, y + 33, 7, 8)
       .fillRect(x + 31, y + 33, 7, 8);
     return;
+  }
+  if (unit.moveType === "flying") {
+    g.fillStyle(0x52637a).fillRect(x + 1, y + 11, 45, 12);
+    g.fillStyle(0xdedcc1)
+      .fillRect(x + 1, y + 8, 10, 9)
+      .fillRect(x + 36, y + 8, 10, 9);
+    g.fillStyle(0xb5c0b6)
+      .fillRect(x + 5, y + 17, 10, 7)
+      .fillRect(x + 32, y + 17, 10, 7);
   }
   const mounted = unit.unitType === "cavalry" || unit.moveType === "mounted";
   if (unit.kind === "commander") {
@@ -100,29 +109,34 @@ export function drawUnit(
     g.fillStyle(uniform).fillRect(x + 6, y + 3, 12, 8);
     g.fillStyle(0xffe9a4).fillRect(x + 6, y + 3, 12, 2);
   } else {
-    for (const [dx, dy] of [
-      [4, 7],
-      [27, 7],
-      [16, 25],
-    ]) {
+    for (const [dx, dy] of mounted
+      ? [
+          [0, 0],
+          [15, 14],
+        ]
+      : [
+          [12, 0],
+          [1, 13],
+          [24, 13],
+        ]) {
       figure(
         g,
         mounted ? rider : soldier,
         x + dx!,
         y + dy!,
-        1,
+        2,
         uniform,
         flip,
         unit.acted,
       );
       if (unit.unitType === "pike")
-        g.fillStyle(0xe4ddae).fillRect(x + dx! + 11, y + dy! - 4, 1, 18);
+        g.fillStyle(0xe4ddae).fillRect(x + dx! + 21, y + dy! - 5, 2, 27);
       if (unit.unitType === "archer")
         g.lineStyle(1, 0x57342d).strokeEllipse(
-          x + dx! + 11,
-          y + dy! + 6,
-          5,
-          11,
+          x + dx! + 20,
+          y + dy! + 12,
+          7,
+          21,
         );
     }
   }

@@ -3,6 +3,7 @@ import { content } from "@orden/content";
 import { commandBonus, terrainAt } from "@orden/core";
 import { BattleMap } from "../game/BattleMap";
 import { MissionPanel, BattleResult } from "./MissionPanel";
+import { Portrait } from "./Portrait";
 import { useBattle } from "./useBattle";
 
 const names: Record<string, string> = {
@@ -218,11 +219,7 @@ export function App() {
       </section>
       <section className="bottom-hud classic-window">
         <div className="unit-summary">
-          <div className={`portrait ${unit?.side ?? ""}`} aria-hidden="true">
-            <span className="portrait-head" />
-            <span className="portrait-body" />
-            <span className="portrait-shield" />
-          </div>
+          <Portrait unit={unit} />
           <div>
             <div className="unit-name">
               <h2>{unit?.name ?? "부대 선택"}</h2>

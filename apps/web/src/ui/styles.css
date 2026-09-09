@@ -239,52 +239,6 @@ button:disabled kbd {
   border: 3px ridge #c6d2e0;
   image-rendering: pixelated;
 }
-.portrait-head {
-  position: absolute;
-  left: 23px;
-  top: 10px;
-  width: 27px;
-  height: 30px;
-  background: #eab786;
-  box-shadow:
-    0 -6px #bdcddd,
-    -5px 0 #92a6c7,
-    5px 0 #7388a9,
-    0 4px #d6a477;
-}
-.portrait-head:after {
-  content: "";
-  position: absolute;
-  width: 5px;
-  height: 3px;
-  background: #1b2443;
-  left: 15px;
-  top: 11px;
-}
-.portrait-body {
-  position: absolute;
-  left: 11px;
-  top: 43px;
-  background: #577bc7;
-  width: 50px;
-  height: 43px;
-  box-shadow:
-    inset 10px 0 #a7bce0,
-    inset -10px 0 #304b91;
-}
-.portrait-shield {
-  position: absolute;
-  left: 40px;
-  top: 46px;
-  width: 28px;
-  height: 39px;
-  border: 4px solid #bdcde4;
-  background: #34558f;
-}
-.portrait.enemy .portrait-body,
-.portrait.enemy .portrait-shield {
-  background: #984343;
-}
 .unit-name {
   display: flex;
   align-items: baseline;
@@ -587,4 +541,127 @@ button:disabled kbd {
 }
 .blocked-route {
   color: #ffbf97;
+}
+/* Brass-edged blue enamel windows, original CSS decoration. */
+:root {
+  background: #151d24;
+}
+body {
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    #35404b 0,
+    #1d2632 60%,
+    #101720 100%
+  );
+}
+.game-shell {
+  border-color: #a39e86;
+  box-shadow:
+    0 0 0 2px #343b45,
+    0 0 0 5px #777c76,
+    0 16px 50px #0009;
+}
+.system-bar {
+  background: linear-gradient(#607483, #354b60 50%, #263b52 51%, #324b60);
+  border-top-color: #c4c3a3;
+  border-bottom-color: #aaa27b;
+  color: #efe5c5;
+  box-shadow: inset 0 -1px #172b40;
+  text-shadow: 1px 1px #172236;
+}
+.system-bar button {
+  color: #e0d7bb;
+}
+.system-bar button:hover {
+  background: #64798a;
+}
+.system-bar h1 {
+  letter-spacing: 2px;
+}
+.system-bar h1 span {
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #bdc6c6;
+}
+.classic-window {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      #ffffff02 0px,
+      #ffffff02 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    linear-gradient(120deg, #253f67, #152a4f 55%, #172843);
+  border: 3px ridge #c4ba95;
+  box-shadow:
+    inset 0 0 0 1px #080f25,
+    inset 0 0 0 3px #51657b,
+    2px 3px 0 #081321b3;
+  text-shadow: 1px 1px #050f26;
+}
+.command-window {
+  padding: 8px 7px 10px;
+}
+.window-caption {
+  color: #cfbf90;
+  letter-spacing: 3px;
+  border-bottom-color: #8e947f;
+}
+.window-caption::before {
+  content: "◆";
+  margin-right: 8px;
+  font-size: 9px;
+  color: #d9c592;
+}
+.classic-window button:hover:not(:disabled),
+.classic-window button.selected {
+  background: linear-gradient(90deg, #74818b88, #74818b22);
+  color: #fff0bc;
+}
+.turn-window {
+  gap: 16px;
+  padding: 8px 14px;
+}
+.turn-window strong {
+  color: #f5d898;
+  text-shadow: 2px 2px #09172c;
+}
+.bottom-hud {
+  background: linear-gradient(115deg, #2f4664, #182e4d 55%, #16283f);
+}
+.portrait {
+  width: 78px;
+  height: 90px;
+  border: 3px ridge #cfbf92;
+  background: #263e51;
+  box-shadow: 2px 2px #0a1a30;
+}
+.portrait svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+.unit-name h2 {
+  color: #f3dfab;
+  font-weight: 700;
+  text-shadow: 2px 2px #0b1931;
+}
+.order-panel {
+  border-left-color: #7d8b8b;
+}
+.order-buttons button,
+.confirm-window button,
+.info-window > button {
+  border-color: #aeb29b;
+  background: #314761;
+}
+.key-guide {
+  background: #192b3e;
+  color: #b1bdba;
+  border-top: 1px solid #566b77;
+}
+.mission-panel {
+  background: linear-gradient(120deg, #213952ef, #15283ded);
 }

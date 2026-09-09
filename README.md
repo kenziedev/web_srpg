@@ -53,6 +53,7 @@ tests/e2e            실제 브라우저 조작 검증
 | [전투 규칙](docs/combat-rules.md) | 지휘·회복·상성·피해·턴 처리의 구현 기준 |
 | [첫 검증 맵](docs/vertical-slice.md) | 배치, 목표, 적 행동, 검증할 전술 |
 | [웹 UX·기술 설계](docs/web-ux-tech.md) | 픽셀 디자인, 조작, 성능·저장·코어 구조 |
+| [아트 방향·출처](docs/art-direction.md) | 지형·병사·초상과 고전 UI의 구현·출처·후속 작업 |
 | [초안 검토·변경 기록](docs/design-review.md) | 초안의 문제, 변경 이유, 레퍼런스 확인 범위 |
 | [v0.1 원안](SRPG_제작계획서_v0.1.md) | 기존 세계관과 100종 전직 아이디어 보관 |
 
