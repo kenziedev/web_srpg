@@ -901,8 +901,6 @@ body {
 .duel-fighter.leader {
   width: 92px;
   height: 118px;
-  top: 12% !important;
-  left: 34% !important;
 }
 .duel-fighter.fallen {
   opacity: 0;
@@ -1129,5 +1127,134 @@ body {
   }
   .duel-stage.phase-run .duel-ground:before {
     display: none;
+  }
+}
+
+/* Each soldier owns a path on the whole field, independent of its army. */
+.duel-stage.choreographed {
+  height: 360px;
+}
+.choreographed .duel-ground {
+  top: 110px;
+}
+.choreographed .duel-army {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: none;
+  pointer-events: none;
+}
+.choreographed .duel-fighter {
+  width: 8%;
+  height: 24%;
+  transition: none;
+  transform-origin: 50% 85%;
+}
+.choreographed .duel-fighter.leader {
+  width: 10%;
+  height: 29%;
+}
+.choreographed .duel-fighter svg {
+  overflow: visible;
+}
+.choreographed .duel-fighter.casualty {
+  filter: brightness(1.8);
+}
+.soldier-spark,
+.soldier-burst {
+  position: absolute;
+  top: 15%;
+  left: 70%;
+  color: #fff0b1;
+  font-size: 34px;
+  text-shadow: 0 0 4px #ed9547;
+}
+.army-1 .soldier-spark {
+  left: -10%;
+}
+.soldier-burst {
+  left: 15%;
+  top: 0;
+  font-size: 50px;
+  color: #ffe396;
+}
+.soldier-projectile {
+  position: absolute;
+  font-size: 26px;
+  color: #ffe9b2;
+  text-shadow: 2px 2px #433325;
+}
+.projectile-1 {
+  transform: scaleX(-1);
+}
+.spell-scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.spell-name {
+  position: absolute;
+  top: 18px;
+  left: 35%;
+  width: 30%;
+  text-align: center;
+  padding: 8px;
+  background: #153c4ecc;
+  border-block: 2px solid #d7e6b9;
+  color: #d9ffe7;
+  letter-spacing: 3px;
+}
+.spell-name span {
+  margin-left: 8px;
+}
+.spell-circle {
+  position: absolute;
+  border-radius: 50%;
+  left: 3%;
+  top: 46%;
+  width: 23%;
+  aspect-ratio: 1;
+  border: 5px double #bbffda;
+  box-shadow:
+    inset 0 0 15px #79eeb5,
+    0 0 18px #79eeb5;
+}
+.spell-mote {
+  position: absolute;
+  font-style: normal;
+  color: #e8ffcf;
+  font-size: 25px;
+  text-shadow: 0 0 9px #88ffbd;
+}
+.spell-pillar {
+  position: absolute;
+  left: 60%;
+  top: 28%;
+  width: 30%;
+  height: 63%;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 18px,
+    #acffca44 18px 24px
+  );
+  border-bottom: 5px solid #c3ffdc;
+  mask-image: linear-gradient(transparent, black);
+}
+.healing .duel-damage {
+  color: #bdffd0;
+}
+@media (max-width: 650px) {
+  .duel-stage.choreographed {
+    height: 280px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .soldier-spark,
+  .soldier-burst {
+    text-shadow: none;
+  }
+  .spell-circle {
+    transform: rotateX(60deg) !important;
+    box-shadow: none;
   }
 }

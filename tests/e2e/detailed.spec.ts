@@ -6,6 +6,7 @@ async function attack(page: Page) {
     .click();
   const canvas = page.locator('canvas[data-ready="true"]');
   await canvas.click({ position: { x: 11 * 48 + 24, y: 10 * 48 + 24 } });
+  await expect(page.getByRole("button", { name: "행동 확정" })).toBeEnabled();
   await canvas.click({ position: { x: 12 * 48 + 24, y: 10 * 48 + 24 } });
   await page.getByRole("button", { name: "행동 확정" }).click();
 }
@@ -85,11 +86,26 @@ for (const reducedMotion of ["no-preference", "reduce"] as const) {
     // Observe every committed SVG pose in the browser so short phases cannot
     // be missed by cross-process locator polling on a busy machine.
     await page.evaluate(() => {
-      const samples = { legs: [] as string[], weapons: [] as string[] };
+      const samples = {
+        legs: [] as string[],
+        weapons: [] as string[],
+        gaps: [] as number[],
+        losses: [] as number[],
+      };
       const observer = new MutationObserver(() => {
         const phase = document
           .querySelector(".duel-stage")
           ?.getAttribute("data-phase");
+        const left = document
+          .querySelector(".army-0 .duel-fighter")
+          ?.getBoundingClientRect();
+        const right = document
+          .querySelector(".army-1 .duel-fighter")
+          ?.getBoundingClientRect();
+        if (left && right) samples.gaps.push(right.left - left.right);
+        samples.losses.push(
+          document.querySelectorAll('.army-1 [data-lost="true"]').length,
+        );
         const selector = phase === "run" ? ".fighter-legs" : ".fighter-weapon";
         if (phase !== "run" && phase !== "attack") return;
         const value = document
@@ -117,15 +133,27 @@ for (const reducedMotion of ["no-preference", "reduce"] as const) {
     ).toHaveCount(0, { timeout: 6000 });
     const counts = await page.evaluate(() => {
       const observed = window as typeof window & {
-        combatPoseSamples: { legs: string[]; weapons: string[] };
+        combatPoseSamples: {
+          legs: string[];
+          weapons: string[];
+          gaps: number[];
+          losses: number[];
+        };
         combatPoseObserver: MutationObserver;
       };
       observed.combatPoseObserver.disconnect();
       return {
+        minGap: Math.min(...observed.combatPoseSamples.gaps),
+        maxGap: Math.max(...observed.combatPoseSamples.gaps),
+        losses: [...new Set(observed.combatPoseSamples.losses)],
         legs: new Set(observed.combatPoseSamples.legs).size,
         weapons: new Set(observed.combatPoseSamples.weapons).size,
       };
     });
+    expect(counts.maxGap).toBeGreaterThan(250);
+    expect(counts.minGap).toBeLessThan(25);
+    expect(counts.losses).toContain(5);
+    expect(counts.losses.some((n) => n > 0 && n < 5)).toBe(true);
     expect(counts.legs).toBeGreaterThan(1);
     expect(counts.weapons).toBeGreaterThan(1);
     await checkDamage(page);

@@ -19,11 +19,15 @@ test("recorded beacon strategy wins through real map inputs and automatic enemy 
   test.setTimeout(180000);
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
+  page.on("console", (message) => {
+    if (message.type() === "error") errors.push(message.text());
+  });
   await page.goto("/");
   const canvas = page.locator('canvas[data-ready="true"]');
   await expect(canvas).toBeVisible();
   await page.getByLabel("빠른 진행").check();
   let state = createBattle(content);
+  let healingCount = 0;
   for (const command of fixture.commands as Command[]) {
     if (state.activeSide === "player") {
       await expect(page.getByTestId("round")).toHaveText(
@@ -51,6 +55,7 @@ test("recorded beacon strategy wins through real map inputs and automatic enemy 
             state.units.find((u) => u.id === action.targetId)!.pos,
           );
         else if (action.type === "heal") {
+          await page.getByLabel("전투 연출").selectOption("detailed");
           await page.getByRole("button", { name: "회복", exact: true }).click();
           await clickTile(
             state.units.find((u) => u.id === action.targetId)!.pos,
@@ -63,6 +68,29 @@ test("recorded beacon strategy wins through real map inputs and automatic enemy 
             })
             .click();
         await page.getByRole("button", { name: "행동 확정" }).click();
+        if (action.type === "heal") {
+          await expect(
+            page.locator('.army-0 svg[data-pose="cast"]'),
+          ).toBeVisible();
+          await expect(page.locator(".spell-pillar")).toBeVisible();
+          await page.screenshot({ path: "test-results/heal-spell.png" });
+          if (healingCount++ % 2 === 0) await page.keyboard.press("Escape");
+          await expect(
+            page.getByRole("dialog", { name: "상세 전투", exact: true }),
+          ).toHaveCount(0);
+          const resolved = apply(content, state, command);
+          if (!resolved.ok) throw Error(resolved.error);
+          const caster = resolved.nextState.units.find(
+            (u) => u.id === command.unitId,
+          )!;
+          await expect(page.locator(".health-line strong")).toHaveText(
+            String(caster.hp),
+          );
+          await expect(page.locator(".health-line + span b")).toHaveText(
+            String(caster.mp),
+          );
+          await page.getByLabel("전투 연출").selectOption("simple");
+        }
       } else {
         await page.getByRole("button", { name: /^턴 종료 E$/ }).click();
         if (

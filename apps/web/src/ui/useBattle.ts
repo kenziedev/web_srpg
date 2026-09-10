@@ -148,7 +148,7 @@ export function useBattle() {
       const detailed =
         combatMode === "detailed" &&
         cmd.type === "act" &&
-        cmd.action.type === "attack";
+        (cmd.action.type === "attack" || cmd.action.type === "heal");
       const moved = result.events.some((e) => e.type === "moved");
       setAnimation({
         id: result.nextState.revision,
@@ -158,7 +158,7 @@ export function useBattle() {
         command: cmd,
         events: result.events,
         moveMs: !detailed && moved ? (fast ? 80 : 240) : 0,
-        impactMs: detailed ? (fast ? 1000 : 2600) : fast ? 140 : 420,
+        impactMs: detailed ? (fast ? 1500 : 4200) : fast ? 140 : 420,
       });
     }
     return true;

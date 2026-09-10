@@ -4,7 +4,7 @@ import { inAttackRange, type Unit } from "@orden/core";
 import { soldier, rider } from "../game/pixelUnits";
 import { Portrait } from "./Portrait";
 
-type Pose = "ready" | "run" | "attack" | "hit";
+type Pose = "ready" | "run" | "attack" | "hit" | "cast";
 function Fighter({
   unit,
   pose,
@@ -19,7 +19,13 @@ function Fighter({
   const stride = frame % 2 === 0 ? -1 : 1;
   const bob = pose === "run" ? stride : 0;
   const swing =
-    pose === "attack" ? (frame % 3 === 0 ? -55 : frame % 3 === 1 ? 25 : 75) : 0;
+    pose === "attack" || pose === "cast"
+      ? frame % 3 === 0
+        ? -55
+        : frame % 3 === 1
+          ? 25
+          : 75
+      : 0;
   const palette: Record<string, string> = {
     h: "#6e8798",
     l: "#e2e4c8",
@@ -98,7 +104,17 @@ function Fighter({
           }
         >
           <path fill="#edbd8e" d="M8 6h3v2H8z" />
-          {unit.unitType === "archer" ? (
+          {pose === "cast" ? (
+            <>
+              <path d="M11 0v15" stroke="#d1b578" strokeWidth="2" />
+              <circle
+                cx="11"
+                cy="0"
+                r="3"
+                fill={frame % 2 ? "#edffd8" : "#80eac5"}
+              />
+            </>
+          ) : unit.unitType === "archer" ? (
             <>
               <path d="M11 2l3 5-3 5M11 2v10" stroke="#cda66d" fill="none" />
               <path
@@ -142,14 +158,23 @@ export function DetailedBattle({
   skip: () => void;
 }) {
   const [frame, setFrame] = useState(0);
-  const progress = frame / 40;
-  const impact = progress >= 0.68;
+  const [reducedMotion, setReducedMotion] = useState(
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(media.matches);
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+  const progress = frame / 80;
+  const impact = progress >= 0.78;
   const phase =
     progress < 0.16
       ? "ready"
       : progress < 0.4
         ? "run"
-        : progress < 0.68
+        : progress < 0.78
           ? "attack"
           : progress < 0.84
             ? "hit"
@@ -163,8 +188,8 @@ export function DetailedBattle({
     const tick = () => {
       setFrame(
         Math.min(
-          40,
-          Math.floor(((performance.now() - start) / animation.impactMs) * 40),
+          80,
+          Math.floor(((performance.now() - start) / animation.impactMs) * 80),
         ),
       );
       handle = requestAnimationFrame(tick);
@@ -176,19 +201,31 @@ export function DetailedBattle({
     };
   }, [animation]);
   const cmd = animation.command;
-  if (cmd.type !== "act" || cmd.action.type !== "attack") return null;
+  if (
+    cmd.type !== "act" ||
+    (cmd.action.type !== "attack" && cmd.action.type !== "heal")
+  )
+    return null;
+  const healing = cmd.action.type === "heal";
   const targetId = cmd.action.targetId;
   const attacker = animation.before.units.find((u) => u.id === cmd.unitId)!;
   const defender = animation.before.units.find((u) => u.id === targetId)!;
   const participants = [attacker, defender];
-  const returned = inAttackRange(defender, {
-    ...attacker,
-    pos: cmd.path.at(-1) ?? attacker.pos,
-  });
+  const returned =
+    !healing &&
+    inAttackRange(defender, {
+      ...attacker,
+      pos: cmd.path.at(-1) ?? attacker.pos,
+    });
   const damageFor = (id: string) =>
     animation.events.find((e) => e.type === "damaged" && e.unitId === id);
   const afterHp = (unit: Unit) =>
     animation.after.units.find((u) => u.id === unit.id)?.hp ?? 0;
+  const shownHp = (unit: Unit) => {
+    const finalHp = afterHp(unit);
+    const reveal = Math.max(0, Math.min(1, (progress - 0.46) / 0.3));
+    return unit.hp + Math.trunc((finalHp - unit.hp) * reveal);
+  };
   return (
     <div
       className="duel-scrim"
@@ -220,9 +257,9 @@ export function DetailedBattle({
             {
               {
                 ready: "대형 정렬",
-                run: "돌격",
-                attack: "공격 · 반격",
-                hit: "피격",
+                run: healing ? "마력 집중" : "돌격",
+                attack: healing ? "회복 마법 발동" : "공격 · 반격",
+                hit: healing ? "회복" : "피격",
                 result: "교전 결과",
               }[phase]
             }
@@ -232,26 +269,32 @@ export function DetailedBattle({
           {participants.map((unit, index) => (
             <div
               className={`duel-unit ${index ? "defender" : "attacker"}`}
-              key={unit.id}
+              key={index}
             >
               <Portrait unit={unit} />
               <div>
                 <small>
-                  {index ? "방어 부대" : "공격 부대"} ·{" "}
-                  {unit.kind === "commander" ? "지휘관" : "병력"}
+                  {healing
+                    ? index
+                      ? "회복 대상"
+                      : "시전자"
+                    : index
+                      ? "방어 부대"
+                      : "공격 부대"}{" "}
+                  · {unit.kind === "commander" ? "지휘관" : "병력"}
                 </small>
                 <h2>{unit.name}</h2>
                 <div
                   className="duel-hp"
                   aria-label={`${index ? "방어" : "공격"} HP`}
                 >
-                  <b>{impact ? afterHp(unit) : unit.hp}</b>
+                  <b>{shownHp(unit)}</b>
                   <span>/ 10</span>
                 </div>
                 <div className="duel-hp-bar">
                   <i
                     style={{
-                      width: `${(impact ? afterHp(unit) : unit.hp) * 10}%`,
+                      width: `${shownHp(unit) * 10}%`,
                     }}
                   />
                 </div>
@@ -260,7 +303,7 @@ export function DetailedBattle({
           ))}
         </div>
         <div
-          className={`duel-stage phase-${phase} ${impact ? "impact" : ""}`}
+          className={`duel-stage choreographed ${healing ? "healing" : ""} phase-${phase} ${impact ? "impact" : ""}`}
           data-phase={phase}
           data-frame={frame}
           aria-hidden="true"
@@ -270,63 +313,191 @@ export function DetailedBattle({
           <div className="duel-hills" />
           <div className="duel-ground" />
           {participants.map((unit, side) => {
-            const count = unit.kind === "mercenary" ? unit.hp : 1;
+            const count =
+              unit.kind === "mercenary"
+                ? healing
+                  ? Math.max(unit.hp, afterHp(unit))
+                  : unit.hp
+                : 1;
             const survivors =
               unit.kind === "mercenary"
-                ? afterHp(unit)
-                : afterHp(unit) > 0
+                ? shownHp(unit)
+                : shownHp(unit) > 0
                   ? 1
                   : 0;
+            const active = side === 0 || returned;
+            const ranged = unit.range[0] > 1;
             return (
-              <div
-                key={unit.id}
-                className={`duel-army army-${side} ${unit.range[0] > 1 ? "ranged" : ""} ${side === 1 && !returned ? "no-counter" : ""}`}
-              >
-                {Array.from({ length: count }, (_, i) => (
-                  <div
-                    className={`duel-fighter ${unit.kind === "commander" ? "leader" : ""} ${impact && i >= survivors ? "fallen" : ""}`}
-                    key={i}
-                    style={
-                      {
-                        left: `${(i % 3) * 27}%`,
-                        top: `${Math.floor(i / 3) * 17}%`,
-                        "--fighter-delay": `${i * 18}ms`,
-                      } as CSSProperties
-                    }
-                  >
-                    <Fighter
-                      unit={unit}
-                      frame={frame + i}
-                      pose={
-                        phase === "run" &&
-                        unit.range[0] <= 1 &&
-                        (side === 0 || returned)
-                          ? "run"
-                          : phase === "attack" && (side === 0 || returned)
-                            ? "attack"
-                            : phase === "hit" && afterHp(unit) < unit.hp
-                              ? "hit"
-                              : "ready"
-                      }
-                    />
-                  </div>
-                ))}
+              <div className={`duel-army army-${side}`} key={side}>
+                {Array.from({ length: count }, (_, i) => {
+                  // Independent lanes/ranks and start times make soldiers meet in
+                  // the field; this is presentation only, never another combat roll.
+                  const lane = unit.kind === "commander" ? 2 : i % 5;
+                  const rank = Math.floor(i / 5);
+                  const direction = side === 0 ? 1 : -1;
+                  const home = side === 0 ? 9 + rank * 12 : 83 - rank * 12;
+                  const opponentMoves =
+                    side === 0
+                      ? returned && defender.range[0] <= 1
+                      : attacker.range[0] <= 1;
+                  const contact =
+                    side === 0
+                      ? (opponentMoves ? 42 : 75) - rank * 6
+                      : (opponentMoves ? 50 : 17) + rank * 6;
+                  const approach = Math.max(
+                    0,
+                    Math.min(
+                      1,
+                      (progress - 0.14 - lane * 0.009 - rank * 0.03) / 0.23,
+                    ),
+                  );
+                  const retreat = Math.max(
+                    0,
+                    Math.min(1, (progress - 0.84) / 0.14),
+                  );
+                  const beat =
+                    ((progress - 0.4) * 9 + lane * 0.17 + rank * 0.3) % 1;
+                  const fighting = phase === "attack";
+                  const thrust = fighting
+                    ? Math.sin(Math.max(0, beat) * Math.PI * 2)
+                    : 0;
+                  const moving = !healing && !ranged && active;
+                  const x =
+                    home +
+                    (moving
+                      ? (contact - home) *
+                          (reducedMotion
+                            ? phase === "attack" || phase === "hit"
+                              ? 1
+                              : 0
+                            : approach * (1 - retreat)) +
+                        (reducedMotion ? 0 : direction * thrust * 2.3)
+                      : 0);
+                  const y = 32 + lane * 10 + rank * 3;
+                  const lost = !healing && i >= survivors;
+                  const hidden = healing && i >= survivors;
+                  const pose: Pose = healing
+                    ? side === 0 && progress > 0.16 && !impact
+                      ? "cast"
+                      : "ready"
+                    : lost
+                      ? "hit"
+                      : moving &&
+                          (phase === "run" || (retreat > 0 && retreat < 1))
+                        ? "run"
+                        : fighting && active
+                          ? thrust < -0.5 && afterHp(unit) < unit.hp
+                            ? "hit"
+                            : "attack"
+                          : "ready";
+                  const fallAt =
+                    unit.kind === "mercenary"
+                      ? 0.46 +
+                        ((unit.hp - i) / Math.max(1, unit.hp - afterHp(unit))) *
+                          0.3
+                      : 0.76;
+                  const fall = lost
+                    ? Math.max(0, Math.min(1, (progress - fallAt) / 0.1))
+                    : 0;
+                  return (
+                    <div
+                      key={i}
+                      className={`duel-fighter ${unit.kind === "commander" ? "leader" : ""} ${lost ? "casualty" : ""}`}
+                      data-x={x.toFixed(2)}
+                      data-lost={lost}
+                      style={{
+                        left: `${x}%`,
+                        top: `${y}%`,
+                        zIndex: lane * 2 + rank,
+                        opacity: hidden ? 0 : 1 - fall,
+                        transform: `translate(${lost && !reducedMotion ? -direction * fall * 36 : 0}px, ${lost && !reducedMotion ? fall * 25 : 0}px) rotate(${lost && !reducedMotion ? -direction * fall * 75 : 0}deg)`,
+                      }}
+                    >
+                      <Fighter
+                        unit={unit}
+                        frame={Math.floor(frame / 2) + i}
+                        pose={pose}
+                      />
+                      {lost && fall < 0.8 && (
+                        <span className="soldier-burst">✦</span>
+                      )}
+                      {fighting && !healing && active && thrust > 0.65 && (
+                        <span className="soldier-spark">✧</span>
+                      )}
+                    </div>
+                  );
+                })}
+                {!healing &&
+                  ranged &&
+                  active &&
+                  phase === "attack" &&
+                  Array.from({ length: 5 }, (_, i) => {
+                    const flight = ((progress - 0.4) * 7 + i * 0.15) % 1;
+                    return (
+                      <span
+                        key={i}
+                        className={`soldier-projectile projectile-${side}`}
+                        style={{
+                          left: `${side ? 78 - flight * 60 : 18 + flight * 60}%`,
+                          top: `${36 + i * 10 - Math.sin(flight * Math.PI) * 12}%`,
+                        }}
+                      >
+                        ➶
+                      </span>
+                    );
+                  })}
               </div>
             );
           })}
-          <div className="duel-clash">✦</div>
-          {attacker.range[0] > 1 && <div className="duel-arrows">➶　➶　➶</div>}
+          {healing && progress >= 0.16 && progress < 0.84 && (
+            <div className="spell-scene">
+              <div className="spell-name">
+                HEAL <span>회복</span>
+              </div>
+              <div
+                className="spell-circle"
+                style={{
+                  transform: `scale(${0.6 + Math.min(1, (progress - 0.16) * 4)}) rotateX(60deg) rotate(${frame * 5}deg)`,
+                }}
+              />
+              {Array.from({ length: 12 }, (_, i) => (
+                <i
+                  className="spell-mote"
+                  key={i}
+                  style={{
+                    left: `${61 + (i % 4) * 7}%`,
+                    top: `${75 - ((progress * 130 + i * 11) % 50)}%`,
+                    opacity: progress > 0.4 ? 1 : 0.4,
+                  }}
+                >
+                  ✦
+                </i>
+              ))}
+              {progress > 0.4 && <div className="spell-pillar" />}
+            </div>
+          )}
           {impact &&
             participants.map((unit, index) => {
-              const event = damageFor(unit.id);
-              const amount = event?.type === "damaged" ? event.amount : 0;
+              const event = healing
+                ? animation.events.find(
+                    (e) => e.type === "healed" && e.unitId === unit.id,
+                  )
+                : damageFor(unit.id);
+              const amount =
+                event?.type === "damaged" || event?.type === "healed"
+                  ? event.amount
+                  : 0;
               return (
-                <div className={`duel-damage damage-${index}`} key={unit.id}>
-                  {index === 0 && !returned
-                    ? "반격 불가"
-                    : amount
-                      ? `−${amount}`
-                      : "방어"}
+                <div className={`duel-damage damage-${index}`} key={index}>
+                  {healing
+                    ? index === 1
+                      ? `+${amount}`
+                      : "시전 완료"
+                    : index === 0 && !returned
+                      ? "반격 불가"
+                      : amount
+                        ? `−${amount}`
+                        : "방어"}
                 </div>
               );
             })}
@@ -337,10 +508,12 @@ export function DetailedBattle({
               ? participants
                   .map(
                     (u, i) =>
-                      `${u.name} HP ${u.hp} → ${afterHp(u)}${i === 0 && !returned ? " (반격 불가)" : ""}`,
+                      `${u.name} HP ${u.hp} → ${afterHp(u)}${!healing && i === 0 && !returned ? " (반격 불가)" : ""}`,
                   )
                   .join("　│　")
-              : "양측 부대가 맞붙습니다."}
+              : healing
+                ? "마력을 모아 회복 마법을 시전합니다."
+                : "양측 부대가 맞붙습니다."}
           </p>
           <button ref={button} onClick={skip}>
             건너뛰기 <kbd>Space</kbd>
