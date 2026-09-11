@@ -19,3 +19,11 @@ jobs:
       - run: pnpm build:srpg
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:e2e --workers=1
+      - name: Upload failed browser test artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-failures
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 7

@@ -234,10 +234,10 @@ for (const reducedMotion of ["no-preference", "reduce"] as const) {
   });
 }
 
-test("single damage and learned healing use the same cast input and saved result", async ({
-  page,
-}) => {
-  for (const spellId of ["magic-arrow", "heal-1", "force-heal-1"]) {
+for (const spellId of ["magic-arrow", "heal-1", "force-heal-1"]) {
+  test(`${spellId} uses the same cast input and saved result`, async ({
+    page,
+  }) => {
     const scene = sceneFor(spellId);
     await loadScene(page, scene.before);
     await page.getByLabel("빠른 진행").check();
@@ -251,8 +251,8 @@ test("single damage and learned healing use the same cast input and saved result
     await expect(
       page.getByRole("button", { name: "부대 목록", exact: true }),
     ).toBeEnabled();
-  }
-});
+  });
+}
 
 test("insufficient MP rejects force healing without consuming the next turn", async ({
   page,
