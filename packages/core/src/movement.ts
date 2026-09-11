@@ -1,4 +1,5 @@
 import type { BattleState, Content, Position, Unit } from "./types";
+import { effectiveUnit } from "./effective";
 
 export const distance = (a: Position, b: Position) =>
   Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
@@ -7,7 +8,7 @@ export const samePosition = (a: Position, b: Position) =>
 export const key = (p: Position) => `${p.x},${p.y}`;
 export const allied = (a: Unit["side"], b: Unit["side"]) =>
   (a === "enemy") === (b === "enemy");
-export function terrainAt(content: Content, p: Position) {
+export function terrainAt(content: Content, p: Position, state?: BattleState) {
   const s = content.scenario;
   if (
     !Number.isInteger(p.x) ||
@@ -18,7 +19,10 @@ export function terrainAt(content: Content, p: Position) {
     p.y >= s.height
   )
     return undefined;
-  return content.terrains.find((t) => t.id === s.tiles[p.y * s.width + p.x]);
+  const changed = state?.terrainChanges[key(p)];
+  return content.terrains.find(
+    (t) => t.id === (changed ?? s.tiles[p.y * s.width + p.x]),
+  );
 }
 export function stepCost(
   content: Content,
@@ -26,7 +30,7 @@ export function stepCost(
   unit: Unit,
   p: Position,
 ): number | null {
-  const terrain = terrainAt(content, p);
+  const terrain = terrainAt(content, p, state);
   if (!terrain) return null;
   if (
     unit.moveType !== "flying" &&
@@ -44,8 +48,9 @@ export function canStop(
   p: Position,
 ) {
   return (
-    !!terrainAt(content, p) &&
-    !terrainAt(content, p)!.noLanding &&
+    !!terrainAt(content, p, state) &&
+    !terrainAt(content, p, state)!.noLanding &&
+    terrainAt(content, p, state)!.costs[unit.moveType] !== null &&
     !state.units.some(
       (other) => other.id !== unit.id && samePosition(other.pos, p),
     )
@@ -62,6 +67,7 @@ export function reachable(
   state: BattleState,
   unit: Unit,
 ): ReachableTile[] {
+  const movement = effectiveUnit(content, state, unit).stats.move;
   const frontier: ReachableTile[] = [{ pos: unit.pos, cost: 0, path: [] }];
   const best = new Map<string, number>([[key(unit.pos), 0]]);
   const result: ReachableTile[] = [];
@@ -82,8 +88,7 @@ export function reachable(
       const cost = stepCost(content, state, unit, pos);
       if (cost === null) continue;
       const next = current.cost + cost;
-      if (next > unit.stats.move || next >= (best.get(key(pos)) ?? Infinity))
-        continue;
+      if (next > movement || next >= (best.get(key(pos)) ?? Infinity)) continue;
       best.set(key(pos), next);
       frontier.push({ pos, cost: next, path: [...current.path, pos] });
     }

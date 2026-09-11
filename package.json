@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "pnpm --filter @orden/web dev",
     "build": "pnpm typecheck && pnpm --filter @orden/web build",
+    "build:srpg": "pnpm typecheck && pnpm --filter @orden/web exec vite build --base=/srpg/",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "content:check": "tsx packages/content/src/check.ts",

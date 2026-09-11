@@ -6,6 +6,8 @@ import type {
   Unit,
 } from "./types";
 import { allied, samePosition, stepCost, canStop } from "./movement";
+import { effectiveUnit } from "./effective";
+import { settleExperience } from "./experience";
 
 /** Shared by NPC execution and UI forecast; fixed route, no tactical rerouting. */
 export function escortForecast(
@@ -44,7 +46,7 @@ export function escortForecast(
       result.reason = "통행할 수 없는 지형입니다.";
       break;
     }
-    if (cost + step > escort.stats.move) break;
+    if (cost + step > effectiveUnit(content, state, escort).stats.move) break;
     cost += step;
     traversed.push(pos);
     if (canStop(content, state, escort, pos)) {
@@ -101,6 +103,7 @@ export function resolveOutcome(
       type: "scenario",
       message: `${status === "victory" ? "승리" : "패배"}: ${reason}`,
     });
+    settleExperience(content, state, events);
   }
 }
 

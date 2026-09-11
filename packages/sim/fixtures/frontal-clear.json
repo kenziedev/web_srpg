@@ -1,0 +1,2365 @@
+{
+  "description": "봉화 미점령으로 비병 증원과 교전하는 정면 방어. 목표별 경비 AI 상대로 9라운드 탈출, 호송 HP 10과 아군 12기 생존.",
+  "commands": [
+    {
+      "type": "act",
+      "commandId": "frontal-1",
+      "expectedRevision": 0,
+      "unitId": "A21",
+      "path": [
+        {
+          "x": 10,
+          "y": 10
+        },
+        {
+          "x": 11,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E11"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-2",
+      "expectedRevision": 1,
+      "unitId": "A2",
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-3",
+      "expectedRevision": 2,
+      "unitId": "A22",
+      "path": [
+        {
+          "x": 8,
+          "y": 10
+        },
+        {
+          "x": 8,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-4",
+      "expectedRevision": 3,
+      "unitId": "A1",
+      "path": [
+        {
+          "x": 7,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-5",
+      "expectedRevision": 4,
+      "unitId": "A23",
+      "path": [
+        {
+          "x": 7,
+          "y": 10
+        },
+        {
+          "x": 8,
+          "y": 10
+        },
+        {
+          "x": 9,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-6",
+      "expectedRevision": 5,
+      "unitId": "A13",
+      "path": [
+        {
+          "x": 7,
+          "y": 11
+        },
+        {
+          "x": 8,
+          "y": 11
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-7",
+      "expectedRevision": 6,
+      "unitId": "A11",
+      "path": [
+        {
+          "x": 6,
+          "y": 9
+        },
+        {
+          "x": 7,
+          "y": 9
+        },
+        {
+          "x": 8,
+          "y": 9
+        },
+        {
+          "x": 9,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-8",
+      "expectedRevision": 7,
+      "unitId": "A12",
+      "path": [
+        {
+          "x": 6,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-9",
+      "expectedRevision": 8,
+      "unitId": "A32",
+      "path": [
+        {
+          "x": 6,
+          "y": 5
+        },
+        {
+          "x": 7,
+          "y": 5
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-10",
+      "expectedRevision": 9,
+      "unitId": "A33",
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-11",
+      "expectedRevision": 10,
+      "unitId": "A3",
+      "path": [
+        {
+          "x": 6,
+          "y": 4
+        },
+        {
+          "x": 6,
+          "y": 5
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-12",
+      "expectedRevision": 11,
+      "unitId": "A31",
+      "path": [
+        {
+          "x": 5,
+          "y": 6
+        },
+        {
+          "x": 5,
+          "y": 7
+        },
+        {
+          "x": 6,
+          "y": 7
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "player",
+      "commandId": "phase-13",
+      "expectedRevision": 12
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-14",
+      "expectedRevision": 13,
+      "unitId": "E11",
+      "path": [
+        {
+          "x": 13,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-15",
+      "expectedRevision": 14,
+      "unitId": "E12",
+      "path": [
+        {
+          "x": 12,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-16",
+      "expectedRevision": 15,
+      "unitId": "E13",
+      "path": [
+        {
+          "x": 12,
+          "y": 11
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-17",
+      "expectedRevision": 16,
+      "unitId": "E21",
+      "path": [
+        {
+          "x": 13,
+          "y": 4
+        },
+        {
+          "x": 12,
+          "y": 4
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-18",
+      "expectedRevision": 17,
+      "unitId": "E22",
+      "path": [
+        {
+          "x": 13,
+          "y": 4
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-19",
+      "expectedRevision": 18,
+      "unitId": "E23",
+      "path": [
+        {
+          "x": 15,
+          "y": 4
+        },
+        {
+          "x": 15,
+          "y": 3
+        },
+        {
+          "x": 14,
+          "y": 3
+        },
+        {
+          "x": 13,
+          "y": 3
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-20",
+      "expectedRevision": 19,
+      "unitId": "E1",
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-21",
+      "expectedRevision": 20,
+      "unitId": "E2",
+      "path": [
+        {
+          "x": 13,
+          "y": 5
+        },
+        {
+          "x": 12,
+          "y": 5
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "enemy",
+      "commandId": "phase-22",
+      "expectedRevision": 21
+    },
+    {
+      "type": "endPhase",
+      "side": "npc",
+      "commandId": "phase-23",
+      "expectedRevision": 22
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-24",
+      "expectedRevision": 23,
+      "unitId": "A2",
+      "path": [
+        {
+          "x": 9,
+          "y": 10
+        },
+        {
+          "x": 10,
+          "y": 10
+        },
+        {
+          "x": 11,
+          "y": 10
+        },
+        {
+          "x": 11,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E12"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-25",
+      "expectedRevision": 24,
+      "unitId": "A21",
+      "path": [
+        {
+          "x": 12,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E11"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-26",
+      "expectedRevision": 25,
+      "unitId": "A23",
+      "path": [
+        {
+          "x": 10,
+          "y": 10
+        },
+        {
+          "x": 11,
+          "y": 10
+        },
+        {
+          "x": 11,
+          "y": 11
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E13"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A32",
+      "commandId": "frontal-27",
+      "expectedRevision": 26,
+      "path": [
+        {
+          "x": 8,
+          "y": 5
+        },
+        {
+          "x": 9,
+          "y": 5
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E2"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A3",
+      "commandId": "frontal-28",
+      "expectedRevision": 27,
+      "path": [
+        {
+          "x": 7,
+          "y": 5
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-29",
+      "expectedRevision": 28,
+      "unitId": "A22",
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-30",
+      "expectedRevision": 29,
+      "unitId": "A1",
+      "path": [
+        {
+          "x": 8,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-31",
+      "expectedRevision": 30,
+      "unitId": "A13",
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-32",
+      "expectedRevision": 31,
+      "unitId": "A11",
+      "path": [
+        {
+          "x": 9,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-33",
+      "expectedRevision": 32,
+      "unitId": "A12",
+      "path": [
+        {
+          "x": 7,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-34",
+      "expectedRevision": 33,
+      "unitId": "A33",
+      "path": [
+        {
+          "x": 7,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-35",
+      "expectedRevision": 34,
+      "unitId": "A31",
+      "path": [
+        {
+          "x": 7,
+          "y": 7
+        },
+        {
+          "x": 8,
+          "y": 7
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "player",
+      "commandId": "phase-36",
+      "expectedRevision": 35
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-37",
+      "expectedRevision": 36,
+      "unitId": "E12",
+      "path": [
+        {
+          "x": 13,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-38",
+      "expectedRevision": 37,
+      "unitId": "E13",
+      "path": [
+        {
+          "x": 13,
+          "y": 11
+        },
+        {
+          "x": 14,
+          "y": 11
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-39",
+      "expectedRevision": 38,
+      "unitId": "E21",
+      "path": [
+        {
+          "x": 12,
+          "y": 3
+        },
+        {
+          "x": 11,
+          "y": 3
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-40",
+      "expectedRevision": 39,
+      "unitId": "E22",
+      "path": [
+        {
+          "x": 12,
+          "y": 4
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-41",
+      "expectedRevision": 40,
+      "unitId": "E23",
+      "path": [
+        {
+          "x": 12,
+          "y": 3
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-42",
+      "expectedRevision": 41,
+      "unitId": "E1",
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-43",
+      "expectedRevision": 42,
+      "unitId": "E2",
+      "path": [
+        {
+          "x": 11,
+          "y": 5
+        },
+        {
+          "x": 11,
+          "y": 6
+        },
+        {
+          "x": 11,
+          "y": 7
+        },
+        {
+          "x": 11,
+          "y": 8
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "A2"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "enemy",
+      "commandId": "phase-44",
+      "expectedRevision": 43
+    },
+    {
+      "type": "endPhase",
+      "side": "npc",
+      "commandId": "phase-45",
+      "expectedRevision": 44
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-46",
+      "expectedRevision": 45,
+      "unitId": "A21",
+      "path": [
+        {
+          "x": 12,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E12"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-47",
+      "expectedRevision": 46,
+      "unitId": "A23",
+      "path": [
+        {
+          "x": 11,
+          "y": 10
+        },
+        {
+          "x": 12,
+          "y": 10
+        },
+        {
+          "x": 13,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E12"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-48",
+      "expectedRevision": 47,
+      "unitId": "A31",
+      "path": [
+        {
+          "x": 9,
+          "y": 7
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E2"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-49",
+      "expectedRevision": 48,
+      "unitId": "A2",
+      "path": [
+        {
+          "x": 12,
+          "y": 9
+        },
+        {
+          "x": 13,
+          "y": 9
+        },
+        {
+          "x": 13,
+          "y": 10
+        },
+        {
+          "x": 13,
+          "y": 11
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E13"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A32",
+      "commandId": "frontal-50",
+      "expectedRevision": 49,
+      "path": [
+        {
+          "x": 9,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 3
+        },
+        {
+          "x": 8,
+          "y": 3
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E21"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A33",
+      "commandId": "frontal-51",
+      "expectedRevision": 50,
+      "path": [
+        {
+          "x": 9,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 5
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E21"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A3",
+      "commandId": "frontal-52",
+      "expectedRevision": 51,
+      "path": [
+        {
+          "x": 7,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 3
+        },
+        {
+          "x": 9,
+          "y": 3
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E21"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-53",
+      "expectedRevision": 52,
+      "unitId": "A1",
+      "path": [
+        {
+          "x": 9,
+          "y": 10
+        },
+        {
+          "x": 10,
+          "y": 10
+        },
+        {
+          "x": 11,
+          "y": 10
+        },
+        {
+          "x": 11,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E2"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-54",
+      "expectedRevision": 53,
+      "unitId": "A11",
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-55",
+      "expectedRevision": 54,
+      "unitId": "A12",
+      "path": [
+        {
+          "x": 7,
+          "y": 9
+        },
+        {
+          "x": 8,
+          "y": 9
+        },
+        {
+          "x": 9,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-56",
+      "expectedRevision": 55,
+      "unitId": "A13",
+      "path": [
+        {
+          "x": 8,
+          "y": 10
+        },
+        {
+          "x": 9,
+          "y": 10
+        },
+        {
+          "x": 10,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "frontal-57",
+      "expectedRevision": 56,
+      "unitId": "A22",
+      "path": [
+        {
+          "x": 9,
+          "y": 9
+        },
+        {
+          "x": 9,
+          "y": 10
+        },
+        {
+          "x": 10,
+          "y": 10
+        },
+        {
+          "x": 11,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "player",
+      "commandId": "phase-58",
+      "expectedRevision": 57
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-59",
+      "expectedRevision": 58,
+      "unitId": "E13",
+      "path": [
+        {
+          "x": 14,
+          "y": 10
+        },
+        {
+          "x": 14,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-60",
+      "expectedRevision": 59,
+      "unitId": "E22",
+      "path": [
+        {
+          "x": 12,
+          "y": 5
+        },
+        {
+          "x": 12,
+          "y": 6
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-61",
+      "expectedRevision": 60,
+      "unitId": "E23",
+      "path": [
+        {
+          "x": 11,
+          "y": 3
+        },
+        {
+          "x": 11,
+          "y": 4
+        },
+        {
+          "x": 11,
+          "y": 5
+        },
+        {
+          "x": 11,
+          "y": 6
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "A31"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-62",
+      "expectedRevision": 61,
+      "unitId": "E1",
+      "path": [
+        {
+          "x": 15,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-63",
+      "expectedRevision": 62,
+      "unitId": "E2",
+      "path": [
+        {
+          "x": 12,
+          "y": 8
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "A21"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "enemy",
+      "commandId": "phase-64",
+      "expectedRevision": 63
+    },
+    {
+      "type": "endPhase",
+      "side": "npc",
+      "commandId": "phase-65",
+      "expectedRevision": 64
+    },
+    {
+      "type": "act",
+      "unitId": "A11",
+      "commandId": "frontal-66",
+      "expectedRevision": 65,
+      "path": [
+        {
+          "x": 10,
+          "y": 10
+        },
+        {
+          "x": 11,
+          "y": 10
+        },
+        {
+          "x": 11,
+          "y": 9
+        },
+        {
+          "x": 11,
+          "y": 8
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E2"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A23",
+      "commandId": "frontal-67",
+      "expectedRevision": 66,
+      "path": [
+        {
+          "x": 14,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E1"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A22",
+      "commandId": "frontal-68",
+      "expectedRevision": 67,
+      "path": [
+        {
+          "x": 11,
+          "y": 9
+        },
+        {
+          "x": 12,
+          "y": 9
+        },
+        {
+          "x": 13,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E13"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A3",
+      "commandId": "frontal-69",
+      "expectedRevision": 68,
+      "path": [
+        {
+          "x": 9,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 5
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "action": {
+        "type": "heal",
+        "targetId": "A31"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A2",
+      "commandId": "frontal-70",
+      "expectedRevision": 69,
+      "path": [
+        {
+          "x": 13,
+          "y": 10
+        },
+        {
+          "x": 13,
+          "y": 9
+        },
+        {
+          "x": 14,
+          "y": 9
+        },
+        {
+          "x": 15,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E1"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A21",
+      "commandId": "frontal-71",
+      "expectedRevision": 70,
+      "path": [
+        {
+          "x": 13,
+          "y": 9
+        },
+        {
+          "x": 14,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A31",
+      "commandId": "frontal-72",
+      "expectedRevision": 71,
+      "path": [
+        {
+          "x": 9,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A1",
+      "commandId": "frontal-73",
+      "expectedRevision": 72,
+      "path": [],
+      "action": {
+        "type": "treat"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A13",
+      "commandId": "frontal-74",
+      "expectedRevision": 73,
+      "path": [
+        {
+          "x": 11,
+          "y": 10
+        },
+        {
+          "x": 12,
+          "y": 10
+        },
+        {
+          "x": 13,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A12",
+      "commandId": "frontal-75",
+      "expectedRevision": 74,
+      "path": [
+        {
+          "x": 9,
+          "y": 10
+        },
+        {
+          "x": 10,
+          "y": 10
+        },
+        {
+          "x": 11,
+          "y": 10
+        },
+        {
+          "x": 12,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A32",
+      "commandId": "frontal-76",
+      "expectedRevision": 75,
+      "path": [
+        {
+          "x": 8,
+          "y": 4
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A33",
+      "commandId": "frontal-77",
+      "expectedRevision": 76,
+      "path": [
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 5
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "player",
+      "commandId": "phase-78",
+      "expectedRevision": 77
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-79",
+      "expectedRevision": 78,
+      "unitId": "E31",
+      "path": [
+        {
+          "x": 11,
+          "y": 1
+        },
+        {
+          "x": 10,
+          "y": 1
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-80",
+      "expectedRevision": 79,
+      "unitId": "E32",
+      "path": [
+        {
+          "x": 14,
+          "y": 2
+        },
+        {
+          "x": 14,
+          "y": 3
+        },
+        {
+          "x": 14,
+          "y": 4
+        },
+        {
+          "x": 14,
+          "y": 5
+        },
+        {
+          "x": 14,
+          "y": 6
+        },
+        {
+          "x": 14,
+          "y": 7
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-81",
+      "expectedRevision": 80,
+      "unitId": "E1",
+      "path": [
+        {
+          "x": 15,
+          "y": 11
+        },
+        {
+          "x": 14,
+          "y": 11
+        },
+        {
+          "x": 13,
+          "y": 11
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "A13"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-82",
+      "expectedRevision": 81,
+      "unitId": "E3",
+      "path": [
+        {
+          "x": 13,
+          "y": 2
+        },
+        {
+          "x": 13,
+          "y": 3
+        },
+        {
+          "x": 13,
+          "y": 4
+        },
+        {
+          "x": 13,
+          "y": 5
+        },
+        {
+          "x": 13,
+          "y": 6
+        },
+        {
+          "x": 13,
+          "y": 7
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "enemy",
+      "commandId": "phase-83",
+      "expectedRevision": 82
+    },
+    {
+      "type": "endPhase",
+      "side": "npc",
+      "commandId": "phase-84",
+      "expectedRevision": 83
+    },
+    {
+      "type": "act",
+      "unitId": "A23",
+      "commandId": "frontal-85",
+      "expectedRevision": 84,
+      "path": [
+        {
+          "x": 14,
+          "y": 11
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E1"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A32",
+      "commandId": "frontal-86",
+      "expectedRevision": 85,
+      "path": [
+        {
+          "x": 8,
+          "y": 3
+        },
+        {
+          "x": 9,
+          "y": 3
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E31"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A12",
+      "commandId": "frontal-87",
+      "expectedRevision": 86,
+      "path": [
+        {
+          "x": 12,
+          "y": 9
+        },
+        {
+          "x": 12,
+          "y": 8
+        },
+        {
+          "x": 12,
+          "y": 7
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E3"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A22",
+      "commandId": "frontal-88",
+      "expectedRevision": 87,
+      "path": [
+        {
+          "x": 13,
+          "y": 8
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E3"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A2",
+      "commandId": "frontal-89",
+      "expectedRevision": 88,
+      "path": [],
+      "action": {
+        "type": "treat"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A13",
+      "commandId": "frontal-90",
+      "expectedRevision": 89,
+      "path": [
+        {
+          "x": 13,
+          "y": 9
+        },
+        {
+          "x": 12,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A1",
+      "commandId": "frontal-91",
+      "expectedRevision": 90,
+      "path": [
+        {
+          "x": 11,
+          "y": 8
+        },
+        {
+          "x": 12,
+          "y": 8
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A11",
+      "commandId": "frontal-92",
+      "expectedRevision": 91,
+      "path": [
+        {
+          "x": 12,
+          "y": 8
+        },
+        {
+          "x": 13,
+          "y": 8
+        },
+        {
+          "x": 14,
+          "y": 8
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E32"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A21",
+      "commandId": "frontal-93",
+      "expectedRevision": 92,
+      "path": [
+        {
+          "x": 14,
+          "y": 8
+        },
+        {
+          "x": 15,
+          "y": 8
+        },
+        {
+          "x": 15,
+          "y": 7
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E32"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A31",
+      "commandId": "frontal-94",
+      "expectedRevision": 93,
+      "path": [
+        {
+          "x": 8,
+          "y": 7
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A33",
+      "commandId": "frontal-95",
+      "expectedRevision": 94,
+      "path": [
+        {
+          "x": 8,
+          "y": 6
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A3",
+      "commandId": "frontal-96",
+      "expectedRevision": 95,
+      "path": [
+        {
+          "x": 9,
+          "y": 7
+        }
+      ],
+      "action": {
+        "type": "heal",
+        "targetId": "A12"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "player",
+      "commandId": "phase-97",
+      "expectedRevision": 96
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-98",
+      "expectedRevision": 97,
+      "unitId": "E32",
+      "path": [
+        {
+          "x": 13,
+          "y": 7
+        },
+        {
+          "x": 12,
+          "y": 7
+        },
+        {
+          "x": 11,
+          "y": 7
+        },
+        {
+          "x": 10,
+          "y": 7
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "A3"
+      }
+    },
+    {
+      "type": "act",
+      "commandId": "enemy-99",
+      "expectedRevision": 98,
+      "unitId": "E3",
+      "path": [],
+      "action": {
+        "type": "treat"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "enemy",
+      "commandId": "phase-100",
+      "expectedRevision": 99
+    },
+    {
+      "type": "endPhase",
+      "side": "npc",
+      "commandId": "phase-101",
+      "expectedRevision": 100
+    },
+    {
+      "type": "act",
+      "unitId": "A12",
+      "commandId": "frontal-102",
+      "expectedRevision": 101,
+      "path": [
+        {
+          "x": 12,
+          "y": 6
+        },
+        {
+          "x": 13,
+          "y": 6
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E3"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A3",
+      "commandId": "frontal-103",
+      "expectedRevision": 102,
+      "path": [
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "action": {
+        "type": "heal",
+        "targetId": "A3"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A11",
+      "commandId": "frontal-104",
+      "expectedRevision": 103,
+      "path": [
+        {
+          "x": 14,
+          "y": 7
+        },
+        {
+          "x": 13,
+          "y": 7
+        },
+        {
+          "x": 12,
+          "y": 7
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A21",
+      "commandId": "frontal-105",
+      "expectedRevision": 104,
+      "path": [
+        {
+          "x": 15,
+          "y": 8
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A22",
+      "commandId": "frontal-106",
+      "expectedRevision": 105,
+      "path": [
+        {
+          "x": 14,
+          "y": 8
+        },
+        {
+          "x": 14,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A1",
+      "commandId": "frontal-107",
+      "expectedRevision": 106,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A2",
+      "commandId": "frontal-108",
+      "expectedRevision": 107,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A31",
+      "commandId": "frontal-109",
+      "expectedRevision": 108,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A33",
+      "commandId": "frontal-110",
+      "expectedRevision": 109,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A13",
+      "commandId": "frontal-111",
+      "expectedRevision": 110,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A32",
+      "commandId": "frontal-112",
+      "expectedRevision": 111,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A23",
+      "commandId": "frontal-113",
+      "expectedRevision": 112,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "player",
+      "commandId": "phase-114",
+      "expectedRevision": 113
+    },
+    {
+      "type": "endPhase",
+      "side": "enemy",
+      "commandId": "phase-115",
+      "expectedRevision": 114
+    },
+    {
+      "type": "endPhase",
+      "side": "npc",
+      "commandId": "phase-116",
+      "expectedRevision": 115
+    },
+    {
+      "type": "act",
+      "unitId": "A3",
+      "commandId": "frontal-117",
+      "expectedRevision": 116,
+      "path": [],
+      "action": {
+        "type": "treat"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A31",
+      "commandId": "frontal-118",
+      "expectedRevision": 117,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A11",
+      "commandId": "frontal-119",
+      "expectedRevision": 118,
+      "path": [
+        {
+          "x": 12,
+          "y": 6
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A33",
+      "commandId": "frontal-120",
+      "expectedRevision": 119,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A21",
+      "commandId": "frontal-121",
+      "expectedRevision": 120,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A23",
+      "commandId": "frontal-122",
+      "expectedRevision": 121,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A32",
+      "commandId": "frontal-123",
+      "expectedRevision": 122,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A12",
+      "commandId": "frontal-124",
+      "expectedRevision": 123,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A22",
+      "commandId": "frontal-125",
+      "expectedRevision": 124,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A13",
+      "commandId": "frontal-126",
+      "expectedRevision": 125,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A2",
+      "commandId": "frontal-127",
+      "expectedRevision": 126,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A1",
+      "commandId": "frontal-128",
+      "expectedRevision": 127,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "player",
+      "commandId": "phase-129",
+      "expectedRevision": 128
+    },
+    {
+      "type": "endPhase",
+      "side": "enemy",
+      "commandId": "phase-130",
+      "expectedRevision": 129
+    },
+    {
+      "type": "endPhase",
+      "side": "npc",
+      "commandId": "phase-131",
+      "expectedRevision": 130
+    },
+    {
+      "type": "act",
+      "unitId": "A11",
+      "commandId": "frontal-132",
+      "expectedRevision": 131,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A12",
+      "commandId": "frontal-133",
+      "expectedRevision": 132,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A31",
+      "commandId": "frontal-134",
+      "expectedRevision": 133,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A33",
+      "commandId": "frontal-135",
+      "expectedRevision": 134,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A23",
+      "commandId": "frontal-136",
+      "expectedRevision": 135,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A13",
+      "commandId": "frontal-137",
+      "expectedRevision": 136,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A21",
+      "commandId": "frontal-138",
+      "expectedRevision": 137,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A22",
+      "commandId": "frontal-139",
+      "expectedRevision": 138,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A32",
+      "commandId": "frontal-140",
+      "expectedRevision": 139,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A1",
+      "commandId": "frontal-141",
+      "expectedRevision": 140,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A3",
+      "commandId": "frontal-142",
+      "expectedRevision": 141,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A2",
+      "commandId": "frontal-143",
+      "expectedRevision": 142,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "player",
+      "commandId": "phase-144",
+      "expectedRevision": 143
+    },
+    {
+      "type": "endPhase",
+      "side": "enemy",
+      "commandId": "phase-145",
+      "expectedRevision": 144
+    },
+    {
+      "type": "endPhase",
+      "side": "npc",
+      "commandId": "phase-146",
+      "expectedRevision": 145
+    },
+    {
+      "type": "act",
+      "unitId": "A11",
+      "commandId": "frontal-147",
+      "expectedRevision": 146,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A12",
+      "commandId": "frontal-148",
+      "expectedRevision": 147,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A31",
+      "commandId": "frontal-149",
+      "expectedRevision": 148,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A33",
+      "commandId": "frontal-150",
+      "expectedRevision": 149,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A21",
+      "commandId": "frontal-151",
+      "expectedRevision": 150,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A22",
+      "commandId": "frontal-152",
+      "expectedRevision": 151,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A23",
+      "commandId": "frontal-153",
+      "expectedRevision": 152,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A32",
+      "commandId": "frontal-154",
+      "expectedRevision": 153,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A13",
+      "commandId": "frontal-155",
+      "expectedRevision": 154,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A1",
+      "commandId": "frontal-156",
+      "expectedRevision": 155,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A2",
+      "commandId": "frontal-157",
+      "expectedRevision": 156,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A3",
+      "commandId": "frontal-158",
+      "expectedRevision": 157,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "player",
+      "commandId": "phase-159",
+      "expectedRevision": 158
+    },
+    {
+      "type": "endPhase",
+      "side": "enemy",
+      "commandId": "phase-160",
+      "expectedRevision": 159
+    }
+  ],
+  "expectedOutcome": {
+    "status": "victory",
+    "reason": "호송대가 탈출했습니다.",
+    "round": 9,
+    "bonuses": ["호송대 안전 탈출"]
+  }
+}

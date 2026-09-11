@@ -1,7 +1,15 @@
 export * from "./types";
 export * from "./movement";
 export * from "./combat";
+export * from "./spells";
 export * from "./commands";
 export * from "./ai";
 export { escortForecast } from "./scenario";
 export { nextFollowerCommand } from "./followers";
+export { enemyIntent, type EnemyIntent } from "./aiObjectives";
+export * from "./effective";
+export * from "./equipment";
+export * from "./preparation";
+export * from "./experience";
+export * from "./advancement";
+export * from "./deployment";

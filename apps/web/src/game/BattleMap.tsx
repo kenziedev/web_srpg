@@ -5,6 +5,7 @@ import Phaser from "phaser";
 import { content } from "@orden/content";
 import {
   commandBonus,
+  effectiveUnit,
   distance,
   escortForecast,
   type BattleState,
@@ -22,6 +23,8 @@ interface MapProps {
   selectedId: string;
   destination: Position | null;
   reachable: ReachableTile[];
+  spellCenters: Position[];
+  spellTiles: Position[];
   showCommand: boolean;
   onTile: (position: Position) => void;
 }
@@ -53,6 +56,9 @@ export function BattleMap(props: MapProps) {
     });
     return () => {
       sceneRef.current = null;
+      // Phaser destroys on its next frame. Remove its canvas from layout now so
+      // a StrictMode remount cannot cache the position of a second, stacked canvas.
+      game.canvas?.remove();
       game.destroy(true);
     };
   }, []);
@@ -64,6 +70,8 @@ export function BattleMap(props: MapProps) {
     props.selectedId,
     props.destination,
     props.reachable,
+    props.spellCenters,
+    props.spellTiles,
     props.showCommand,
   ]);
   return (
@@ -80,6 +88,8 @@ class BattleScene extends Phaser.Scene {
   private playing: BattleAnimation | null = null;
   private lastState: BattleState | null = null;
   private stopAnimation: (() => void) | null = null;
+  private terrainImage?: Phaser.GameObjects.Image;
+  private terrainSignature = "";
   private art!: Phaser.GameObjects.Graphics;
   private labels: Phaser.GameObjects.Text[] = [];
   private drag: { x: number; y: number; sx: number; sy: number } | null = null;
@@ -87,15 +97,7 @@ class BattleScene extends Phaser.Scene {
     super("battle");
   }
   create() {
-    const terrain = this.add.graphics();
-    drawTerrain(terrain, content);
-    terrain.generateTexture(
-      "battle-terrain",
-      content.scenario.width * TILE,
-      content.scenario.height * TILE,
-    );
-    terrain.destroy();
-    this.add.image(0, 0, "battle-terrain").setOrigin(0);
+    this.paintTerrain(this.read().state);
     this.art = this.add.graphics();
     this.cameras.main.setBounds(
       0,
@@ -105,6 +107,7 @@ class BattleScene extends Phaser.Scene {
     );
     this.cameras.main.centerOn(10 * TILE, 8 * TILE);
     this.game.events.once(Phaser.Core.Events.POST_RENDER, () => {
+      this.scale.updateBounds();
       this.game.canvas.dataset.ready = "true";
     });
     this.input.on("pointerdown", (p: Phaser.Input.Pointer) => {
@@ -145,6 +148,26 @@ class BattleScene extends Phaser.Scene {
     this.events.once("shutdown", () => this.stopAnimation?.());
     this.paint();
   }
+  private paintTerrain(state: BattleState) {
+    const signature = JSON.stringify(state.terrainChanges);
+    if (this.terrainImage && signature === this.terrainSignature) return;
+    this.terrainImage?.destroy();
+    if (this.textures.exists("battle-terrain"))
+      this.textures.remove("battle-terrain");
+    const terrain = this.add.graphics();
+    drawTerrain(terrain, content, state);
+    terrain.generateTexture(
+      "battle-terrain",
+      content.scenario.width * TILE,
+      content.scenario.height * TILE,
+    );
+    terrain.destroy();
+    this.terrainImage = this.add
+      .image(0, 0, "battle-terrain")
+      .setOrigin(0)
+      .setDepth(-1);
+    this.terrainSignature = signature;
+  }
   private label(
     x: number,
     y: number,
@@ -173,9 +196,12 @@ class BattleScene extends Phaser.Scene {
       selectedId,
       destination,
       reachable,
+      spellCenters,
+      spellTiles,
       showCommand,
       animation,
     } = this.read();
+    this.paintTerrain(state);
     if (this.playing !== animation) {
       this.stopAnimation?.();
       this.playing = animation;
@@ -191,10 +217,13 @@ class BattleScene extends Phaser.Scene {
         ? animation.command.unitId
         : animation?.events.find((e) => e.type === "moved")?.unitId;
     const selected = state.units.find((u) => u.id === selectedId);
-    const leader =
+    const rawLeader =
       selected?.kind === "commander"
         ? selected
         : state.units.find((u) => u.id === selected?.commanderId);
+    const leader = rawLeader
+      ? effectiveUnit(content, state, rawLeader)
+      : undefined;
     this.art.clear();
     this.labels.forEach((text) => text.destroy());
     this.labels = [];
@@ -216,6 +245,18 @@ class BattleScene extends Phaser.Scene {
             .fillStyle(0x4968ce, 0.18)
             .fillRect(px + 3, py + 3, TILE - 6, TILE - 6);
       }
+    for (const pos of spellCenters)
+      this.art
+        .fillStyle(0x9d73fa, 0.25)
+        .fillRect(pos.x * TILE + 4, pos.y * TILE + 4, TILE - 8, TILE - 8)
+        .lineStyle(1, 0xc8a5ff, 0.85)
+        .strokeRect(pos.x * TILE + 4, pos.y * TILE + 4, TILE - 8, TILE - 8);
+    for (const pos of spellTiles)
+      this.art
+        .fillStyle(0xefcafa, 0.24)
+        .fillRect(pos.x * TILE + 3, pos.y * TILE + 3, TILE - 6, TILE - 6)
+        .lineStyle(3, 0xffe4ab, 1)
+        .strokeRect(pos.x * TILE + 3, pos.y * TILE + 3, TILE - 6, TILE - 6);
     for (const marker of s.markers)
       this.label(
         Math.min(
@@ -281,7 +322,18 @@ class BattleScene extends Phaser.Scene {
       drawUnit(this.art, unit, x, y);
       this.label(x + 33, y + 31, `${unit.hp}`, "#fff8df", 13);
       if (unit.acted) this.label(x + 2, y + 30, "✓");
-      if (unit.kind === "mercenary" && !commandBonus(state, unit).active)
+      if (state.statuses.some((effect) => effect.unitId === unit.id))
+        this.label(
+          unit.pos.x * TILE + 30,
+          unit.pos.y * TILE + 3,
+          "✦",
+          "#efcafa",
+          12,
+        );
+      if (
+        unit.kind === "mercenary" &&
+        !commandBonus(state, unit, content).active
+      )
         this.label(x + 1, y - 4, "! 범위 밖", "#efb296", 9);
       if (unit.id === selectedId)
         this.art

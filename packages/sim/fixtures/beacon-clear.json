@@ -1,5 +1,5 @@
 {
-  "description": "봉화 2라운드 점령 후 호송로 확보. 실제 기본 적 AI 상대로 10라운드 탈출.",
+  "description": "봉화 2라운드 점령 후 호송로 확보. 목표별 경비 AI 상대로 9라운드 탈출, 호송 HP 10과 아군 12기 생존.",
   "commands": [
     {
       "type": "act",
@@ -8,7 +8,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-0",
+      "commandId": "beacon-1",
       "expectedRevision": 0
     },
     {
@@ -18,7 +18,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-1",
+      "commandId": "beacon-2",
       "expectedRevision": 1
     },
     {
@@ -33,7 +33,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-2",
+      "commandId": "beacon-3",
       "expectedRevision": 2
     },
     {
@@ -53,7 +53,7 @@
         "type": "attack",
         "targetId": "E11"
       },
-      "commandId": "sim-3",
+      "commandId": "beacon-4",
       "expectedRevision": 3
     },
     {
@@ -76,7 +76,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-4",
+      "commandId": "beacon-5",
       "expectedRevision": 4
     },
     {
@@ -99,7 +99,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-5",
+      "commandId": "beacon-6",
       "expectedRevision": 5
     },
     {
@@ -122,7 +122,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-6",
+      "commandId": "beacon-7",
       "expectedRevision": 6
     },
     {
@@ -149,7 +149,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-7",
+      "commandId": "beacon-8",
       "expectedRevision": 7
     },
     {
@@ -168,7 +168,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-8",
+      "commandId": "beacon-9",
       "expectedRevision": 8
     },
     {
@@ -178,7 +178,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-9",
+      "commandId": "beacon-10",
       "expectedRevision": 9
     },
     {
@@ -205,7 +205,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-10",
+      "commandId": "beacon-11",
       "expectedRevision": 10
     },
     {
@@ -228,7 +228,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-11",
+      "commandId": "beacon-12",
       "expectedRevision": 11
     },
     {
@@ -319,19 +319,19 @@
       "path": [
         {
           "x": 15,
-          "y": 6
+          "y": 4
         },
         {
           "x": 15,
-          "y": 7
+          "y": 3
         },
         {
           "x": 14,
-          "y": 7
+          "y": 3
         },
         {
           "x": 13,
-          "y": 7
+          "y": 3
         }
       ],
       "action": {
@@ -412,7 +412,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-23",
+      "commandId": "beacon-24",
       "expectedRevision": 23
     },
     {
@@ -431,7 +431,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-24",
+      "commandId": "beacon-25",
       "expectedRevision": 24
     },
     {
@@ -441,7 +441,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-25",
+      "commandId": "beacon-26",
       "expectedRevision": 25
     },
     {
@@ -457,7 +457,7 @@
         "type": "attack",
         "targetId": "E11"
       },
-      "commandId": "sim-26",
+      "commandId": "beacon-27",
       "expectedRevision": 26
     },
     {
@@ -477,7 +477,7 @@
         "type": "attack",
         "targetId": "E13"
       },
-      "commandId": "sim-27",
+      "commandId": "beacon-28",
       "expectedRevision": 27
     },
     {
@@ -505,7 +505,7 @@
         "type": "attack",
         "targetId": "E1"
       },
-      "commandId": "sim-28",
+      "commandId": "beacon-29",
       "expectedRevision": 28
     },
     {
@@ -524,7 +524,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-29",
+      "commandId": "beacon-30",
       "expectedRevision": 29
     },
     {
@@ -539,7 +539,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-30",
+      "commandId": "beacon-31",
       "expectedRevision": 30
     },
     {
@@ -549,7 +549,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-31",
+      "commandId": "beacon-32",
       "expectedRevision": 31
     },
     {
@@ -568,7 +568,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-32",
+      "commandId": "beacon-33",
       "expectedRevision": 32
     },
     {
@@ -584,7 +584,7 @@
         "type": "attack",
         "targetId": "E1"
       },
-      "commandId": "sim-33",
+      "commandId": "beacon-34",
       "expectedRevision": 33
     },
     {
@@ -599,7 +599,7 @@
       "action": {
         "type": "wait"
       },
-      "commandId": "sim-34",
+      "commandId": "beacon-35",
       "expectedRevision": 34
     },
     {
@@ -693,12 +693,8 @@
       "unitId": "E22",
       "path": [
         {
-          "x": 13,
-          "y": 5
-        },
-        {
-          "x": 13,
-          "y": 6
+          "x": 12,
+          "y": 4
         }
       ],
       "action": {
@@ -713,16 +709,24 @@
       "path": [
         {
           "x": 12,
-          "y": 7
+          "y": 3
         },
         {
-          "x": 12,
-          "y": 6
+          "x": 11,
+          "y": 3
+        },
+        {
+          "x": 11,
+          "y": 4
+        },
+        {
+          "x": 11,
+          "y": 5
         }
       ],
       "action": {
         "type": "attack",
-        "targetId": "A2"
+        "targetId": "A31"
       }
     },
     {
@@ -747,7 +751,7 @@
         },
         {
           "x": 11,
-          "y": 6
+          "y": 4
         }
       ],
       "action": {
@@ -768,57 +772,14 @@
     },
     {
       "type": "act",
-      "unitId": "A11",
+      "unitId": "A23",
+      "commandId": "beacon-46",
+      "expectedRevision": 45,
       "path": [
         {
-          "x": 6,
+          "x": 11,
           "y": 9
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-45",
-      "expectedRevision": 45
-    },
-    {
-      "type": "act",
-      "unitId": "A12",
-      "path": [
-        {
-          "x": 7,
-          "y": 11
         },
-        {
-          "x": 8,
-          "y": 11
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-46",
-      "expectedRevision": 46
-    },
-    {
-      "type": "act",
-      "unitId": "A13",
-      "path": [
-        {
-          "x": 6,
-          "y": 11
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-47",
-      "expectedRevision": 47
-    },
-    {
-      "type": "act",
-      "unitId": "A21",
-      "path": [
         {
           "x": 12,
           "y": 9
@@ -831,107 +792,65 @@
       "action": {
         "type": "attack",
         "targetId": "E12"
-      },
-      "commandId": "sim-48",
-      "expectedRevision": 48
+      }
     },
     {
       "type": "act",
       "unitId": "A22",
+      "commandId": "beacon-47",
+      "expectedRevision": 46,
       "path": [
         {
           "x": 11,
           "y": 10
+        },
+        {
+          "x": 11,
+          "y": 9
+        },
+        {
+          "x": 11,
+          "y": 8
         }
       ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-49",
-      "expectedRevision": 49
-    },
-    {
-      "type": "act",
-      "unitId": "A23",
-      "path": [],
       "action": {
         "type": "attack",
         "targetId": "E1"
-      },
-      "commandId": "sim-50",
-      "expectedRevision": 50
-    },
-    {
-      "type": "act",
-      "unitId": "A31",
-      "path": [
-        {
-          "x": 8,
-          "y": 4
-        },
-        {
-          "x": 7,
-          "y": 4
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-51",
-      "expectedRevision": 51
+      }
     },
     {
       "type": "act",
       "unitId": "A32",
-      "path": [],
+      "commandId": "beacon-48",
+      "expectedRevision": 47,
+      "path": [
+        {
+          "x": 8,
+          "y": 4
+        }
+      ],
       "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-52",
-      "expectedRevision": 52
+        "type": "attack",
+        "targetId": "E2"
+      }
     },
     {
       "type": "act",
       "unitId": "A33",
-      "path": [],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-53",
-      "expectedRevision": 53
-    },
-    {
-      "type": "act",
-      "unitId": "A1",
-      "path": [],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-54",
-      "expectedRevision": 54
-    },
-    {
-      "type": "act",
-      "unitId": "A2",
-      "path": [],
-      "action": {
-        "type": "attack",
-        "targetId": "E1"
-      },
-      "commandId": "sim-55",
-      "expectedRevision": 55
-    },
-    {
-      "type": "act",
-      "unitId": "A3",
+      "commandId": "beacon-49",
+      "expectedRevision": 48,
       "path": [
         {
-          "x": 8,
-          "y": 2
+          "x": 7,
+          "y": 4
         },
         {
-          "x": 9,
-          "y": 2
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 3
         },
         {
           "x": 9,
@@ -939,10 +858,170 @@
         }
       ],
       "action": {
+        "type": "attack",
+        "targetId": "E2"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A3",
+      "commandId": "beacon-50",
+      "expectedRevision": 49,
+      "path": [
+        {
+          "x": 7,
+          "y": 3
+        }
+      ],
+      "action": {
+        "type": "heal",
+        "targetId": "A31"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A31",
+      "commandId": "beacon-51",
+      "expectedRevision": 50,
+      "path": [
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 4
+        }
+      ],
+      "action": {
+        "type": "attack",
+        "targetId": "E2"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A2",
+      "commandId": "beacon-52",
+      "expectedRevision": 51,
+      "path": [],
+      "action": {
         "type": "wait"
-      },
-      "commandId": "sim-56",
-      "expectedRevision": 56
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A21",
+      "commandId": "beacon-53",
+      "expectedRevision": 52,
+      "path": [
+        {
+          "x": 12,
+          "y": 9
+        },
+        {
+          "x": 11,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A1",
+      "commandId": "beacon-54",
+      "expectedRevision": 53,
+      "path": [
+        {
+          "x": 7,
+          "y": 10
+        },
+        {
+          "x": 7,
+          "y": 9
+        },
+        {
+          "x": 6,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A11",
+      "commandId": "beacon-55",
+      "expectedRevision": 54,
+      "path": [
+        {
+          "x": 7,
+          "y": 8
+        },
+        {
+          "x": 7,
+          "y": 7
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A12",
+      "commandId": "beacon-56",
+      "expectedRevision": 55,
+      "path": [
+        {
+          "x": 6,
+          "y": 10
+        },
+        {
+          "x": 6,
+          "y": 9
+        },
+        {
+          "x": 7,
+          "y": 9
+        },
+        {
+          "x": 8,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A13",
+      "commandId": "beacon-57",
+      "expectedRevision": 56,
+      "path": [
+        {
+          "x": 5,
+          "y": 10
+        },
+        {
+          "x": 5,
+          "y": 9
+        },
+        {
+          "x": 5,
+          "y": 8
+        },
+        {
+          "x": 6,
+          "y": 8
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
     },
     {
       "type": "endPhase",
@@ -958,7 +1037,7 @@
       "path": [],
       "action": {
         "type": "attack",
-        "targetId": "A23"
+        "targetId": "A22"
       }
     },
     {
@@ -968,21 +1047,16 @@
       "unitId": "E22",
       "path": [
         {
-          "x": 13,
-          "y": 7
+          "x": 12,
+          "y": 5
         },
         {
           "x": 12,
-          "y": 7
-        },
-        {
-          "x": 12,
-          "y": 8
+          "y": 6
         }
       ],
       "action": {
-        "type": "attack",
-        "targetId": "A2"
+        "type": "wait"
       }
     },
     {
@@ -994,19 +1068,11 @@
         {
           "x": 11,
           "y": 6
-        },
-        {
-          "x": 11,
-          "y": 5
-        },
-        {
-          "x": 11,
-          "y": 4
         }
       ],
       "action": {
         "type": "attack",
-        "targetId": "A3"
+        "targetId": "A21"
       }
     },
     {
@@ -1014,23 +1080,9 @@
       "commandId": "enemy-62",
       "expectedRevision": 61,
       "unitId": "E2",
-      "path": [
-        {
-          "x": 11,
-          "y": 7
-        },
-        {
-          "x": 11,
-          "y": 8
-        },
-        {
-          "x": 11,
-          "y": 9
-        }
-      ],
+      "path": [],
       "action": {
-        "type": "attack",
-        "targetId": "A2"
+        "type": "treat"
       }
     },
     {
@@ -1047,152 +1099,75 @@
     },
     {
       "type": "act",
-      "unitId": "A11",
-      "path": [
-        {
-          "x": 7,
-          "y": 9
-        },
-        {
-          "x": 8,
-          "y": 9
-        }
-      ],
+      "unitId": "A32",
+      "commandId": "beacon-65",
+      "expectedRevision": 64,
+      "path": [],
       "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-64",
-      "expectedRevision": 64
-    },
-    {
-      "type": "act",
-      "unitId": "A12",
-      "path": [
-        {
-          "x": 9,
-          "y": 11
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-65",
-      "expectedRevision": 65
-    },
-    {
-      "type": "act",
-      "unitId": "A13",
-      "path": [
-        {
-          "x": 6,
-          "y": 10
-        },
-        {
-          "x": 6,
-          "y": 9
-        },
-        {
-          "x": 7,
-          "y": 9
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-66",
-      "expectedRevision": 66
+        "type": "attack",
+        "targetId": "E2"
+      }
     },
     {
       "type": "act",
       "unitId": "A31",
-      "path": [
-        {
-          "x": 8,
-          "y": 4
-        },
-        {
-          "x": 9,
-          "y": 4
-        }
-      ],
+      "commandId": "beacon-66",
+      "expectedRevision": 65,
+      "path": [],
       "action": {
         "type": "attack",
-        "targetId": "E23"
-      },
-      "commandId": "sim-67",
-      "expectedRevision": 67
+        "targetId": "E2"
+      }
     },
     {
       "type": "act",
-      "unitId": "A32",
+      "unitId": "A22",
+      "commandId": "beacon-67",
+      "expectedRevision": 66,
       "path": [
         {
-          "x": 8,
-          "y": 4
-        }
-      ],
-      "action": {
-        "type": "attack",
-        "targetId": "E23"
-      },
-      "commandId": "sim-68",
-      "expectedRevision": 68
-    },
-    {
-      "type": "act",
-      "unitId": "A33",
-      "path": [
-        {
-          "x": 8,
-          "y": 5
-        },
-        {
-          "x": 9,
-          "y": 5
-        },
-        {
-          "x": 9,
-          "y": 6
-        }
-      ],
-      "action": {
-        "type": "attack",
-        "targetId": "E21"
-      },
-      "commandId": "sim-69",
-      "expectedRevision": 69
-    },
-    {
-      "type": "act",
-      "unitId": "A1",
-      "path": [
-        {
-          "x": 7,
-          "y": 10
-        },
-        {
-          "x": 7,
-          "y": 9
-        },
-        {
-          "x": 8,
-          "y": 9
-        },
-        {
-          "x": 9,
-          "y": 9
+          "x": 12,
+          "y": 8
         }
       ],
       "action": {
         "type": "wait"
-      },
-      "commandId": "sim-70",
-      "expectedRevision": 70
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A2",
+      "commandId": "beacon-68",
+      "expectedRevision": 67,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A23",
+      "commandId": "beacon-69",
+      "expectedRevision": 68,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
     },
     {
       "type": "act",
       "unitId": "A3",
+      "commandId": "beacon-70",
+      "expectedRevision": 69,
       "path": [
+        {
+          "x": 8,
+          "y": 3
+        },
+        {
+          "x": 9,
+          "y": 3
+        },
         {
           "x": 9,
           "y": 4
@@ -1204,179 +1179,174 @@
       ],
       "action": {
         "type": "heal",
-        "targetId": "A3"
-      },
-      "commandId": "sim-71",
-      "expectedRevision": 71
+        "targetId": "A31"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A21",
+      "commandId": "beacon-71",
+      "expectedRevision": 70,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A13",
+      "commandId": "beacon-72",
+      "expectedRevision": 71,
+      "path": [
+        {
+          "x": 7,
+          "y": 8
+        },
+        {
+          "x": 7,
+          "y": 9
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A33",
+      "commandId": "beacon-73",
+      "expectedRevision": 72,
+      "path": [
+        {
+          "x": 9,
+          "y": 4
+        },
+        {
+          "x": 9,
+          "y": 5
+        },
+        {
+          "x": 9,
+          "y": 6
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A11",
+      "commandId": "beacon-74",
+      "expectedRevision": 73,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A12",
+      "commandId": "beacon-75",
+      "expectedRevision": 74,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A1",
+      "commandId": "beacon-76",
+      "expectedRevision": 75,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
     },
     {
       "type": "endPhase",
       "side": "player",
-      "commandId": "phase-73",
-      "expectedRevision": 72
-    },
-    {
-      "type": "act",
-      "commandId": "enemy-74",
-      "expectedRevision": 73,
-      "unitId": "E21",
-      "path": [
-        {
-          "x": 11,
-          "y": 8
-        },
-        {
-          "x": 11,
-          "y": 9
-        },
-        {
-          "x": 11,
-          "y": 10
-        },
-        {
-          "x": 10,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      }
-    },
-    {
-      "type": "act",
-      "commandId": "enemy-75",
-      "expectedRevision": 74,
-      "unitId": "E22",
-      "path": [
-        {
-          "x": 11,
-          "y": 8
-        },
-        {
-          "x": 11,
-          "y": 9
-        },
-        {
-          "x": 11,
-          "y": 10
-        },
-        {
-          "x": 11,
-          "y": 11
-        }
-      ],
-      "action": {
-        "type": "wait"
-      }
-    },
-    {
-      "type": "act",
-      "commandId": "enemy-76",
-      "expectedRevision": 75,
-      "unitId": "E2",
-      "path": [
-        {
-          "x": 11,
-          "y": 10
-        },
-        {
-          "x": 10,
-          "y": 10
-        },
-        {
-          "x": 9,
-          "y": 10
-        },
-        {
-          "x": 8,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "attack",
-        "targetId": "N1"
-      }
-    },
-    {
-      "type": "endPhase",
-      "side": "enemy",
       "commandId": "phase-77",
       "expectedRevision": 76
     },
     {
       "type": "endPhase",
-      "side": "npc",
+      "side": "enemy",
       "commandId": "phase-78",
       "expectedRevision": 77
     },
     {
-      "type": "act",
-      "unitId": "A11",
-      "path": [],
-      "action": {
-        "type": "attack",
-        "targetId": "E2"
-      },
-      "commandId": "sim-78",
+      "type": "endPhase",
+      "side": "npc",
+      "commandId": "phase-79",
       "expectedRevision": 78
     },
     {
       "type": "act",
-      "unitId": "A12",
-      "path": [
-        {
-          "x": 8,
-          "y": 11
-        }
-      ],
+      "unitId": "A22",
+      "commandId": "beacon-80",
+      "expectedRevision": 79,
+      "path": [],
       "action": {
-        "type": "attack",
-        "targetId": "E2"
-      },
-      "commandId": "sim-79",
-      "expectedRevision": 79
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A11",
+      "commandId": "beacon-81",
+      "expectedRevision": 80,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A2",
+      "commandId": "beacon-82",
+      "expectedRevision": 81,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
     },
     {
       "type": "act",
       "unitId": "A13",
+      "commandId": "beacon-83",
+      "expectedRevision": 82,
       "path": [],
       "action": {
         "type": "wait"
-      },
-      "commandId": "sim-80",
-      "expectedRevision": 80
+      }
     },
     {
       "type": "act",
-      "unitId": "A31",
-      "path": [
-        {
-          "x": 9,
-          "y": 5
-        },
-        {
-          "x": 9,
-          "y": 6
-        },
-        {
-          "x": 9,
-          "y": 7
-        },
-        {
-          "x": 9,
-          "y": 8
-        }
-      ],
+      "unitId": "A21",
+      "commandId": "beacon-84",
+      "expectedRevision": 83,
+      "path": [],
       "action": {
-        "type": "attack",
-        "targetId": "E2"
-      },
-      "commandId": "sim-81",
-      "expectedRevision": 81
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A23",
+      "commandId": "beacon-85",
+      "expectedRevision": 84,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
     },
     {
       "type": "act",
       "unitId": "A32",
+      "commandId": "beacon-86",
+      "expectedRevision": 85,
       "path": [
         {
           "x": 7,
@@ -1385,13 +1355,13 @@
       ],
       "action": {
         "type": "wait"
-      },
-      "commandId": "sim-82",
-      "expectedRevision": 82
+      }
     },
     {
       "type": "act",
       "unitId": "A33",
+      "commandId": "beacon-87",
+      "expectedRevision": 86,
       "path": [
         {
           "x": 9,
@@ -1400,133 +1370,24 @@
       ],
       "action": {
         "type": "wait"
-      },
-      "commandId": "sim-83",
-      "expectedRevision": 83
-    },
-    {
-      "type": "act",
-      "unitId": "A1",
-      "path": [],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-84",
-      "expectedRevision": 84
-    },
-    {
-      "type": "act",
-      "unitId": "A3",
-      "path": [
-        {
-          "x": 9,
-          "y": 6
-        },
-        {
-          "x": 9,
-          "y": 7
-        },
-        {
-          "x": 9,
-          "y": 8
-        },
-        {
-          "x": 8,
-          "y": 8
-        }
-      ],
-      "action": {
-        "type": "heal",
-        "targetId": "N1"
-      },
-      "commandId": "sim-85",
-      "expectedRevision": 85
-    },
-    {
-      "type": "endPhase",
-      "side": "player",
-      "commandId": "phase-87",
-      "expectedRevision": 86
-    },
-    {
-      "type": "endPhase",
-      "side": "enemy",
-      "commandId": "phase-88",
-      "expectedRevision": 87
-    },
-    {
-      "type": "endPhase",
-      "side": "npc",
-      "commandId": "phase-89",
-      "expectedRevision": 88
-    },
-    {
-      "type": "act",
-      "unitId": "A11",
-      "path": [
-        {
-          "x": 8,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-89",
-      "expectedRevision": 89
+      }
     },
     {
       "type": "act",
       "unitId": "A12",
-      "path": [
-        {
-          "x": 9,
-          "y": 11
-        }
-      ],
+      "commandId": "beacon-88",
+      "expectedRevision": 87,
+      "path": [],
       "action": {
         "type": "wait"
-      },
-      "commandId": "sim-90",
-      "expectedRevision": 90
-    },
-    {
-      "type": "act",
-      "unitId": "A13",
-      "path": [
-        {
-          "x": 8,
-          "y": 9
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-91",
-      "expectedRevision": 91
+      }
     },
     {
       "type": "act",
       "unitId": "A31",
-      "path": [],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-92",
-      "expectedRevision": 92
-    },
-    {
-      "type": "act",
-      "unitId": "A32",
+      "commandId": "beacon-89",
+      "expectedRevision": 88,
       "path": [
-        {
-          "x": 8,
-          "y": 4
-        },
-        {
-          "x": 9,
-          "y": 4
-        },
         {
           "x": 9,
           "y": 5
@@ -1534,244 +1395,7 @@
         {
           "x": 9,
           "y": 6
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-93",
-      "expectedRevision": 93
-    },
-    {
-      "type": "act",
-      "unitId": "A33",
-      "path": [],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-94",
-      "expectedRevision": 94
-    },
-    {
-      "type": "act",
-      "unitId": "A1",
-      "path": [],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-95",
-      "expectedRevision": 95
-    },
-    {
-      "type": "act",
-      "unitId": "A3",
-      "path": [],
-      "action": {
-        "type": "heal",
-        "targetId": "A3"
-      },
-      "commandId": "sim-96",
-      "expectedRevision": 96
-    },
-    {
-      "type": "endPhase",
-      "side": "player",
-      "commandId": "phase-98",
-      "expectedRevision": 97
-    },
-    {
-      "type": "endPhase",
-      "side": "enemy",
-      "commandId": "phase-99",
-      "expectedRevision": 98
-    },
-    {
-      "type": "endPhase",
-      "side": "npc",
-      "commandId": "phase-100",
-      "expectedRevision": 99
-    },
-    {
-      "type": "act",
-      "unitId": "A11",
-      "path": [
-        {
-          "x": 9,
-          "y": 10
         },
-        {
-          "x": 10,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-100",
-      "expectedRevision": 100
-    },
-    {
-      "type": "act",
-      "unitId": "A12",
-      "path": [
-        {
-          "x": 9,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-101",
-      "expectedRevision": 101
-    },
-    {
-      "type": "act",
-      "unitId": "A13",
-      "path": [
-        {
-          "x": 8,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-102",
-      "expectedRevision": 102
-    },
-    {
-      "type": "act",
-      "unitId": "A31",
-      "path": [],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-103",
-      "expectedRevision": 103
-    },
-    {
-      "type": "act",
-      "unitId": "A32",
-      "path": [],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-104",
-      "expectedRevision": 104
-    },
-    {
-      "type": "act",
-      "unitId": "A33",
-      "path": [],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-105",
-      "expectedRevision": 105
-    },
-    {
-      "type": "act",
-      "unitId": "A1",
-      "path": [],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-106",
-      "expectedRevision": 106
-    },
-    {
-      "type": "act",
-      "unitId": "A3",
-      "path": [
-        {
-          "x": 8,
-          "y": 9
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-107",
-      "expectedRevision": 107
-    },
-    {
-      "type": "endPhase",
-      "side": "player",
-      "commandId": "phase-109",
-      "expectedRevision": 108
-    },
-    {
-      "type": "endPhase",
-      "side": "enemy",
-      "commandId": "phase-110",
-      "expectedRevision": 109
-    },
-    {
-      "type": "endPhase",
-      "side": "npc",
-      "commandId": "phase-111",
-      "expectedRevision": 110
-    },
-    {
-      "type": "act",
-      "unitId": "A11",
-      "path": [
-        {
-          "x": 11,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-111",
-      "expectedRevision": 111
-    },
-    {
-      "type": "act",
-      "unitId": "A12",
-      "path": [
-        {
-          "x": 10,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-112",
-      "expectedRevision": 112
-    },
-    {
-      "type": "act",
-      "unitId": "A13",
-      "path": [
-        {
-          "x": 9,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-113",
-      "expectedRevision": 113
-    },
-    {
-      "type": "act",
-      "unitId": "A31",
-      "path": [],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-114",
-      "expectedRevision": 114
-    },
-    {
-      "type": "act",
-      "unitId": "A32",
-      "path": [
         {
           "x": 9,
           "y": 7
@@ -1779,335 +1403,495 @@
         {
           "x": 9,
           "y": 8
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A1",
+      "commandId": "beacon-90",
+      "expectedRevision": 89,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A3",
+      "commandId": "beacon-91",
+      "expectedRevision": 90,
+      "path": [
+        {
+          "x": 9,
+          "y": 6
+        },
+        {
+          "x": 8,
+          "y": 6
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "player",
+      "commandId": "phase-92",
+      "expectedRevision": 91
+    },
+    {
+      "type": "endPhase",
+      "side": "enemy",
+      "commandId": "phase-93",
+      "expectedRevision": 92
+    },
+    {
+      "type": "endPhase",
+      "side": "npc",
+      "commandId": "phase-94",
+      "expectedRevision": 93
+    },
+    {
+      "type": "act",
+      "unitId": "A33",
+      "commandId": "beacon-95",
+      "expectedRevision": 94,
+      "path": [
+        {
+          "x": 8,
+          "y": 7
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A21",
+      "commandId": "beacon-96",
+      "expectedRevision": 95,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A22",
+      "commandId": "beacon-97",
+      "expectedRevision": 96,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A23",
+      "commandId": "beacon-98",
+      "expectedRevision": 97,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A31",
+      "commandId": "beacon-99",
+      "expectedRevision": 98,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A13",
+      "commandId": "beacon-100",
+      "expectedRevision": 99,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A12",
+      "commandId": "beacon-101",
+      "expectedRevision": 100,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A32",
+      "commandId": "beacon-102",
+      "expectedRevision": 101,
+      "path": [
+        {
+          "x": 8,
+          "y": 4
+        },
+        {
+          "x": 8,
+          "y": 5
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A11",
+      "commandId": "beacon-103",
+      "expectedRevision": 102,
+      "path": [
+        {
+          "x": 7,
+          "y": 8
         },
         {
           "x": 8,
           "y": 8
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-115",
-      "expectedRevision": 115
-    },
-    {
-      "type": "act",
-      "unitId": "A33",
-      "path": [],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-116",
-      "expectedRevision": 116
-    },
-    {
-      "type": "act",
-      "unitId": "A1",
-      "path": [
-        {
-          "x": 9,
-          "y": 10
         },
         {
-          "x": 10,
-          "y": 10
+          "x": 8,
+          "y": 9
         },
         {
-          "x": 11,
-          "y": 10
-        },
-        {
-          "x": 12,
+          "x": 8,
           "y": 10
         }
       ],
       "action": {
         "type": "wait"
-      },
-      "commandId": "sim-117",
-      "expectedRevision": 117
+      }
     },
     {
       "type": "act",
       "unitId": "A3",
-      "path": [
-        {
-          "x": 9,
-          "y": 9
-        }
-      ],
+      "commandId": "beacon-104",
+      "expectedRevision": 103,
+      "path": [],
       "action": {
         "type": "wait"
-      },
-      "commandId": "sim-118",
-      "expectedRevision": 118
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A1",
+      "commandId": "beacon-105",
+      "expectedRevision": 104,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A2",
+      "commandId": "beacon-106",
+      "expectedRevision": 105,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
     },
     {
       "type": "endPhase",
       "side": "player",
-      "commandId": "phase-120",
-      "expectedRevision": 119
+      "commandId": "phase-107",
+      "expectedRevision": 106
     },
     {
       "type": "endPhase",
       "side": "enemy",
-      "commandId": "phase-121",
-      "expectedRevision": 120
+      "commandId": "phase-108",
+      "expectedRevision": 107
     },
     {
       "type": "endPhase",
       "side": "npc",
+      "commandId": "phase-109",
+      "expectedRevision": 108
+    },
+    {
+      "type": "act",
+      "unitId": "A32",
+      "commandId": "beacon-110",
+      "expectedRevision": 109,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A33",
+      "commandId": "beacon-111",
+      "expectedRevision": 110,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A21",
+      "commandId": "beacon-112",
+      "expectedRevision": 111,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A22",
+      "commandId": "beacon-113",
+      "expectedRevision": 112,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A23",
+      "commandId": "beacon-114",
+      "expectedRevision": 113,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A31",
+      "commandId": "beacon-115",
+      "expectedRevision": 114,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A12",
+      "commandId": "beacon-116",
+      "expectedRevision": 115,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A13",
+      "commandId": "beacon-117",
+      "expectedRevision": 116,
+      "path": [
+        {
+          "x": 7,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A11",
+      "commandId": "beacon-118",
+      "expectedRevision": 117,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A1",
+      "commandId": "beacon-119",
+      "expectedRevision": 118,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A2",
+      "commandId": "beacon-120",
+      "expectedRevision": 119,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A3",
+      "commandId": "beacon-121",
+      "expectedRevision": 120,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "player",
       "commandId": "phase-122",
       "expectedRevision": 121
     },
     {
-      "type": "act",
-      "unitId": "A11",
-      "path": [
-        {
-          "x": 12,
-          "y": 10
-        },
-        {
-          "x": 13,
-          "y": 10
-        },
-        {
-          "x": 14,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-122",
-      "expectedRevision": 122
-    },
-    {
-      "type": "act",
-      "unitId": "A12",
-      "path": [
-        {
-          "x": 11,
-          "y": 10
-        },
-        {
-          "x": 12,
-          "y": 10
-        },
-        {
-          "x": 13,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-123",
-      "expectedRevision": 123
-    },
-    {
-      "type": "act",
-      "unitId": "A13",
-      "path": [
-        {
-          "x": 10,
-          "y": 10
-        },
-        {
-          "x": 11,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-124",
-      "expectedRevision": 124
-    },
-    {
-      "type": "act",
-      "unitId": "A31",
-      "path": [
-        {
-          "x": 9,
-          "y": 9
-        },
-        {
-          "x": 9,
-          "y": 10
-        },
-        {
-          "x": 10,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-125",
-      "expectedRevision": 125
-    },
-    {
-      "type": "act",
-      "unitId": "A32",
-      "path": [
-        {
-          "x": 9,
-          "y": 8
-        },
-        {
-          "x": 9,
-          "y": 9
-        },
-        {
-          "x": 9,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-126",
-      "expectedRevision": 126
-    },
-    {
-      "type": "act",
-      "unitId": "A33",
-      "path": [
-        {
-          "x": 9,
-          "y": 8
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-127",
-      "expectedRevision": 127
-    },
-    {
-      "type": "act",
-      "unitId": "A1",
-      "path": [],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-128",
-      "expectedRevision": 128
-    },
-    {
-      "type": "act",
-      "unitId": "A3",
-      "path": [],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-129",
-      "expectedRevision": 129
-    },
-    {
-      "type": "endPhase",
-      "side": "player",
-      "commandId": "phase-131",
-      "expectedRevision": 130
-    },
-    {
       "type": "endPhase",
       "side": "enemy",
-      "commandId": "phase-132",
-      "expectedRevision": 131
+      "commandId": "phase-123",
+      "expectedRevision": 122
     },
     {
       "type": "endPhase",
       "side": "npc",
-      "commandId": "phase-133",
-      "expectedRevision": 132
-    },
-    {
-      "type": "act",
-      "unitId": "A11",
-      "path": [
-        {
-          "x": 15,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-133",
-      "expectedRevision": 133
-    },
-    {
-      "type": "act",
-      "unitId": "A12",
-      "path": [
-        {
-          "x": 14,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-134",
-      "expectedRevision": 134
-    },
-    {
-      "type": "act",
-      "unitId": "A13",
-      "path": [
-        {
-          "x": 12,
-          "y": 10
-        },
-        {
-          "x": 13,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-135",
-      "expectedRevision": 135
-    },
-    {
-      "type": "act",
-      "unitId": "A31",
-      "path": [
-        {
-          "x": 11,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-136",
-      "expectedRevision": 136
-    },
-    {
-      "type": "act",
-      "unitId": "A32",
-      "path": [
-        {
-          "x": 10,
-          "y": 10
-        }
-      ],
-      "action": {
-        "type": "wait"
-      },
-      "commandId": "sim-137",
-      "expectedRevision": 137
+      "commandId": "phase-124",
+      "expectedRevision": 123
     },
     {
       "type": "act",
       "unitId": "A33",
+      "commandId": "beacon-125",
+      "expectedRevision": 124,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A21",
+      "commandId": "beacon-126",
+      "expectedRevision": 125,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A22",
+      "commandId": "beacon-127",
+      "expectedRevision": 126,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A23",
+      "commandId": "beacon-128",
+      "expectedRevision": 127,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A31",
+      "commandId": "beacon-129",
+      "expectedRevision": 128,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A12",
+      "commandId": "beacon-130",
+      "expectedRevision": 129,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A13",
+      "commandId": "beacon-131",
+      "expectedRevision": 130,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A32",
+      "commandId": "beacon-132",
+      "expectedRevision": 131,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A11",
+      "commandId": "beacon-133",
+      "expectedRevision": 132,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A2",
+      "commandId": "beacon-134",
+      "expectedRevision": 133,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A3",
+      "commandId": "beacon-135",
+      "expectedRevision": 134,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A1",
+      "commandId": "beacon-136",
+      "expectedRevision": 135,
       "path": [
+        {
+          "x": 7,
+          "y": 9
+        },
+        {
+          "x": 8,
+          "y": 9
+        },
         {
           "x": 9,
           "y": 9
@@ -2119,40 +1903,118 @@
       ],
       "action": {
         "type": "wait"
-      },
-      "commandId": "sim-138",
+      }
+    },
+    {
+      "type": "endPhase",
+      "side": "player",
+      "commandId": "phase-137",
+      "expectedRevision": 136
+    },
+    {
+      "type": "endPhase",
+      "side": "enemy",
+      "commandId": "phase-138",
+      "expectedRevision": 137
+    },
+    {
+      "type": "endPhase",
+      "side": "npc",
+      "commandId": "phase-139",
       "expectedRevision": 138
     },
     {
       "type": "act",
-      "unitId": "A1",
+      "unitId": "A21",
+      "commandId": "beacon-140",
+      "expectedRevision": 139,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A22",
+      "commandId": "beacon-141",
+      "expectedRevision": 140,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A23",
+      "commandId": "beacon-142",
+      "expectedRevision": 141,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A33",
+      "commandId": "beacon-143",
+      "expectedRevision": 142,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A13",
+      "commandId": "beacon-144",
+      "expectedRevision": 143,
       "path": [
         {
-          "x": 13,
+          "x": 8,
           "y": 10
         },
         {
-          "x": 14,
+          "x": 9,
           "y": 10
         },
         {
-          "x": 15,
+          "x": 10,
           "y": 10
         },
         {
-          "x": 16,
+          "x": 11,
           "y": 10
         }
       ],
       "action": {
         "type": "wait"
-      },
-      "commandId": "sim-139",
-      "expectedRevision": 139
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A31",
+      "commandId": "beacon-145",
+      "expectedRevision": 144,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
     },
     {
       "type": "act",
       "unitId": "A3",
+      "commandId": "beacon-146",
+      "expectedRevision": 145,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A11",
+      "commandId": "beacon-147",
+      "expectedRevision": 146,
       "path": [
         {
           "x": 9,
@@ -2173,30 +2035,91 @@
       ],
       "action": {
         "type": "wait"
-      },
-      "commandId": "sim-140",
-      "expectedRevision": 140
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A12",
+      "commandId": "beacon-148",
+      "expectedRevision": 147,
+      "path": [
+        {
+          "x": 9,
+          "y": 9
+        },
+        {
+          "x": 9,
+          "y": 10
+        },
+        {
+          "x": 10,
+          "y": 10
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A32",
+      "commandId": "beacon-149",
+      "expectedRevision": 148,
+      "path": [
+        {
+          "x": 9,
+          "y": 5
+        },
+        {
+          "x": 9,
+          "y": 6
+        },
+        {
+          "x": 9,
+          "y": 7
+        }
+      ],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A1",
+      "commandId": "beacon-150",
+      "expectedRevision": 149,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
+    },
+    {
+      "type": "act",
+      "unitId": "A2",
+      "commandId": "beacon-151",
+      "expectedRevision": 150,
+      "path": [],
+      "action": {
+        "type": "wait"
+      }
     },
     {
       "type": "endPhase",
       "side": "player",
-      "commandId": "phase-142",
-      "expectedRevision": 141
+      "commandId": "phase-152",
+      "expectedRevision": 151
     },
     {
       "type": "endPhase",
       "side": "enemy",
-      "commandId": "phase-143",
-      "expectedRevision": 142
+      "commandId": "phase-153",
+      "expectedRevision": 152
     }
   ],
   "expectedOutcome": {
     "status": "victory",
     "reason": "호송대가 탈출했습니다.",
-    "round": 10,
-    "bonuses": [
-      "봉화 조기 점령",
-      "호송대 안전 탈출"
-    ]
+    "round": 9,
+    "bonuses": ["봉화 조기 점령", "호송대 안전 탈출"]
   }
 }

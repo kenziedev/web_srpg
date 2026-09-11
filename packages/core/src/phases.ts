@@ -7,6 +7,7 @@ import type {
 } from "./types";
 import { distance, terrainAt } from "./movement";
 import { finishRound, moveEscort, resolveOutcome } from "./scenario";
+import { expireStatuses, hasStatus } from "./statuses";
 
 /** Called only after shared command/version validation. No wall-clock or UI dependencies. */
 export function endPhase(
@@ -39,10 +40,11 @@ export function endPhase(
     side: nextState.activeSide,
     round: nextState.round,
   });
-  // Poison/death-at-start is deferred until statuses exist. Never restore removed units.
+  expireStatuses(nextState, events);
+  // Status expiration precedes action reset and recovery. Never restore removed units.
   for (const unit of nextState.units) {
     if (unit.side !== nextState.activeSide || unit.hp <= 0) continue;
-    unit.acted = false;
+    unit.acted = hasStatus(nextState, unit, "sleep");
     const leader = nextState.units.find(
       (other) =>
         other.id === unit.commanderId &&
@@ -59,7 +61,7 @@ export function endPhase(
     const terrain =
       unit.moveType === "flying"
         ? 0
-        : (terrainAt(content, unit.pos)?.recovery ?? 0);
+        : (terrainAt(content, unit.pos, nextState)?.recovery ?? 0);
     const amount = Math.min(10 - unit.hp, Math.max(adjacent, terrain));
     if (amount > 0) {
       unit.hp += amount;

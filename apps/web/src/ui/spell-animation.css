@@ -1,0 +1,434 @@
+.spell-duel-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  background: #070e20df;
+}
+.spell-duel-window {
+  --spell-color: #d8acff;
+  --spell-dim: #765ab5;
+  width: min(820px, 96vw);
+  max-height: calc(100dvh - 24px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 3px #24384f,
+    0 20px 80px #000b;
+}
+.spell-restorative {
+  --spell-color: #a4f2bd;
+  --spell-dim: #477b72;
+}
+.spell-supportive {
+  --spell-color: #a7daff;
+  --spell-dim: #427e9a;
+}
+.spell-supportive .spell-theater-target b {
+  font-size: 14px;
+}
+.spell-terrain-display {
+  width: 100%;
+  color: var(--spell-color);
+  text-align: center;
+  font-size: 56px;
+}
+.spell-terrain-display b {
+  display: block;
+  font-size: 13px;
+}
+.spell-result-effect {
+  grid-column: 1 / -1;
+  margin: -8px 0 0;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #bcd9ed;
+}
+.spell-terrain-result {
+  border-bottom: 1px solid #4a5c71;
+  padding: 8px 0;
+  font-size: 12px;
+  color: #dac7a5;
+}
+.spell-duel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid #a99f7e;
+  color: #f4e3b5;
+}
+.spell-duel-title > span {
+  font:
+    12px Georgia,
+    serif;
+  letter-spacing: 4px;
+  color: #b7bda9;
+}
+.spell-duel-title small {
+  color: var(--spell-color);
+  font-size: 11px;
+}
+.spell-cast-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 12px 22px;
+  background: linear-gradient(90deg, #254567, #182e49 45%, #302d57);
+}
+.spell-caster {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.spell-caster .portrait {
+  width: 62px;
+  height: 72px;
+}
+.spell-caster small,
+.spell-cast-name small {
+  font-size: 11px;
+  color: #bcc8d4;
+}
+.spell-caster h2,
+.spell-cast-name h2 {
+  font-size: 21px;
+  color: #f8e2ad;
+  margin: 3px 0;
+}
+.spell-caster p {
+  font-size: 12px;
+  margin: 3px 0 0;
+  color: #cbd9e7;
+}
+.spell-caster p b {
+  color: var(--spell-color);
+}
+.spell-cast-name {
+  text-align: right;
+  align-self: center;
+}
+.spell-cast-name h2 {
+  font-size: 29px;
+  letter-spacing: 3px;
+  color: var(--spell-color);
+}
+.spell-cast-name > span {
+  font-size: 12px;
+  color: #bfcadc;
+}
+.spell-theater {
+  position: relative;
+  flex: 0 0 200px;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse at 50% 30%,
+    #343561,
+    #13293f 64%,
+    #0c202e
+  );
+  border-block: 1px solid #71728b;
+}
+.spell-theater::after {
+  content: "";
+  position: absolute;
+  inset: 74% 0 0;
+  background: repeating-linear-gradient(0deg, #293b46 0 3px, #24353e 3px 6px);
+  opacity: 0.5;
+}
+.spell-conduits {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+.spell-magic-ring,
+.spell-target-ring {
+  fill: var(--spell-dim);
+  fill-opacity: 0.35;
+  stroke: var(--spell-color);
+  stroke-width: 2;
+}
+.spell-magic-ring {
+  transform-origin: 110px 175px;
+  animation: spell-ring-pulse 1s steps(6) infinite alternate;
+}
+.spell-magic-thread {
+  fill: none;
+  stroke: var(--spell-color);
+  stroke-width: 2;
+  stroke-dasharray: 5 8;
+  opacity: 0.3;
+}
+.phase-release .spell-magic-thread {
+  opacity: 0.85;
+  animation: spell-thread-flow 0.6s linear infinite;
+}
+.phase-result .spell-magic-thread {
+  opacity: 0.08;
+}
+.spell-light-column {
+  fill: var(--spell-color);
+  opacity: 0;
+}
+.phase-release .spell-light-column {
+  opacity: 0.4;
+  animation: spell-column-glow 0.5s steps(4) infinite alternate;
+}
+.spell-theater-caster {
+  position: absolute;
+  top: 49%;
+  left: 9.5%;
+  width: 66px;
+  height: 76px;
+  z-index: 3;
+}
+.spell-theater-caster svg {
+  width: 100%;
+  height: 100%;
+}
+.spell-charge-orb {
+  position: absolute;
+  left: 30%;
+  top: -20px;
+  color: var(--spell-color);
+  font-size: 32px;
+  text-shadow: 0 0 20px var(--spell-color);
+  animation: spell-orb-float 1s steps(6) infinite alternate;
+}
+.phase-result .spell-charge-orb {
+  opacity: 0.15;
+}
+.spell-theater-targets {
+  position: absolute;
+  top: 49%;
+  left: 39%;
+  width: 56%;
+  display: flex;
+  z-index: 3;
+}
+.spell-theater-target {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+.spell-theater-target svg {
+  width: min(100%, 63px);
+  height: 76px;
+  transition: opacity 200ms;
+}
+.spell-impact-symbol {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: -15px;
+  transform: translateX(-50%);
+  font-size: 40px;
+  color: var(--spell-color);
+  opacity: 0;
+  text-shadow: 0 0 18px var(--spell-color);
+}
+.phase-release .spell-impact-symbol {
+  opacity: 1;
+}
+.spell-theater-target b {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 62px;
+  color: var(--spell-color);
+  font-size: 21px;
+  text-shadow: 2px 2px #142033;
+}
+.spell-fallen svg {
+  opacity: 0.3;
+}
+.spell-theater-caption {
+  position: absolute;
+  top: 18px;
+  left: 24%;
+  right: 24%;
+  text-align: center;
+  color: var(--spell-color);
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+.spell-results {
+  min-height: 45px;
+  max-height: 155px;
+  overflow-y: auto;
+  padding: 4px 20px;
+  background: #142d47;
+  flex: 1 1 auto;
+}
+.spell-results:focus-visible {
+  outline: 2px solid #e2cd9e;
+  outline-offset: -3px;
+}
+.spell-result {
+  display: grid;
+  grid-template-columns: 1fr 140px 100px;
+  align-items: center;
+  gap: 20px;
+  padding: 8px 0;
+  border-bottom: 1px solid #4a5c71;
+  font-size: 13px;
+}
+.spell-result:last-child {
+  border-bottom: 0;
+}
+.spell-result > span {
+  color: #ede1c7;
+}
+.spell-result small {
+  margin-left: 9px;
+  font-size: 10px;
+  color: #9dacbf;
+}
+.spell-result strong {
+  text-align: right;
+  font-size: 12px;
+  color: var(--spell-color);
+}
+.spell-result-hp > span {
+  display: block;
+  font-size: 11px;
+  color: #cad5e2;
+}
+.spell-result-hp > div {
+  height: 5px;
+  margin-top: 4px;
+  border: 1px solid #829394;
+  background: #0c2035;
+}
+.spell-result-hp i {
+  display: block;
+  height: 100%;
+  background: var(--spell-color);
+  transition: width 200ms steps(4);
+}
+.spell-duel-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 18px;
+  border-top: 1px solid #827e76;
+}
+.spell-duel-footer p {
+  font-size: 11px;
+  color: #bcc7d7;
+  margin: 0;
+}
+.spell-duel-footer button {
+  white-space: nowrap;
+}
+.spell-duel-footer kbd {
+  margin-left: 8px;
+  font-size: 10px;
+  color: #bfcada;
+}
+@keyframes spell-ring-pulse {
+  from {
+    transform: scale(0.85);
+    opacity: 0.5;
+  }
+  to {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+@keyframes spell-orb-float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-7px);
+  }
+}
+@keyframes spell-thread-flow {
+  to {
+    stroke-dashoffset: -26;
+  }
+}
+@keyframes spell-column-glow {
+  from {
+    fill-opacity: 0.4;
+  }
+  to {
+    fill-opacity: 0.8;
+  }
+}
+.spell-reduced-motion *,
+.spell-reduced-motion *::after {
+  animation: none !important;
+  transition: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .spell-duel-window *,
+  .spell-duel-window *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+@media (max-width: 600px), (max-height: 590px) {
+  .spell-duel-title {
+    padding: 8px 12px;
+  }
+  .spell-duel-title > span {
+    display: none;
+  }
+  .spell-cast-summary {
+    gap: 10px;
+    padding: 8px 12px;
+  }
+  .spell-caster {
+    gap: 8px;
+  }
+  .spell-caster .portrait {
+    width: 43px;
+    height: 52px;
+  }
+  .spell-caster h2 {
+    font-size: 16px;
+  }
+  .spell-cast-name h2 {
+    font-size: 23px;
+  }
+  .spell-theater {
+    flex-basis: 145px;
+  }
+  .spell-theater-caster,
+  .spell-theater-target svg {
+    height: 55px;
+  }
+  .spell-theater-caster {
+    width: 48px;
+  }
+  .spell-theater-target b {
+    top: 45px;
+    font-size: 16px;
+  }
+  .spell-results {
+    padding-inline: 12px;
+  }
+  .spell-result {
+    grid-template-columns: 1fr 90px 72px;
+    gap: 8px;
+    padding-block: 6px;
+  }
+  .spell-result small {
+    display: none;
+  }
+  .spell-duel-footer {
+    padding: 8px 12px;
+  }
+  .spell-duel-footer p {
+    max-width: 55%;
+  }
+}

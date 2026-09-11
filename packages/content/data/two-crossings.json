@@ -1,5 +1,5 @@
 {
-  "rulesVersion": "0.2",
+  "rulesVersion": "0.7",
   "terrains": [
     {
       "id": "plain",
@@ -44,7 +44,8 @@
       "defense": 2,
       "recovery": 0,
       "noLanding": false,
-      "water": false
+      "water": false,
+      "destroyedTo": "plain"
     },
     {
       "id": "hill",
@@ -59,7 +60,8 @@
       "defense": 1,
       "recovery": 0,
       "noLanding": false,
-      "water": false
+      "water": false,
+      "destroyedTo": "plain"
     },
     {
       "id": "mountain",
@@ -164,7 +166,8 @@
       "defense": 0,
       "recovery": 0,
       "noLanding": true,
-      "water": false
+      "water": false,
+      "destroyedTo": "plain"
     }
   ],
   "affinities": [
@@ -547,7 +550,17 @@
           "df": 2
         },
         "acted": false,
-        "canHeal": false
+        "spellIds": [],
+        "progression": {
+          "classId": "lord",
+          "baseClassId": "lord",
+          "growthId": "kaiel",
+          "level": 1,
+          "exp": 0,
+          "totalExp": 0,
+          "learnedSpellIds": [],
+          "classHistory": ["lord"]
+        }
       },
       {
         "id": "A2",
@@ -578,7 +591,17 @@
           "df": 2
         },
         "acted": false,
-        "canHeal": false
+        "spellIds": [],
+        "progression": {
+          "classId": "warrior",
+          "baseClassId": "warrior",
+          "growthId": "roen",
+          "level": 1,
+          "exp": 0,
+          "totalExp": 0,
+          "learnedSpellIds": [],
+          "classHistory": ["warrior"]
+        }
       },
       {
         "id": "A3",
@@ -609,7 +632,22 @@
           "df": 2
         },
         "acted": false,
-        "canHeal": true
+        "spellIds": ["heal-1", "magic-arrow", "fireball", "force-heal-1"],
+        "progression": {
+          "classId": "mage",
+          "baseClassId": "mage",
+          "growthId": "mira",
+          "level": 1,
+          "exp": 0,
+          "totalExp": 0,
+          "learnedSpellIds": [
+            "heal-1",
+            "magic-arrow",
+            "fireball",
+            "force-heal-1"
+          ],
+          "classHistory": ["mage"]
+        }
       },
       {
         "id": "E1",
@@ -640,7 +678,7 @@
           "df": 2
         },
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "E2",
@@ -671,7 +709,7 @@
           "df": 2
         },
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "A11",
@@ -698,7 +736,7 @@
         "range": [1, 1],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "A12",
@@ -725,7 +763,7 @@
         "range": [1, 1],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "A13",
@@ -752,7 +790,7 @@
         "range": [1, 1],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "A21",
@@ -779,7 +817,7 @@
         "range": [1, 1],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "A22",
@@ -806,7 +844,7 @@
         "range": [1, 1],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "A23",
@@ -833,7 +871,7 @@
         "range": [1, 1],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "A31",
@@ -860,7 +898,7 @@
         "range": [2, 3],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "A32",
@@ -887,7 +925,7 @@
         "range": [2, 3],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "A33",
@@ -914,7 +952,7 @@
         "range": [2, 3],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "E11",
@@ -941,7 +979,7 @@
         "range": [1, 1],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "E12",
@@ -968,7 +1006,7 @@
         "range": [1, 1],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "E13",
@@ -995,7 +1033,7 @@
         "range": [1, 1],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "E21",
@@ -1022,7 +1060,7 @@
         "range": [1, 1],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "E22",
@@ -1049,7 +1087,7 @@
         "range": [1, 1],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "E23",
@@ -1076,7 +1114,7 @@
         "range": [2, 3],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       },
       {
         "id": "N1",
@@ -1103,7 +1141,7 @@
         "range": [0, 0],
         "command": null,
         "acted": false,
-        "canHeal": false
+        "spellIds": []
       }
     ],
     "reinforcement": {
@@ -1138,7 +1176,7 @@
             "df": 2
           },
           "acted": false,
-          "canHeal": false
+          "spellIds": []
         },
         {
           "id": "E31",
@@ -1165,7 +1203,7 @@
           "range": [1, 1],
           "command": null,
           "acted": false,
-          "canHeal": false
+          "spellIds": []
         },
         {
           "id": "E32",
@@ -1192,7 +1230,7 @@
           "range": [1, 1],
           "command": null,
           "acted": false,
-          "canHeal": false
+          "spellIds": []
         }
       ],
       "reserves": {
@@ -1216,6 +1254,29 @@
         ]
       }
     },
+    "enemyPlans": [
+      {
+        "commanderId": "E2",
+        "stages": [
+          {
+            "fromRound": 1,
+            "label": "북쪽 여울 견제",
+            "target": {
+              "x": 11,
+              "y": 3
+            }
+          },
+          {
+            "fromRound": 3,
+            "label": "남쪽 호송로 압박",
+            "target": {
+              "x": 11,
+              "y": 10
+            }
+          }
+        ]
+      }
+    ],
     "markers": [
       {
         "id": "beacon",
@@ -1333,6 +1394,1610 @@
       "healthyEscapeHp": 7,
       "maxRounds": 10,
       "unitLimit": 24
+    },
+    "inventory": {
+      "knife": 1,
+      "war-hammer": 1,
+      "great-sword": 1,
+      "devil-axe": 1,
+      "flame-lance": 1,
+      "dragon-slayer": 1,
+      "langrisser-sealed": 1,
+      "langrisser": 1,
+      "alhazard-sealed": 1,
+      "alhazard": 1,
+      "wand": 1,
+      "orb": 1,
+      "holy-rod": 1,
+      "dark-rod": 1,
+      "masayan-sword": 1,
+      "iron-dumbbell": 1,
+      "longbow": 1,
+      "arbalest": 1,
+      "small-shield": 1,
+      "large-shield": 1,
+      "chain-mail": 1,
+      "plate-armor": 1,
+      "dragon-scale": 1,
+      "assault-suit": 1,
+      "robe": 1,
+      "mirage-robe": 1,
+      "speed-boots": 1,
+      "amulet": 1,
+      "cross": 1,
+      "necklace": 1,
+      "crown": 1,
+      "runestone": 1,
+      "gleipnir": 1,
+      "odins-shield": 1
+    },
+    "seed": 20260911
+  },
+  "spells": [
+    {
+      "id": "heal-1",
+      "name": "힐 1",
+      "mpCost": 2,
+      "range": [0, 6],
+      "shape": "radius",
+      "radius": 1,
+      "effect": {
+        "type": "heal",
+        "power": 3
+      }
+    },
+    {
+      "id": "heal-2",
+      "name": "힐 2",
+      "mpCost": 4,
+      "range": [0, 6],
+      "shape": "radius",
+      "radius": 1,
+      "effect": {
+        "type": "heal",
+        "power": 10
+      }
+    },
+    {
+      "id": "force-heal-1",
+      "name": "포스 힐 1",
+      "mpCost": 3,
+      "range": [0, 6],
+      "shape": "squad",
+      "effect": {
+        "type": "heal",
+        "power": 3
+      }
+    },
+    {
+      "id": "force-heal-2",
+      "name": "포스 힐 2",
+      "mpCost": 6,
+      "range": [0, 6],
+      "shape": "squad",
+      "effect": {
+        "type": "heal",
+        "power": 10
+      }
+    },
+    {
+      "id": "magic-arrow",
+      "name": "매직 애로우",
+      "mpCost": 1,
+      "range": [0, 5],
+      "shape": "single",
+      "effect": {
+        "type": "damage",
+        "power": 3
+      }
+    },
+    {
+      "id": "blast",
+      "name": "블래스트",
+      "mpCost": 10,
+      "range": [0, 2],
+      "shape": "single",
+      "effect": {
+        "type": "damage",
+        "power": 7
+      }
+    },
+    {
+      "id": "thunder",
+      "name": "썬더",
+      "mpCost": 4,
+      "range": [0, 7],
+      "shape": "squad",
+      "effect": {
+        "type": "damage",
+        "power": 3,
+        "bonusAgainst": "water",
+        "bonusPower": 2
+      }
+    },
+    {
+      "id": "fireball",
+      "name": "파이어볼",
+      "mpCost": 2,
+      "range": [0, 4],
+      "shape": "radius",
+      "radius": 3,
+      "effect": {
+        "type": "damage",
+        "power": 2
+      }
+    },
+    {
+      "id": "blizzard",
+      "name": "블리자드",
+      "mpCost": 3,
+      "range": [0, 0],
+      "shape": "radius",
+      "radius": 4,
+      "effect": {
+        "type": "damage",
+        "power": 2
+      }
+    },
+    {
+      "id": "tornado",
+      "name": "토네이도",
+      "mpCost": 2,
+      "range": [0, 0],
+      "shape": "radius",
+      "radius": 3,
+      "effect": {
+        "type": "damage",
+        "power": 2,
+        "bonusAgainst": "flying",
+        "bonusPower": 2
+      }
+    },
+    {
+      "id": "meteor",
+      "name": "메테오",
+      "mpCost": 8,
+      "range": [0, 8],
+      "shape": "radius",
+      "radius": 2,
+      "effect": {
+        "type": "damage",
+        "power": 6,
+        "terrainChange": "center"
+      }
+    },
+    {
+      "id": "turn-undead",
+      "name": "턴 언데드",
+      "mpCost": 5,
+      "range": [0, 0],
+      "shape": "radius",
+      "radius": 4,
+      "effect": {
+        "type": "slay-undead",
+        "power": 0
+      }
+    },
+    {
+      "id": "earthquake",
+      "name": "어스퀘이크",
+      "mpCost": 12,
+      "range": [0, 0],
+      "shape": "radius",
+      "radius": 5,
+      "effect": {
+        "type": "damage",
+        "power": 7,
+        "terrainChange": "area",
+        "groundOnly": true
+      }
+    },
+    {
+      "id": "protection-1",
+      "name": "프로텍션 1",
+      "mpCost": 2,
+      "range": [0, 5],
+      "shape": "squad",
+      "effect": {
+        "type": "status",
+        "power": 3,
+        "status": "protection",
+        "hostile": false,
+        "duration": 1
+      }
+    },
+    {
+      "id": "protection-2",
+      "name": "프로텍션 2",
+      "mpCost": 4,
+      "range": [0, 5],
+      "shape": "squad",
+      "effect": {
+        "type": "status",
+        "power": 5,
+        "status": "protection",
+        "hostile": false,
+        "duration": 1
+      }
+    },
+    {
+      "id": "attack-1",
+      "name": "어택 1",
+      "mpCost": 2,
+      "range": [0, 5],
+      "shape": "squad",
+      "effect": {
+        "type": "status",
+        "power": 3,
+        "status": "attack",
+        "hostile": false,
+        "duration": 1
+      }
+    },
+    {
+      "id": "attack-2",
+      "name": "어택 2",
+      "mpCost": 4,
+      "range": [0, 5],
+      "shape": "squad",
+      "effect": {
+        "type": "status",
+        "power": 5,
+        "status": "attack",
+        "hostile": false,
+        "duration": 1
+      }
+    },
+    {
+      "id": "resist",
+      "name": "레지스트",
+      "mpCost": 2,
+      "range": [0, 8],
+      "shape": "squad",
+      "effect": {
+        "type": "status",
+        "power": 2,
+        "status": "resist",
+        "hostile": false,
+        "duration": 1
+      }
+    },
+    {
+      "id": "quick",
+      "name": "퀵",
+      "mpCost": 5,
+      "range": [0, 6],
+      "shape": "squad",
+      "effect": {
+        "type": "status",
+        "power": 3,
+        "status": "quick",
+        "hostile": false,
+        "duration": 1
+      }
+    },
+    {
+      "id": "sleep",
+      "name": "슬립",
+      "mpCost": 4,
+      "range": [0, 3],
+      "shape": "radius",
+      "radius": 1,
+      "effect": {
+        "type": "status",
+        "power": 0,
+        "status": "sleep",
+        "hostile": true,
+        "duration": 1
+      }
+    },
+    {
+      "id": "mute",
+      "name": "뮤트",
+      "mpCost": 3,
+      "range": [0, 5],
+      "shape": "single",
+      "effect": {
+        "type": "status",
+        "power": 0,
+        "status": "mute",
+        "hostile": true,
+        "duration": 1,
+        "commanderOnly": true
+      }
+    },
+    {
+      "id": "zone",
+      "name": "존",
+      "mpCost": 6,
+      "range": [0, 6],
+      "shape": "single",
+      "effect": {
+        "type": "status",
+        "power": 0,
+        "status": "zone",
+        "hostile": true,
+        "duration": 1,
+        "commanderOnly": true
+      }
+    },
+    {
+      "id": "charm",
+      "name": "참",
+      "mpCost": 6,
+      "range": [0, 4],
+      "shape": "squad",
+      "effect": {
+        "type": "status",
+        "power": 0,
+        "status": "charm",
+        "hostile": true,
+        "duration": 1
+      }
+    },
+    {
+      "id": "decline",
+      "name": "디클레인",
+      "mpCost": 5,
+      "range": [0, 5],
+      "shape": "squad",
+      "effect": {
+        "type": "status",
+        "power": 2,
+        "status": "decline",
+        "hostile": true,
+        "duration": 1
+      }
+    },
+    {
+      "id": "teleport",
+      "name": "텔레포트",
+      "mpCost": 5,
+      "range": [0, 16],
+      "shape": "squad",
+      "effect": {
+        "type": "teleport",
+        "power": 0
+      }
+    },
+    {
+      "id": "again",
+      "name": "어게인",
+      "mpCost": 10,
+      "range": [0, 3],
+      "shape": "squad",
+      "effect": {
+        "type": "again",
+        "power": 0
+      }
+    },
+    {
+      "id": "summon-valkyrie",
+      "name": "발키리 소환",
+      "mpCost": 10,
+      "range": [1, 2],
+      "shape": "single",
+      "effect": {
+        "type": "summon",
+        "power": 0,
+        "summonId": "valkyrie"
+      }
+    },
+    {
+      "id": "summon-freya",
+      "name": "프레이어 소환",
+      "mpCost": 15,
+      "range": [1, 2],
+      "shape": "single",
+      "effect": {
+        "type": "summon",
+        "power": 0,
+        "summonId": "freya"
+      }
+    },
+    {
+      "id": "summon-white-dragon",
+      "name": "화이트 드래곤 소환",
+      "mpCost": 20,
+      "range": [1, 2],
+      "shape": "single",
+      "effect": {
+        "type": "summon",
+        "power": 0,
+        "summonId": "white-dragon"
+      }
+    },
+    {
+      "id": "summon-salamander",
+      "name": "사라만다 소환",
+      "mpCost": 5,
+      "range": [1, 2],
+      "shape": "single",
+      "effect": {
+        "type": "summon",
+        "power": 0,
+        "summonId": "salamander"
+      }
+    },
+    {
+      "id": "summon-iron-golem",
+      "name": "아이언 골렘 소환",
+      "mpCost": 18,
+      "range": [1, 2],
+      "shape": "single",
+      "effect": {
+        "type": "summon",
+        "power": 0,
+        "summonId": "iron-golem"
+      }
+    },
+    {
+      "id": "summon-demon-lord",
+      "name": "데몬 로드 소환",
+      "mpCost": 30,
+      "range": [1, 2],
+      "shape": "single",
+      "effect": {
+        "type": "summon",
+        "power": 0,
+        "summonId": "demon-lord"
+      }
+    },
+    {
+      "id": "summon-sleipnir",
+      "name": "슬레이프 닐 소환",
+      "mpCost": 10,
+      "range": [1, 2],
+      "shape": "single",
+      "effect": {
+        "type": "summon",
+        "power": 0,
+        "summonId": "sleipnir"
+      },
+      "learnable": false
+    },
+    {
+      "id": "summon-fenrir",
+      "name": "펜릴 소환",
+      "mpCost": 20,
+      "range": [1, 2],
+      "shape": "single",
+      "effect": {
+        "type": "summon",
+        "power": 0,
+        "summonId": "fenrir"
+      },
+      "learnable": false
+    },
+    {
+      "id": "summon-aniki",
+      "name": "아니키 소환",
+      "mpCost": 25,
+      "range": [1, 2],
+      "shape": "single",
+      "effect": {
+        "type": "summon",
+        "power": 0,
+        "summonId": "aniki"
+      },
+      "learnable": false
     }
-  }
+  ],
+  "summons": [
+    {
+      "id": "valkyrie",
+      "name": "발키리",
+      "unitType": "flier",
+      "moveType": "flying",
+      "stats": {
+        "at": 12,
+        "df": 9,
+        "res": 9,
+        "mag": 5,
+        "maxMp": 15,
+        "move": 7
+      },
+      "range": [1, 1],
+      "spellIds": ["fireball", "quick"]
+    },
+    {
+      "id": "freya",
+      "name": "프레이어",
+      "unitType": "flier",
+      "moveType": "flying",
+      "stats": {
+        "at": 11,
+        "df": 11,
+        "res": 8,
+        "mag": 6,
+        "maxMp": 25,
+        "move": 7
+      },
+      "range": [1, 1],
+      "spellIds": ["sleep", "attack-2", "force-heal-2", "charm"]
+    },
+    {
+      "id": "white-dragon",
+      "name": "화이트 드래곤",
+      "unitType": "flier",
+      "moveType": "flying",
+      "stats": {
+        "at": 14,
+        "df": 12,
+        "res": 8,
+        "mag": 4,
+        "maxMp": 8,
+        "move": 5
+      },
+      "range": [1, 1],
+      "spellIds": ["fireball", "blizzard"]
+    },
+    {
+      "id": "salamander",
+      "name": "사라만다",
+      "unitType": "infantry",
+      "moveType": "foot",
+      "stats": {
+        "at": 10,
+        "df": 10,
+        "res": 7,
+        "mag": 4,
+        "maxMp": 10,
+        "move": 6
+      },
+      "range": [1, 1],
+      "spellIds": ["fireball"]
+    },
+    {
+      "id": "iron-golem",
+      "name": "아이언 골렘",
+      "unitType": "pike",
+      "moveType": "foot",
+      "stats": {
+        "at": 11,
+        "df": 14,
+        "res": 9,
+        "mag": 0,
+        "maxMp": 0,
+        "move": 4
+      },
+      "range": [1, 1],
+      "spellIds": []
+    },
+    {
+      "id": "demon-lord",
+      "name": "데몬 로드",
+      "unitType": "mage",
+      "moveType": "flying",
+      "stats": {
+        "at": 13,
+        "df": 11,
+        "res": 9,
+        "mag": 7,
+        "maxMp": 25,
+        "move": 5
+      },
+      "range": [1, 1],
+      "spellIds": ["meteor", "force-heal-2", "zone", "attack-2"]
+    },
+    {
+      "id": "sleipnir",
+      "name": "슬레이프 닐",
+      "unitType": "cavalry",
+      "moveType": "mounted",
+      "stats": {
+        "at": 13,
+        "df": 10,
+        "res": 8,
+        "mag": 0,
+        "maxMp": 0,
+        "move": 10
+      },
+      "range": [1, 1],
+      "spellIds": []
+    },
+    {
+      "id": "fenrir",
+      "name": "펜릴",
+      "unitType": "cavalry",
+      "moveType": "mounted",
+      "stats": {
+        "at": 16,
+        "df": 11,
+        "res": 8,
+        "mag": 5,
+        "maxMp": 10,
+        "move": 8
+      },
+      "range": [1, 1],
+      "spellIds": ["blizzard", "tornado", "quick"]
+    },
+    {
+      "id": "aniki",
+      "name": "아니키",
+      "unitType": "infantry",
+      "moveType": "foot",
+      "stats": {
+        "at": 14,
+        "df": 12,
+        "res": 7,
+        "mag": 6,
+        "maxMp": 16,
+        "move": 5
+      },
+      "range": [1, 1],
+      "spellIds": ["blast", "heal-1", "decline"]
+    }
+  ],
+  "items": [
+    {
+      "id": "knife",
+      "name": "나이프",
+      "slot": "weapon",
+      "description": "공격 +1.",
+      "modifiers": {
+        "at": 1
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "war-hammer",
+      "name": "워 해머",
+      "slot": "weapon",
+      "description": "공격 +2.",
+      "modifiers": {
+        "at": 2
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "great-sword",
+      "name": "그레이트 소드",
+      "slot": "weapon",
+      "description": "공격 +4.",
+      "modifiers": {
+        "at": 4
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "devil-axe",
+      "name": "데빌 액스",
+      "slot": "weapon",
+      "description": "공격 +8, 방어 −3.",
+      "modifiers": {
+        "at": 8,
+        "df": -3
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "flame-lance",
+      "name": "플레임 랜스",
+      "slot": "weapon",
+      "description": "공격 +6.",
+      "modifiers": {
+        "at": 6
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "dragon-slayer",
+      "name": "D－슬레이어",
+      "slot": "weapon",
+      "description": "공격 +7.",
+      "modifiers": {
+        "at": 7
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "langrisser-sealed",
+      "name": "랑그릿사(봉인)",
+      "slot": "weapon",
+      "description": "공격 +3, 방어 +1.",
+      "modifiers": {
+        "at": 3,
+        "df": 1
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "langrisser",
+      "name": "랑그릿사",
+      "slot": "weapon",
+      "description": "공격 +9, 방어 +2, 지휘 공격 +3, 지휘 방어 +1.",
+      "modifiers": {
+        "at": 9,
+        "df": 2,
+        "commandAt": 3,
+        "commandDf": 1
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "alhazard-sealed",
+      "name": "알하자드(봉인)",
+      "slot": "weapon",
+      "description": "공격 +10, 방어 +1, 지휘 공격 +3, 지휘 방어 +1. 원작 획득 조건은 미확정이다.",
+      "modifiers": {
+        "at": 10,
+        "df": 1,
+        "commandAt": 3,
+        "commandDf": 1
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "alhazard",
+      "name": "알하자드",
+      "slot": "weapon",
+      "description": "공격 +12, 방어 +1, 지휘 공격 +3, 지휘 방어 +1. 원작 획득 조건은 미확정이다.",
+      "modifiers": {
+        "at": 12,
+        "df": 1,
+        "commandAt": 3,
+        "commandDf": 1
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "wand",
+      "name": "완드",
+      "slot": "weapon",
+      "description": "마법 사거리 +2. 자료마다 방향이 다른 마법 피해 효과는 아직 적용하지 않는다.",
+      "modifiers": {
+        "spellRange": 2
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "orb",
+      "name": "오브",
+      "slot": "weapon",
+      "description": "최대 MP 2배, 마법 사거리 +3. 장착·해제 시 남은 MP 비율을 유지하며 소수점은 버린다.",
+      "modifiers": {
+        "maxMpMultiplier": 2,
+        "spellRange": 3
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "holy-rod",
+      "name": "홀리 로드",
+      "slot": "weapon",
+      "description": "마법 사거리 +2, 마법 저항 +3. 원작 MDF +30을 RES +3으로 환산했다. 미확정 마법 피해 효과는 제외한다.",
+      "modifiers": {
+        "spellRange": 2,
+        "res": 3
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "dark-rod",
+      "name": "다크 로드",
+      "slot": "weapon",
+      "description": "마법 사거리 +2. 자료가 충돌하는 마법 피해·MDF 효과는 제외한다.",
+      "modifiers": {
+        "spellRange": 2
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "masayan-sword",
+      "name": "메사이얀 소드",
+      "slot": "weapon",
+      "description": "공격 −4, 방어 −3, 지휘 공격 −2. 장착 지휘관과 소속 부대의 전투 기여 EXP 2배. 고정 클리어 EXP에는 적용하지 않는다.",
+      "modifiers": {
+        "at": -4,
+        "df": -3,
+        "commandAt": -2,
+        "expMultiplier": 2
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "iron-dumbbell",
+      "name": "철 아령",
+      "slot": "weapon",
+      "description": "공격 +1, 이동 −1, 아니키 소환을 사용할 수 있다.",
+      "modifiers": {
+        "at": 1,
+        "move": -1
+      },
+      "grantedSpellIds": ["summon-aniki"]
+    },
+    {
+      "id": "longbow",
+      "name": "롱 보우",
+      "slot": "weapon",
+      "description": "공격 −2, 이동 −2, 공격 사거리 1~3.",
+      "modifiers": {
+        "at": -2,
+        "move": -2,
+        "attackRange": [1, 3]
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "arbalest",
+      "name": "아바 레스트",
+      "slot": "weapon",
+      "description": "공격 −4, 이동 −3, 공격 사거리 1~6.",
+      "modifiers": {
+        "at": -4,
+        "move": -3,
+        "attackRange": [1, 6]
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "small-shield",
+      "name": "스몰 실드",
+      "slot": "armor",
+      "description": "방어 +1.",
+      "modifiers": {
+        "df": 1
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "large-shield",
+      "name": "라지 실드",
+      "slot": "armor",
+      "description": "방어 +2.",
+      "modifiers": {
+        "df": 2
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "chain-mail",
+      "name": "체인 메일",
+      "slot": "armor",
+      "description": "방어 +3.",
+      "modifiers": {
+        "df": 3
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "plate-armor",
+      "name": "플레이트아머",
+      "slot": "armor",
+      "description": "방어 +4.",
+      "modifiers": {
+        "df": 4
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "dragon-scale",
+      "name": "드래곤 스케일",
+      "slot": "armor",
+      "description": "방어 +4.",
+      "modifiers": {
+        "df": 4
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "assault-suit",
+      "name": "아절트 슈트",
+      "slot": "armor",
+      "description": "공격 +10, 방어 +10.",
+      "modifiers": {
+        "at": 10,
+        "df": 10
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "robe",
+      "name": "로브",
+      "slot": "armor",
+      "description": "방어 +1, 마법 저항 +1. 원작 MDF +10을 RES +1로 환산했다.",
+      "modifiers": {
+        "df": 1,
+        "res": 1
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "mirage-robe",
+      "name": "미라쥬 로브",
+      "slot": "armor",
+      "description": "방어 +2, 마법 저항 +2. 원작 MDF +20을 RES +2로 환산했다.",
+      "modifiers": {
+        "df": 2,
+        "res": 2
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "speed-boots",
+      "name": "스피드 부츠",
+      "slot": "armor",
+      "description": "소속 부대 이동 +2. 원작의 직업별 장착 제한은 미확정이며 현재는 지휘관 공통 장비다.",
+      "modifiers": {
+        "squadMove": 2
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "amulet",
+      "name": "아뮬렛",
+      "slot": "armor",
+      "description": "소속 부대 마법 저항 +1. 원작 MDF +15를 10으로 나눈 정수 RES +1로 환산했다.",
+      "modifiers": {
+        "squadRes": 1
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "cross",
+      "name": "크로스",
+      "slot": "armor",
+      "description": "성직 지휘관 전용. 지휘 방어 +2, 마법 저항 +2. 원작 MDF +20을 RES +2로 환산했다.",
+      "modifiers": {
+        "commandDf": 2,
+        "res": 2
+      },
+      "grantedSpellIds": [],
+      "allowedUnitTypes": ["cleric"]
+    },
+    {
+      "id": "necklace",
+      "name": "넥크리스",
+      "slot": "armor",
+      "description": "지휘 범위 +2, 지휘 방어 +3. 프로젝트 지휘 범위 상한 4를 적용한다.",
+      "modifiers": {
+        "commandRadius": 2,
+        "commandDf": 3
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "crown",
+      "name": "크라운",
+      "slot": "armor",
+      "description": "지휘 범위 +2, 지휘 공격 +3, 지휘 방어 +2. 프로젝트 지휘 범위 상한 4를 적용한다.",
+      "modifiers": {
+        "commandRadius": 2,
+        "commandAt": 3,
+        "commandDf": 2
+      },
+      "grantedSpellIds": []
+    },
+    {
+      "id": "runestone",
+      "name": "룬스톤",
+      "slot": "armor",
+      "description": "성장 화면에서 소모한다. 2차 직업 Lv10 지휘관을 초기 직업 Lv1로 되돌리며, 누적 능력치와 배운 마법은 유지한다. 보관 EXP는 0이 된다.",
+      "modifiers": {},
+      "grantedSpellIds": [],
+      "useEffect": "class-reset"
+    },
+    {
+      "id": "gleipnir",
+      "name": "그레이프 닐",
+      "slot": "armor",
+      "description": "방어 +1, 펜릴 소환을 사용할 수 있다. 자료가 충돌하는 MDF 효과는 제외한다.",
+      "modifiers": {
+        "df": 1
+      },
+      "grantedSpellIds": ["summon-fenrir"]
+    },
+    {
+      "id": "odins-shield",
+      "name": "오딘의 방패",
+      "slot": "armor",
+      "description": "방어 +3, 지휘 방어 +1, 슬레이프 닐 소환을 사용할 수 있다.",
+      "modifiers": {
+        "df": 3,
+        "commandDf": 1
+      },
+      "grantedSpellIds": ["summon-sleipnir"]
+    }
+  ],
+  "classes": [
+    {
+      "id": "lord",
+      "name": "영주",
+      "tier": 1,
+      "promotions": ["frontline-captain", "raider-lord"],
+      "unitType": "infantry",
+      "moveType": "foot",
+      "move": 4,
+      "range": [1, 1],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {},
+      "learns": [],
+      "description": "보병 지휘의 기본 직업. 전열을 넓히거나 기동을 강화하는 방향으로 전직한다."
+    },
+    {
+      "id": "frontline-captain",
+      "name": "전열대장",
+      "tier": 2,
+      "promotions": [],
+      "unitType": "infantry",
+      "moveType": "foot",
+      "move": 4,
+      "range": [1, 1],
+      "command": {
+        "radius": 4,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {
+        "df": 1
+      },
+      "learns": [],
+      "description": "방어 +1, 지휘 범위 4. 이동 4를 유지하며 넓은 전열을 지휘한다."
+    },
+    {
+      "id": "raider-lord",
+      "name": "유격영주",
+      "tier": 2,
+      "promotions": [],
+      "unitType": "infantry",
+      "moveType": "foot",
+      "move": 5,
+      "range": [1, 1],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {
+        "at": 1
+      },
+      "learns": [],
+      "description": "공격 +1, 이동 5. 지휘 범위 3을 유지하며 빠르게 전선을 옮긴다."
+    },
+    {
+      "id": "warrior",
+      "name": "전사",
+      "tier": 1,
+      "promotions": ["iron-guard", "assault-captain"],
+      "unitType": "pike",
+      "moveType": "foot",
+      "move": 4,
+      "range": [1, 1],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {},
+      "learns": [],
+      "description": "창병 지휘의 기본 직업. 방어 유지와 부대 공격 강화 중에서 선택한다."
+    },
+    {
+      "id": "iron-guard",
+      "name": "철벽병",
+      "tier": 2,
+      "promotions": [],
+      "unitType": "pike",
+      "moveType": "foot",
+      "move": 3,
+      "range": [1, 1],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 3
+      },
+      "statBonus": {
+        "df": 1
+      },
+      "learns": [],
+      "description": "방어 +1, 지휘 방어 +3. 이동이 3으로 줄지만 전선을 단단하게 지킨다."
+    },
+    {
+      "id": "assault-captain",
+      "name": "돌격대장",
+      "tier": 2,
+      "promotions": [],
+      "unitType": "infantry",
+      "moveType": "foot",
+      "move": 4,
+      "range": [1, 1],
+      "command": {
+        "radius": 3,
+        "at": 3,
+        "df": 2
+      },
+      "statBonus": {
+        "at": 1
+      },
+      "learns": [],
+      "description": "공격 +1, 지휘 공격 +3. 보병으로 바뀌며 이동 4를 유지한다."
+    },
+    {
+      "id": "knight",
+      "name": "기사",
+      "tier": 1,
+      "promotions": ["heavy-knight", "sky-knight"],
+      "unitType": "cavalry",
+      "moveType": "mounted",
+      "move": 5,
+      "range": [1, 1],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {},
+      "learns": [],
+      "description": "기승 이동 5의 기병. 방어를 강화하거나 비병으로 전직한다."
+    },
+    {
+      "id": "heavy-knight",
+      "name": "중기사",
+      "tier": 2,
+      "promotions": [],
+      "unitType": "cavalry",
+      "moveType": "mounted",
+      "move": 5,
+      "range": [1, 1],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 3
+      },
+      "statBonus": {
+        "df": 1
+      },
+      "learns": [],
+      "description": "방어 +1, 지휘 방어 +3. 기승 이동 5를 유지한다."
+    },
+    {
+      "id": "sky-knight",
+      "name": "비행기사",
+      "tier": 2,
+      "promotions": [],
+      "unitType": "flier",
+      "moveType": "flying",
+      "move": 6,
+      "range": [1, 1],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {
+        "at": 1
+      },
+      "learns": [],
+      "description": "공격 +1, 비행 이동 6. 강과 산을 넘지만 궁병 특효의 대상이 된다."
+    },
+    {
+      "id": "scout",
+      "name": "정찰병",
+      "tier": 1,
+      "promotions": ["longbow-captain", "naval-captain"],
+      "unitType": "archer",
+      "moveType": "foot",
+      "move": 4,
+      "range": [2, 3],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {},
+      "learns": [],
+      "description": "사거리 2–3의 궁병. 원거리 전열과 수상 기동 중에서 선택한다."
+    },
+    {
+      "id": "longbow-captain",
+      "name": "장궁대장",
+      "tier": 2,
+      "promotions": [],
+      "unitType": "archer",
+      "moveType": "foot",
+      "move": 4,
+      "range": [2, 3],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {
+        "at": 1
+      },
+      "learns": [],
+      "description": "공격 +1. 보행 4와 공격 사거리 2–3으로 원거리 전열을 운용한다."
+    },
+    {
+      "id": "naval-captain",
+      "name": "수군대장",
+      "tier": 2,
+      "promotions": [],
+      "unitType": "sailor",
+      "moveType": "amphibious",
+      "move": 5,
+      "range": [1, 1],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {
+        "df": 1
+      },
+      "learns": [],
+      "description": "방어 +1, 수륙 이동 5, 근접 사거리 1. 수상 기동과 지형 효과를 활용한다."
+    },
+    {
+      "id": "mage",
+      "name": "마도사",
+      "tier": 1,
+      "promotions": ["elementalist", "arcane-commander"],
+      "unitType": "archer",
+      "moveType": "foot",
+      "move": 4,
+      "range": [2, 3],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {},
+      "learns": [
+        {
+          "level": 1,
+          "spellIds": ["heal-1", "magic-arrow", "fireball", "force-heal-1"]
+        },
+        {
+          "level": 2,
+          "spellIds": ["protection-1"]
+        },
+        {
+          "level": 3,
+          "spellIds": ["thunder"]
+        },
+        {
+          "level": 4,
+          "spellIds": ["resist"]
+        },
+        {
+          "level": 5,
+          "spellIds": ["blizzard"]
+        },
+        {
+          "level": 6,
+          "spellIds": ["sleep", "summon-salamander"]
+        },
+        {
+          "level": 7,
+          "spellIds": ["mute"]
+        },
+        {
+          "level": 8,
+          "spellIds": ["teleport"]
+        },
+        {
+          "level": 9,
+          "spellIds": ["decline"]
+        },
+        {
+          "level": 10,
+          "spellIds": ["zone"]
+        }
+      ],
+      "description": "미라의 기본 역할. 초기 궁병 공격과 네 마법을 유지하고 레벨별 마법을 배운다."
+    },
+    {
+      "id": "elementalist",
+      "name": "원소술사",
+      "tier": 2,
+      "promotions": [],
+      "unitType": "mage",
+      "moveType": "foot",
+      "move": 4,
+      "range": [1, 1],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {
+        "mag": 1
+      },
+      "learns": [
+        {
+          "level": 1,
+          "spellIds": ["tornado"]
+        },
+        {
+          "level": 2,
+          "spellIds": ["meteor"]
+        },
+        {
+          "level": 4,
+          "spellIds": ["earthquake"]
+        },
+        {
+          "level": 6,
+          "spellIds": ["blast"]
+        },
+        {
+          "level": 8,
+          "spellIds": ["summon-white-dragon"]
+        },
+        {
+          "level": 10,
+          "spellIds": ["summon-demon-lord"]
+        }
+      ],
+      "description": "마력 +1, 마법병, 근접 사거리 1. 광역 공격과 강력한 소환 마법을 배운다."
+    },
+    {
+      "id": "arcane-commander",
+      "name": "마도지휘관",
+      "tier": 2,
+      "promotions": [],
+      "unitType": "mage",
+      "moveType": "foot",
+      "move": 4,
+      "range": [1, 1],
+      "command": {
+        "radius": 4,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {
+        "res": 1
+      },
+      "learns": [
+        {
+          "level": 1,
+          "spellIds": ["attack-1", "protection-1"]
+        },
+        {
+          "level": 2,
+          "spellIds": ["attack-2", "protection-2"]
+        },
+        {
+          "level": 4,
+          "spellIds": ["charm"]
+        },
+        {
+          "level": 6,
+          "spellIds": ["quick", "again"]
+        },
+        {
+          "level": 8,
+          "spellIds": ["summon-iron-golem"]
+        }
+      ],
+      "description": "저항 +1, 지휘 범위 4, 소속 용병 저항 +2. 새로운 광역 피해 마법 대신 강화·제어 마법을 배운다.",
+      "squadRes": 2
+    },
+    {
+      "id": "monk",
+      "name": "수도사",
+      "tier": 1,
+      "promotions": ["bishop", "holy-warrior"],
+      "unitType": "cleric",
+      "moveType": "foot",
+      "move": 4,
+      "range": [1, 1],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {},
+      "learns": [
+        {
+          "level": 1,
+          "spellIds": ["heal-1", "force-heal-1"]
+        },
+        {
+          "level": 2,
+          "spellIds": ["protection-1"]
+        },
+        {
+          "level": 4,
+          "spellIds": ["heal-2"]
+        },
+        {
+          "level": 6,
+          "spellIds": ["resist", "summon-valkyrie"]
+        },
+        {
+          "level": 8,
+          "spellIds": ["protection-2"]
+        },
+        {
+          "level": 10,
+          "spellIds": ["turn-undead"]
+        }
+      ],
+      "description": "치유와 보호를 배우는 성직병. 상위 회복과 근접 운용 중에서 선택한다."
+    },
+    {
+      "id": "bishop",
+      "name": "주교",
+      "tier": 2,
+      "promotions": [],
+      "unitType": "cleric",
+      "moveType": "foot",
+      "move": 4,
+      "range": [1, 1],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {
+        "mag": 1
+      },
+      "learns": [
+        {
+          "level": 1,
+          "spellIds": ["heal-2", "force-heal-2"]
+        },
+        {
+          "level": 4,
+          "spellIds": ["turn-undead"]
+        },
+        {
+          "level": 6,
+          "spellIds": ["again"]
+        },
+        {
+          "level": 8,
+          "spellIds": ["summon-freya"]
+        }
+      ],
+      "description": "마력 +1. 상위 힐·포스 힐과 성직 소환으로 아군을 지원한다."
+    },
+    {
+      "id": "holy-warrior",
+      "name": "성전사",
+      "tier": 2,
+      "promotions": [],
+      "unitType": "cleric",
+      "moveType": "foot",
+      "move": 5,
+      "range": [1, 1],
+      "command": {
+        "radius": 3,
+        "at": 2,
+        "df": 2
+      },
+      "statBonus": {
+        "at": 1
+      },
+      "learns": [
+        {
+          "level": 1,
+          "spellIds": ["attack-1"]
+        },
+        {
+          "level": 4,
+          "spellIds": ["attack-2"]
+        },
+        {
+          "level": 6,
+          "spellIds": ["quick"]
+        }
+      ],
+      "description": "공격 +1, 보행 이동 5. 기존 치유 마법을 유지하면서 근접 전선을 돕는다."
+    }
+  ],
+  "growthProfiles": [
+    {
+      "id": "kaiel",
+      "name": "카이엘 고정 성장",
+      "levels": [
+        {
+          "level": 2,
+          "gains": {
+            "at": 1
+          }
+        },
+        {
+          "level": 4,
+          "gains": {
+            "df": 1
+          }
+        },
+        {
+          "level": 7,
+          "gains": {
+            "at": 1
+          }
+        },
+        {
+          "level": 10,
+          "gains": {
+            "res": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "roen",
+      "name": "로엔 고정 성장",
+      "levels": [
+        {
+          "level": 2,
+          "gains": {
+            "df": 1
+          }
+        },
+        {
+          "level": 4,
+          "gains": {
+            "at": 1
+          }
+        },
+        {
+          "level": 7,
+          "gains": {
+            "df": 1
+          }
+        },
+        {
+          "level": 10,
+          "gains": {
+            "res": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "mira",
+      "name": "미라 고정 성장",
+      "levels": [
+        {
+          "level": 2,
+          "gains": {
+            "mag": 1,
+            "maxMp": 2
+          }
+        },
+        {
+          "level": 4,
+          "gains": {
+            "res": 1,
+            "maxMp": 2
+          }
+        },
+        {
+          "level": 6,
+          "gains": {
+            "maxMp": 2
+          }
+        },
+        {
+          "level": 7,
+          "gains": {
+            "mag": 1
+          }
+        },
+        {
+          "level": 8,
+          "gains": {
+            "maxMp": 2
+          }
+        },
+        {
+          "level": 10,
+          "gains": {
+            "df": 1,
+            "maxMp": 2
+          }
+        }
+      ]
+    }
+  ]
 }

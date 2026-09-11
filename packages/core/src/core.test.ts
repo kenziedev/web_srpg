@@ -42,7 +42,7 @@ function unit(
     range: [1, 1],
     command: null,
     acted: false,
-    canHeal: false,
+    spellIds: [],
   };
 }
 function fixture() {
@@ -217,7 +217,7 @@ describe("atomic commands and movement", () => {
   it("heal requires MP and a wounded ally, restores 3 HP", () => {
     const { state, a } = fixture();
     const leader = state.units.find((u) => u.id === "A")!;
-    leader.canHeal = true;
+    leader.spellIds = ["heal-1"];
     leader.mp = leader.stats.maxMp = 9;
     a.hp = 4;
     const result = apply(
@@ -230,6 +230,6 @@ describe("atomic commands and movement", () => {
     ).toBe(7);
     expect(
       result.ok && result.nextState.units.find((u) => u.id === "A")?.mp,
-    ).toBe(6);
+    ).toBe(7);
   });
 });

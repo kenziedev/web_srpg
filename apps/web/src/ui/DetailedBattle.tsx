@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { BattleAnimation } from "../game/BattleAnimation";
-import { inAttackRange, type Unit } from "@orden/core";
+import { canCounter, distance, type Unit } from "@orden/core";
+import { content } from "@orden/content";
 import { soldier, rider } from "../game/pixelUnits";
 import { Portrait } from "./Portrait";
 
@@ -211,12 +212,11 @@ export function DetailedBattle({
   const attacker = animation.before.units.find((u) => u.id === cmd.unitId)!;
   const defender = animation.before.units.find((u) => u.id === targetId)!;
   const participants = [attacker, defender];
+  const movedAttacker = { ...attacker, pos: cmd.path.at(-1) ?? attacker.pos };
   const returned =
-    !healing &&
-    inAttackRange(defender, {
-      ...attacker,
-      pos: cmd.path.at(-1) ?? attacker.pos,
-    });
+    !healing && canCounter(content, animation.before, defender, movedAttacker);
+  // A bow with minimum range 1 still uses a melee exchange on adjacent tiles.
+  const ranged = !healing && distance(movedAttacker.pos, defender.pos) > 1;
   const damageFor = (id: string) =>
     animation.events.find((e) => e.type === "damaged" && e.unitId === id);
   const afterHp = (unit: Unit) =>
@@ -257,8 +257,12 @@ export function DetailedBattle({
             {
               {
                 ready: "대형 정렬",
-                run: healing ? "마력 집중" : "돌격",
-                attack: healing ? "회복 마법 발동" : "공격 · 반격",
+                run: healing ? "마력 집중" : ranged ? "사격 준비" : "돌격",
+                attack: healing
+                  ? "회복 마법 발동"
+                  : returned
+                    ? "공격 · 반격"
+                    : "공격 · 반격 없음",
                 hit: healing ? "회복" : "피격",
                 result: "교전 결과",
               }[phase]
@@ -326,9 +330,21 @@ export function DetailedBattle({
                   ? 1
                   : 0;
             const active = side === 0 || returned;
-            const ranged = unit.range[0] > 1;
             return (
-              <div className={`duel-army army-${side}`} key={side}>
+              <div
+                className={`duel-army army-${side}`}
+                key={side}
+                data-active={active}
+                data-attack-style={
+                  healing
+                    ? "heal"
+                    : !active
+                      ? "inactive"
+                      : ranged
+                        ? "ranged"
+                        : "melee"
+                }
+              >
                 {Array.from({ length: count }, (_, i) => {
                   // Independent lanes/ranks and start times make soldiers meet in
                   // the field; this is presentation only, never another combat roll.
@@ -337,9 +353,7 @@ export function DetailedBattle({
                   const direction = side === 0 ? 1 : -1;
                   const home = side === 0 ? 9 + rank * 12 : 83 - rank * 12;
                   const opponentMoves =
-                    side === 0
-                      ? returned && defender.range[0] <= 1
-                      : attacker.range[0] <= 1;
+                    !ranged && (side === 0 ? returned : true);
                   const contact =
                     side === 0
                       ? (opponentMoves ? 42 : 75) - rank * 6
@@ -513,7 +527,11 @@ export function DetailedBattle({
                   .join("　│　")
               : healing
                 ? "마력을 모아 회복 마법을 시전합니다."
-                : "양측 부대가 맞붙습니다."}
+                : ranged
+                  ? "원거리 공격을 가합니다."
+                  : returned
+                    ? "양측 부대가 맞붙습니다."
+                    : "공격 부대가 돌격합니다."}
           </p>
           <button ref={button} onClick={skip}>
             건너뛰기 <kbd>Space</kbd>

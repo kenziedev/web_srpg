@@ -1,0 +1,1846 @@
+{
+  "referenceVersion": 1,
+  "researchedAt": "2026-09-11",
+  "purpose": "reference-only",
+  "runtimeIntegrated": false,
+  "targetEdition": {
+    "title": "랑그릿사 2",
+    "family": "Der Langrisser",
+    "platform": "구판 Windows PC",
+    "exactBuild": null,
+    "excluded": [
+      "Mega Drive original",
+      "Langrisser Mobile / 모바일 PC 클라이언트",
+      "Langrisser I & II 리메이크 / Steam"
+    ],
+    "scopeNote": "시나리오 대사상의 주문이나 에디터 전용 더미는 플레이 가능 마법 목록에 합치지 않는다."
+  },
+  "method": {
+    "summary": "PC판 명시 자료를 우선하고 독립 PC 데이터 분석으로 이름을 확인했다. 충돌 수치는 출처별 보관하며 실제 게임 실행 검증은 하지 않았다.",
+    "sourceLineage": "위키 미러끼리는 하나의 계보다. DER 범용·SNES 자료는 PC의 동일 수치를 단독 확정하지 않는다.",
+    "copyright": "게임 이름·숫자·사실 필드와 짧은 독자 요약만 기록했다. 원문 설명·이미지·게임 파일은 복제하지 않았다.",
+    "unknownPolicy": "null은 미확인이다. 0이나 없음으로 해석하지 않는다. 참조 기본값을 현재 코어 수치로 자동 적용하지 않는다."
+  },
+  "sources": {
+    "pcWikiMagic": {
+      "url": "https://tcatmon.com/wiki/랑그릿사_2/마법",
+      "title": "랑그릿사 2/마법 — 우만위키",
+      "edition": "PC판 데어 기준 명시",
+      "lineage": "namu-wiki-magic",
+      "kind": "secondary",
+      "use": "PC 기본 수치·효과 우선 자료"
+    },
+    "pcWikiSummons": {
+      "url": "https://tcatmon.com/wiki/랑그릿사_2/소환물",
+      "title": "랑그릿사 2/소환물 — 우만위키",
+      "edition": "PC판 데어 기준 명시",
+      "lineage": "namu-wiki-summons",
+      "kind": "secondary",
+      "use": "PC 소환수 구성·능력·학습 조건"
+    },
+    "namuMagicMirror": {
+      "url": "https://namu.moe/w/랑그릿사%202/마법",
+      "title": "랑그릿사 2/마법 — 나무모에",
+      "edition": "PC판 데어 기준 명시",
+      "lineage": "namu-wiki-magic",
+      "kind": "secondary-mirror",
+      "use": "같은 위키 계보; 독립 교차검증으로 세지 않음"
+    },
+    "namuSummonsMirror": {
+      "url": "https://namu.moe/w/랑그릿사%202/소환물",
+      "title": "랑그릿사 2/소환물 — 나무모에",
+      "edition": "1절 구판; 2절 리메이크",
+      "lineage": "namu-wiki-summons",
+      "kind": "secondary-mirror",
+      "use": "1절만 구판에 사용; 2절은 버전 제외 근거"
+    },
+    "derMagic": {
+      "url": "https://langrisser.org/der/6.htm",
+      "title": "DER 魔法系统",
+      "edition": "DER 계열, PC 개별 빌드 미명시",
+      "lineage": "langrisser-org",
+      "kind": "secondary",
+      "use": "다른 사이트의 목록·비용·소환 표 대조; 충돌값 별도 보관"
+    },
+    "pcDataAnalysis": {
+      "url": "https://langrisser2.blogspot.com/2019/08/7-2.html",
+      "title": "7. 랑그릿사2 클래스(지휘관, 용병, 소환수) 데이터",
+      "edition": "구판 Windows PC / MENU.DAT·CLASS.DAT 분석",
+      "lineage": "langrisser2-reversing",
+      "kind": "first-hand-published-analysis",
+      "use": "일반 마법26종·기본 소환6종의 내부 번호와 이름 확인; 이번 작업에서 게임 바이너리 실행·분석은 하지 않음"
+    },
+    "derKoreanTable": {
+      "url": "https://humans.tistory.com/651",
+      "title": "랑그릿사 2 (데어 랑그릿사) 클래스 / 용병 / 마법 / 소환마법",
+      "edition": "DER 계열, 표 자체는 PC 명시 없음",
+      "lineage": "humans-tistory-unknown-upstream",
+      "kind": "secondary",
+      "use": "일반 마법 사거리·범위·MP 대조; 소환 능력치 일부 충돌하여 채택하지 않음"
+    },
+    "snesGuide": {
+      "url": "https://gamefaqs.gamespot.com/snes/588277-der-langrisser/faqs/49716",
+      "title": "Der Langrisser — JSuk Strategy Guide",
+      "edition": "SNES",
+      "lineage": "jsuk",
+      "kind": "other-edition-guide",
+      "use": "관련판 보조 비교 전용; PC 확정값으로 승격하지 않음"
+    },
+    "mdGuide": {
+      "url": "https://gamefaqs.gamespot.com/genesis/564392-langrisser-ii/faqs/45142",
+      "title": "Langrisser II — TheStarbird Guide",
+      "edition": "Mega Drive / Genesis",
+      "lineage": "the-starbird",
+      "kind": "other-edition-guide",
+      "use": "MD 전용 목록·수치 혼입 방지"
+    },
+    "rpgClassics": {
+      "url": "https://tartarus.rpgclassics.com/langrisser/magic.shtml",
+      "title": "Der Langrisser — RPGClassics Magic",
+      "edition": "DER, zero0723 FAQ 재구성",
+      "lineage": "zero0723-derived",
+      "kind": "secondary-derived",
+      "use": "이름·능력치 전사 충돌 발견으로 채택하지 않음"
+    }
+  },
+  "totals": {
+    "spells": 26,
+    "categories": {
+      "attack": 9,
+      "healing": 4,
+      "buff": 6,
+      "debuff": 5,
+      "utility": 2
+    },
+    "summons": 9,
+    "summonCategories": {
+      "cleric": 3,
+      "summoner": 3,
+      "equipment": 3
+    }
+  },
+  "generalRules": {
+    "rangeValues": "출처의 기본 사정거리·영향범위 표기이며 현재 프로젝트의 맨해튼 반경으로 자동 변환하지 않는다.",
+    "areaGrowth": {
+      "sourceIds": [
+        "pcWikiMagic"
+      ],
+      "levelMilestones": [
+        4,
+        8
+      ],
+      "increaseEach": 1,
+      "classChangeDelta": -1,
+      "appliesTo": "area-only",
+      "unitOrSquadAreaGrows": false
+    },
+    "summonMagicGrowth": {
+      "sourceIds": [
+        "pcWikiMagic",
+        "pcDataAnalysis"
+      ],
+      "usesCommanderGrowthBonus": false
+    },
+    "buffLifetime": {
+      "sourceIds": [
+        "pcWikiMagic",
+        "derMagic"
+      ],
+      "reportedTurns": 1,
+      "exactPhaseContract": "구판은 아군/NPC/적 순서 설명을 사용한다. 현재 프로젝트의 아군/적/NPC 순서로 단순 이식하지 않는다."
+    },
+    "debuffAccuracy": {
+      "sourceIds": [
+        "pcWikiMagic"
+      ],
+      "usesResistance": true,
+      "formula": null
+    },
+    "summonPlacement": {
+      "sourceIds": [],
+      "range": null,
+      "limitPerCaster": null,
+      "replaceExistingRule": null,
+      "controlSide": null,
+      "needsVerification": true
+    },
+    "equipmentSummonRestrictions": {
+      "sourceIds": [
+        "pcWikiSummons"
+      ],
+      "eligibleFamilies": [
+        "cleric",
+        "summoner"
+      ]
+    },
+    "originalDamageFormula": {
+      "value": null,
+      "note": "현재 S01의 MAG/RES 공식은 프로젝트 공식이며 구판 공식으로 입증되지 않았다."
+    }
+  },
+  "spells": [
+    {
+      "id": "magic-arrow",
+      "pcMenuHex": "00",
+      "nameKo": "매직 애로우",
+      "category": "attack",
+      "baseMpCost": 1,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 5,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "unit",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "적 단일 경미피해",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "damageFormula": null
+      }
+    },
+    {
+      "id": "blast",
+      "pcMenuHex": "01",
+      "nameKo": "블래스트",
+      "category": "attack",
+      "baseMpCost": 10,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 2,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "unit",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "적 단일 강공격",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "damageFormula": null
+      }
+    },
+    {
+      "id": "thunder",
+      "pcMenuHex": "02",
+      "nameKo": "썬더",
+      "category": "attack",
+      "baseMpCost": 4,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 7,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "squad",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "적 부대 번개; 물 보너스",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "specialEffects": [
+          "water-dependent-bonus"
+        ],
+        "magnitude": null
+      }
+    },
+    {
+      "id": "fireball",
+      "pcMenuHex": "03",
+      "nameKo": "파이어 볼",
+      "category": "attack",
+      "baseMpCost": 2,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 4,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "area",
+          "baseValue": 3,
+          "geometry": "not-yet-verified"
+        }
+      },
+      "effectSummary": "지점 주변 적 화염피해",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "damageFormula": null
+      }
+    },
+    {
+      "id": "meteor",
+      "pcMenuHex": "04",
+      "nameKo": "메테오",
+      "category": "attack",
+      "baseMpCost": 8,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 8,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "area",
+          "baseValue": 2,
+          "geometry": "not-yet-verified"
+        }
+      },
+      "effectSummary": "운석피해; 중심 지형파괴",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "specialEffects": [
+          "terrain-destruction-at-target-center"
+        ],
+        "terrainEligibility": null
+      }
+    },
+    {
+      "id": "blizzard",
+      "pcMenuHex": "05",
+      "nameKo": "블리져드",
+      "category": "attack",
+      "baseMpCost": 3,
+      "targeting": {
+        "center": "caster",
+        "baseCastRange": null,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "area",
+          "baseValue": 4,
+          "geometry": "not-yet-verified"
+        }
+      },
+      "effectSummary": "시전자 주변 적 냉기피해",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "damageFormula": null
+      }
+    },
+    {
+      "id": "tornado",
+      "pcMenuHex": "06",
+      "nameKo": "토네이도",
+      "category": "attack",
+      "baseMpCost": 2,
+      "targeting": {
+        "center": "caster",
+        "baseCastRange": null,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "area",
+          "baseValue": 3,
+          "geometry": "not-yet-verified"
+        }
+      },
+      "effectSummary": "주변 적 피해; 비병 특효",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "specialEffects": [
+          "anti-flying-bonus"
+        ],
+        "magnitude": null
+      }
+    },
+    {
+      "id": "turn-undead",
+      "pcMenuHex": "07",
+      "nameKo": "턴 언데드",
+      "category": "attack",
+      "baseMpCost": 5,
+      "targeting": {
+        "center": "caster",
+        "baseCastRange": null,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "area",
+          "baseValue": 4,
+          "geometry": "not-yet-verified"
+        }
+      },
+      "effectSummary": "주변 불사 용병 제거; 지휘관 제외",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "specialEffects": [
+          "remove-undead-mercenaries"
+        ],
+        "excludes": [
+          "commanders"
+        ],
+        "resistInteraction": "PC 위키는 레지스트 중에도 제거된다고 서술"
+      }
+    },
+    {
+      "id": "earthquake",
+      "pcMenuHex": "08",
+      "nameKo": "어스퀘이크",
+      "category": "attack",
+      "baseMpCost": 12,
+      "targeting": {
+        "center": "caster",
+        "baseCastRange": null,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "area",
+          "baseValue": 5,
+          "geometry": "not-yet-verified"
+        }
+      },
+      "effectSummary": "주변 지상적 피해; 무작위 지형파괴",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "specialEffects": [
+          "random-terrain-destruction"
+        ],
+        "excludes": [
+          "flying"
+        ],
+        "terrainEligibility": null,
+        "randomSelectionRule": null
+      }
+    },
+    {
+      "id": "heal-1",
+      "pcMenuHex": "09",
+      "nameKo": "힐1",
+      "category": "healing",
+      "baseMpCost": 2,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 6,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "area",
+          "baseValue": 1,
+          "geometry": "not-yet-verified"
+        }
+      },
+      "effectSummary": "아군 HP+3",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "healing": 3
+      }
+    },
+    {
+      "id": "heal-2",
+      "pcMenuHex": "0A",
+      "nameKo": "힐2",
+      "category": "healing",
+      "baseMpCost": 4,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 6,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "area",
+          "baseValue": 1,
+          "geometry": "not-yet-verified"
+        }
+      },
+      "effectSummary": "아군 완전회복",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "healing": "restore-to-10"
+      }
+    },
+    {
+      "id": "force-heal-1",
+      "pcMenuHex": "0B",
+      "nameKo": "포스 힐1",
+      "category": "healing",
+      "baseMpCost": 3,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 6,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "squad",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "아군 부대 HP+3",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "healing": 3
+      }
+    },
+    {
+      "id": "force-heal-2",
+      "pcMenuHex": "0C",
+      "nameKo": "포스 힐2",
+      "category": "healing",
+      "baseMpCost": 6,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 6,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "squad",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "아군 부대 완전회복",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "healing": "restore-to-10"
+      }
+    },
+    {
+      "id": "protection-1",
+      "pcMenuHex": "0F",
+      "nameKo": "프로텍션1",
+      "category": "buff",
+      "baseMpCost": 2,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 5,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "squad",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "지휘관 DF·용병 방어수정+3",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "duration": "one-turn-phase-boundary-needs-validation",
+        "commanderDf": 3,
+        "troopDefenseCorrection": 3
+      }
+    },
+    {
+      "id": "protection-2",
+      "pcMenuHex": "10",
+      "nameKo": "프로텍션2",
+      "category": "buff",
+      "baseMpCost": 4,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 5,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "squad",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "지휘관 DF·용병 방어수정+5",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "duration": "one-turn-phase-boundary-needs-validation",
+        "commanderDf": 5,
+        "troopDefenseCorrection": 5
+      }
+    },
+    {
+      "id": "attack-1",
+      "pcMenuHex": "11",
+      "nameKo": "어택1",
+      "category": "buff",
+      "baseMpCost": 2,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 5,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "squad",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "지휘관 AT·용병 공격수정+3",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "duration": "one-turn-phase-boundary-needs-validation",
+        "commanderAt": 3,
+        "troopAttackCorrection": 3
+      }
+    },
+    {
+      "id": "attack-2",
+      "pcMenuHex": "12",
+      "nameKo": "어택2",
+      "category": "buff",
+      "baseMpCost": 4,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 5,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "squad",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "지휘관 AT·용병 공격수정+5",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "duration": "one-turn-phase-boundary-needs-validation",
+        "commanderAt": 5,
+        "troopAttackCorrection": 5
+      }
+    },
+    {
+      "id": "resist",
+      "pcMenuHex": "15",
+      "nameKo": "레지스트",
+      "category": "buff",
+      "baseMpCost": 2,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 8,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "squad",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "아군 부대 마법저항 강화",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "duration": "one-turn-phase-boundary-needs-validation",
+        "magicResistanceIncrease": null
+      }
+    },
+    {
+      "id": "quick",
+      "pcMenuHex": "17",
+      "nameKo": "퀵",
+      "category": "buff",
+      "baseMpCost": 5,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 6,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "squad",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "아군 부대 MOV+3",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "duration": "one-turn-phase-boundary-needs-validation",
+        "movement": 3
+      }
+    },
+    {
+      "id": "sleep",
+      "pcMenuHex": "0D",
+      "nameKo": "슬립",
+      "category": "debuff",
+      "baseMpCost": 4,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 3,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "area",
+          "baseValue": 1,
+          "geometry": "not-yet-verified"
+        }
+      },
+      "effectSummary": "적 수면; 공격 억제",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-source-preferred-conflict-recorded"
+      },
+      "mechanics": {
+        "success": "resistance-dependent-chance",
+        "duration": null,
+        "wakeCondition": null
+      }
+    },
+    {
+      "id": "mute",
+      "pcMenuHex": "0E",
+      "nameKo": "뮤트",
+      "category": "debuff",
+      "baseMpCost": 3,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 5,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "unit",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "적 지휘관·소환물 마법봉쇄",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "success": "resistance-dependent-chance",
+        "duration": null,
+        "summoningBlocked": null
+      }
+    },
+    {
+      "id": "zone",
+      "pcMenuHex": "13",
+      "nameKo": "존",
+      "category": "debuff",
+      "baseMpCost": 6,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 6,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "unit",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "적 지휘관 지휘범위0",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-source-preferred-conflict-recorded"
+      },
+      "mechanics": {
+        "success": "resistance-dependent-chance",
+        "duration": null,
+        "commandRadius": 0
+      }
+    },
+    {
+      "id": "charm",
+      "pcMenuHex": "16",
+      "nameKo": "참",
+      "category": "debuff",
+      "baseMpCost": 6,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 4,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "squad",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "적 부대를 우호 NPC화",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "success": "resistance-dependent-chance",
+        "duration": null,
+        "release": "probabilistic-at-enemy-turn",
+        "victoryEligibility": "still-counts-as-original-enemy"
+      }
+    },
+    {
+      "id": "decline",
+      "pcMenuHex": "19",
+      "nameKo": "디클레인",
+      "category": "debuff",
+      "baseMpCost": 5,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 5,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "squad",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "적 부대 마법저항 저하",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "magicResistanceReduction": null,
+        "relatedDerReportedReduction": 15,
+        "relatedDerValueSources": [
+          "derMagic",
+          "derKoreanTable"
+        ],
+        "success": "PC 위키는 다른 약화와 달리 버프 성격이라고 서술; 확정성·지속·중첩 미검증"
+      }
+    },
+    {
+      "id": "teleport",
+      "pcMenuHex": "14",
+      "nameKo": "텔레포트",
+      "category": "utility",
+      "baseMpCost": 5,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 16,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "squad",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "아군 부대 재배치",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "placement": "commander-movement-type-dependent",
+        "sourceOrDestinationRangeInterpretation": null
+      }
+    },
+    {
+      "id": "again",
+      "pcMenuHex": "18",
+      "nameKo": "어게인",
+      "category": "utility",
+      "baseMpCost": 10,
+      "targeting": {
+        "center": "selected",
+        "baseCastRange": 3,
+        "minimumCastRange": null,
+        "effect": {
+          "kind": "squad",
+          "baseValue": 1,
+          "geometry": null
+        }
+      },
+      "effectSummary": "행동완료 부대원 재행동",
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiMagic",
+          "derMagic"
+        ],
+        "parameters": [
+          "pcWikiMagic",
+          "derKoreanTable"
+        ],
+        "effects": [
+          "pcWikiMagic"
+        ],
+        "verification": "pc-stated-secondary-with-related-source-corroboration"
+      },
+      "mechanics": {
+        "resetsActedMembers": true,
+        "allowsCasterAsTarget": null
+      }
+    }
+  ],
+  "summons": [
+    {
+      "id": "valkyrie",
+      "pcMenuHex": "1A",
+      "nameKo": "발키리",
+      "category": "cleric",
+      "cast": {
+        "baseMpCost": 10,
+        "baseRange": null,
+        "placementRange": null,
+        "effect": {
+          "kind": "summon",
+          "unitId": "valkyrie"
+        },
+        "mpVerification": "related-DER-and-SNES-agree-PC-cast-cost-not-directly-verified"
+      },
+      "unit": {
+        "unitType": "flying",
+        "at": 36,
+        "df": 24,
+        "move": 7,
+        "maxMp": 15,
+        "magicResistanceReported": 95,
+        "magicResistanceNumeric": 95,
+        "spellIds": [
+          "fireball",
+          "quick"
+        ]
+      },
+      "unlock": {
+        "className": "클레릭",
+        "level": 2,
+        "itemName": null
+      },
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "unitStats": [
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "magicResistance": [
+          "pcWikiSummons"
+        ],
+        "castCost": [
+          "derMagic",
+          "snesGuide"
+        ],
+        "verification": "PC-labelled-unit-data-with-related-DER-corroboration"
+      },
+      "effectSummary": "소환 유닛 추가"
+    },
+    {
+      "id": "freya",
+      "pcMenuHex": "1B",
+      "nameKo": "프레이어",
+      "category": "cleric",
+      "cast": {
+        "baseMpCost": 15,
+        "baseRange": null,
+        "placementRange": null,
+        "effect": {
+          "kind": "summon",
+          "unitId": "freya"
+        },
+        "mpVerification": "related-DER-and-SNES-agree-PC-cast-cost-not-directly-verified"
+      },
+      "unit": {
+        "unitType": "flying",
+        "at": 34,
+        "df": 29,
+        "move": 7,
+        "maxMp": 25,
+        "magicResistanceReported": "FF",
+        "magicResistanceNumeric": null,
+        "spellIds": [
+          "sleep",
+          "attack-2",
+          "force-heal-2",
+          "charm"
+        ]
+      },
+      "unlock": {
+        "className": "프리스트",
+        "level": 2,
+        "itemName": null
+      },
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "unitStats": [
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "magicResistance": [
+          "pcWikiSummons"
+        ],
+        "castCost": [
+          "derMagic",
+          "snesGuide"
+        ],
+        "verification": "PC-labelled-unit-data-with-related-DER-corroboration"
+      },
+      "effectSummary": "소환 유닛 추가"
+    },
+    {
+      "id": "white-dragon",
+      "pcMenuHex": "1C",
+      "nameKo": "화이트 드래곤",
+      "category": "cleric",
+      "cast": {
+        "baseMpCost": 20,
+        "baseRange": null,
+        "placementRange": null,
+        "effect": {
+          "kind": "summon",
+          "unitId": "white-dragon"
+        },
+        "mpVerification": "related-DER-and-SNES-agree-PC-cast-cost-not-directly-verified"
+      },
+      "unit": {
+        "unitType": "dragon",
+        "at": 40,
+        "df": 30,
+        "move": 5,
+        "maxMp": 8,
+        "magicResistanceReported": 85,
+        "magicResistanceNumeric": 85,
+        "spellIds": [
+          "fireball",
+          "blizzard"
+        ]
+      },
+      "unlock": {
+        "className": "하이프리스트",
+        "level": 2,
+        "itemName": null
+      },
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "unitStats": [
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "magicResistance": [
+          "pcWikiSummons"
+        ],
+        "castCost": [
+          "derMagic",
+          "snesGuide"
+        ],
+        "verification": "PC-labelled-unit-data-with-related-DER-corroboration"
+      },
+      "effectSummary": "소환 유닛 추가"
+    },
+    {
+      "id": "salamander",
+      "pcMenuHex": "1D",
+      "nameKo": "사라만다",
+      "category": "summoner",
+      "cast": {
+        "baseMpCost": 5,
+        "baseRange": null,
+        "placementRange": null,
+        "effect": {
+          "kind": "summon",
+          "unitId": "salamander"
+        },
+        "mpVerification": "related-DER-and-SNES-agree-PC-cast-cost-not-directly-verified"
+      },
+      "unit": {
+        "unitType": "dragon",
+        "at": 28,
+        "df": 26,
+        "move": 6,
+        "maxMp": 10,
+        "magicResistanceReported": 75,
+        "magicResistanceNumeric": 75,
+        "spellIds": [
+          "fireball"
+        ]
+      },
+      "unlock": {
+        "className": "네크로맨서",
+        "level": 2,
+        "itemName": null
+      },
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "unitStats": [
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "magicResistance": [
+          "pcWikiSummons"
+        ],
+        "castCost": [
+          "derMagic",
+          "snesGuide"
+        ],
+        "verification": "PC-labelled-unit-data-with-related-DER-corroboration"
+      },
+      "effectSummary": "소환 유닛 추가"
+    },
+    {
+      "id": "iron-golem",
+      "pcMenuHex": "1E",
+      "nameKo": "아이언 골렘",
+      "category": "summoner",
+      "cast": {
+        "baseMpCost": 18,
+        "baseRange": null,
+        "placementRange": null,
+        "effect": {
+          "kind": "summon",
+          "unitId": "iron-golem"
+        },
+        "mpVerification": "related-DER-and-SNES-agree-PC-cast-cost-not-directly-verified"
+      },
+      "unit": {
+        "unitType": "pike",
+        "at": 32,
+        "df": 32,
+        "move": 4,
+        "maxMp": 0,
+        "magicResistanceReported": 90,
+        "magicResistanceNumeric": 90,
+        "spellIds": []
+      },
+      "unlock": {
+        "className": "서머너",
+        "level": 2,
+        "itemName": null
+      },
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "unitStats": [
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "magicResistance": [
+          "pcWikiSummons"
+        ],
+        "castCost": [
+          "derMagic",
+          "snesGuide"
+        ],
+        "verification": "PC-labelled-unit-data-with-related-DER-corroboration"
+      },
+      "effectSummary": "소환 유닛 추가"
+    },
+    {
+      "id": "demon-lord",
+      "pcMenuHex": "1F",
+      "nameKo": "데몬 로드",
+      "category": "summoner",
+      "cast": {
+        "baseMpCost": 30,
+        "baseRange": null,
+        "placementRange": null,
+        "effect": {
+          "kind": "summon",
+          "unitId": "demon-lord"
+        },
+        "mpVerification": "related-DER-and-SNES-agree-PC-cast-cost-not-directly-verified"
+      },
+      "unit": {
+        "unitType": "demon",
+        "at": 38,
+        "df": 28,
+        "move": 5,
+        "maxMp": 25,
+        "magicResistanceReported": 95,
+        "magicResistanceNumeric": 95,
+        "spellIds": [
+          "meteor",
+          "force-heal-2",
+          "zone",
+          "attack-2"
+        ]
+      },
+      "unlock": {
+        "className": "자밸러",
+        "level": 2,
+        "itemName": null
+      },
+      "evidence": {
+        "identity": [
+          "pcDataAnalysis",
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "unitStats": [
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "magicResistance": [
+          "pcWikiSummons"
+        ],
+        "castCost": [
+          "derMagic",
+          "snesGuide"
+        ],
+        "verification": "PC-labelled-unit-data-with-related-DER-corroboration"
+      },
+      "effectSummary": "소환 유닛 추가"
+    },
+    {
+      "id": "sleipnir",
+      "pcMenuHex": null,
+      "nameKo": "슬레이프 닐",
+      "category": "equipment",
+      "cast": {
+        "baseMpCost": null,
+        "baseRange": null,
+        "placementRange": null,
+        "effect": {
+          "kind": "summon",
+          "unitId": "sleipnir"
+        },
+        "mpVerification": "unresolved-conflict-10-versus-8"
+      },
+      "unit": {
+        "unitType": "mounted",
+        "at": 38,
+        "df": 25,
+        "move": 10,
+        "maxMp": 0,
+        "magicResistanceReported": 80,
+        "magicResistanceNumeric": 80,
+        "spellIds": []
+      },
+      "unlock": {
+        "className": null,
+        "level": null,
+        "itemName": "오딘의 방패"
+      },
+      "evidence": {
+        "identity": [
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "unitStats": [
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "magicResistance": [
+          "pcWikiSummons"
+        ],
+        "castCost": [
+          "derMagic",
+          "snesGuide"
+        ],
+        "verification": "PC-labelled-unit-data-with-related-DER-corroboration"
+      },
+      "effectSummary": "소환 유닛 추가"
+    },
+    {
+      "id": "fenrir",
+      "pcMenuHex": null,
+      "nameKo": "펜릴",
+      "category": "equipment",
+      "cast": {
+        "baseMpCost": 20,
+        "baseRange": null,
+        "placementRange": null,
+        "effect": {
+          "kind": "summon",
+          "unitId": "fenrir"
+        },
+        "mpVerification": "related-DER-and-SNES-agree-PC-cast-cost-not-directly-verified"
+      },
+      "unit": {
+        "unitType": "mounted",
+        "at": 42,
+        "df": 28,
+        "move": 8,
+        "maxMp": 10,
+        "magicResistanceReported": 85,
+        "magicResistanceNumeric": 85,
+        "spellIds": [
+          "blizzard",
+          "tornado",
+          "quick"
+        ]
+      },
+      "unlock": {
+        "className": null,
+        "level": null,
+        "itemName": "그레이프 닐"
+      },
+      "evidence": {
+        "identity": [
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "unitStats": [
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "magicResistance": [
+          "pcWikiSummons"
+        ],
+        "castCost": [
+          "derMagic",
+          "snesGuide"
+        ],
+        "verification": "PC-labelled-unit-data-with-related-DER-corroboration"
+      },
+      "effectSummary": "소환 유닛 추가"
+    },
+    {
+      "id": "aniki",
+      "pcMenuHex": null,
+      "nameKo": "아니키",
+      "category": "equipment",
+      "cast": {
+        "baseMpCost": 25,
+        "baseRange": null,
+        "placementRange": null,
+        "effect": {
+          "kind": "summon",
+          "unitId": "aniki"
+        },
+        "mpVerification": "related-DER-and-SNES-agree-PC-cast-cost-not-directly-verified"
+      },
+      "unit": {
+        "unitType": "infantry",
+        "at": 40,
+        "df": 30,
+        "move": 5,
+        "maxMp": 16,
+        "magicResistanceReported": 75,
+        "magicResistanceNumeric": 75,
+        "spellIds": [
+          "blast",
+          "heal-1",
+          "decline"
+        ]
+      },
+      "unlock": {
+        "className": null,
+        "level": null,
+        "itemName": "철아령"
+      },
+      "evidence": {
+        "identity": [
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "unitStats": [
+          "pcWikiSummons",
+          "derMagic"
+        ],
+        "magicResistance": [
+          "pcWikiSummons"
+        ],
+        "castCost": [
+          "derMagic",
+          "snesGuide"
+        ],
+        "verification": "PC-labelled-unit-data-with-related-DER-corroboration"
+      },
+      "effectSummary": "소환 유닛 추가"
+    }
+  ],
+  "conflicts": [
+    {
+      "field": "sleep.baseMpCost",
+      "adoptedReference": 4,
+      "observations": [
+        {
+          "sourceIds": [
+            "pcWikiMagic",
+            "derKoreanTable",
+            "snesGuide"
+          ],
+          "value": 4
+        },
+        {
+          "sourceIds": [
+            "derMagic"
+          ],
+          "value": 2
+        }
+      ],
+      "resolution": "PC 명시값4를 우선; 중문 오기인지 판 차이인지 미확정"
+    },
+    {
+      "field": "sleipnir.cast.baseMpCost",
+      "adoptedReference": null,
+      "observations": [
+        {
+          "sourceIds": [
+            "derMagic"
+          ],
+          "value": 10
+        },
+        {
+          "sourceIds": [
+            "snesGuide"
+          ],
+          "value": 8
+        }
+      ],
+      "resolution": "PC 직접 근거 부족; 둘 중 하나를 확정하지 않음"
+    },
+    {
+      "field": "zone.effect",
+      "adoptedReference": "command-radius-0",
+      "observations": [
+        {
+          "sourceIds": [
+            "pcWikiMagic",
+            "derKoreanTable"
+          ],
+          "value": "command-radius-0"
+        },
+        {
+          "sourceIds": [
+            "derMagic"
+          ],
+          "value": "troop-A-and-D-correction-0"
+        }
+      ],
+      "resolution": "PC 지휘범위0 설명을 우선; 보정0과 등치하지 않음"
+    },
+    {
+      "field": "heal-2/force-heal-2.effect",
+      "adoptedReference": "restore-to-10",
+      "observations": [
+        {
+          "sourceIds": [
+            "pcWikiMagic",
+            "derKoreanTable"
+          ],
+          "value": "full-heal"
+        },
+        {
+          "sourceIds": [
+            "derMagic"
+          ],
+          "value": "restore-9-HP"
+        }
+      ],
+      "resolution": "생존 HP1~10에서는 관찰상 같을 수 있음; 부활 지원으로 해석하지 않음"
+    },
+    {
+      "field": "freya.unit.magicResistance",
+      "adoptedReference": "FF",
+      "observations": [
+        {
+          "sourceIds": [
+            "pcWikiSummons"
+          ],
+          "value": "FF"
+        },
+        {
+          "sourceIds": [
+            "pcDataAnalysis"
+          ],
+          "value": "일반 마법저항 최댓값100"
+        }
+      ],
+      "resolution": "FF를255나100으로 임의 변환하지 않음; 특수값 검증 필요"
+    },
+    {
+      "field": "summon-spelling-and-stats",
+      "adoptedReference": "PC wiki + DER table",
+      "observations": [
+        {
+          "sourceIds": [
+            "rpgClassics"
+          ],
+          "value": "슬레이프닐/펜릴 연결 및 발키리 행이 다른 자료와 충돌"
+        },
+        {
+          "sourceIds": [
+            "derKoreanTable"
+          ],
+          "value": "발키리·프레이어·화이트드래곤·데몬로드 수치 일부 충돌"
+        }
+      ],
+      "resolution": "이 두 표의 소환 능력치를 PC 참조값으로 채택하지 않음"
+    }
+  ],
+  "excludedOrNotFound": [
+    {
+      "names": [
+        "독",
+        "해독",
+        "해제"
+      ],
+      "status": "not-in-verified-PC-lineup",
+      "sourceIds": [
+        "pcDataAnalysis",
+        "pcWikiMagic",
+        "derMagic"
+      ],
+      "note": "앞서 구상한 poison/cleanse는 프로젝트 독자안이다. 이번 PC 라인업에 추가하지 않는다."
+    },
+    {
+      "names": [
+        "마력탄",
+        "십자 폭발",
+        "회복"
+      ],
+      "status": "project-prototype-names-not-original-catalog-entries",
+      "sourceIds": [],
+      "note": "S01 구현 이름이다. 매직 애로우·파이어 볼·힐1과 수치/대상 구조가 달라 단순 이름 교체하지 않는다."
+    },
+    {
+      "names": [
+        "Illusion",
+        "Elemental 소환",
+        "Worm Guard 소환"
+      ],
+      "status": "MD-guide-only-not-in-PC-catalog",
+      "sourceIds": [
+        "mdGuide",
+        "pcDataAnalysis",
+        "pcWikiSummons"
+      ],
+      "note": "구판 PC 용병의 엘레멘탈과 MD 소환을 구별한다."
+    },
+    {
+      "names": [
+        "프리즈",
+        "번타이드",
+        "슬로우",
+        "액셀"
+      ],
+      "status": "remake-section-not-PC-lineup",
+      "sourceIds": [
+        "namuSummonsMirror",
+        "pcDataAnalysis"
+      ],
+      "note": "나무모에 소환물 문서의 리메이크 절에 등장. 퀵을 리메이크 액셀 수치로 대체하지 않는다."
+    }
+  ],
+  "implementationStatusNote": "아래는 조사로 식별한 기능 분류이며 현재 구현 완료 여부는 docs/handoff.md가 기준이다.",
+  "implementationConsiderations": [
+    "unit/squad/area/caster 중심의 서로 다른 대상 규칙",
+    "레벨·전직에 따른 마법 범위 성장",
+    "물·비행·불사 특효와 저항",
+    "지형 파괴와 재현 가능한 원작 무작위 처리 정책",
+    "지휘관 능력치와 용병 지휘수정 강화",
+    "수면·뮤트·존·참·저항 저하 및 확률·지속 규칙",
+    "부대 텔레포트 배치와 재행동",
+    "소환 유닛·고유 마법·장비 해금·소환 제한",
+    "마법·용병·지휘관 기여 경험치의 구판 처리"
+  ],
+  "nextVerification": [
+    "PC 마법 범위의 실제 모양·최소사거리·성장 적용 위치",
+    "텔레포트 사거리16이 대상 선택과 이동 목적지에 적용되는 방식",
+    "슬레이프닐 소모MP, 전체 소환의 배치·제한·교체·조작 규칙",
+    "상태효과 지속·해제·명중·중첩 및 레지스트/디클레인 수치",
+    "공격마법 정확한 위력·저항 계산과 지형변형 범위",
+    "원작 이름 유지 범위와 프로젝트용 표현·수치 채택은 별도 구현 결정"
+  ]
+}

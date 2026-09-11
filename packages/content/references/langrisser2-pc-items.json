@@ -1,0 +1,126 @@
+{
+  "referenceVersion": 1,
+  "researchedOn": "2026-09-11",
+  "target": "구 Windows PC판 랑그릿사 2, 데어 계열",
+  "runtimeConnected": false,
+  "purpose": "장비 시스템의 종류와 효과 축을 설계하기 위한 사실 메모. 게임에 적용할 밸런스 데이터가 아니다.",
+  "coverage": {
+    "pcDataSlots": 35,
+    "listedVariants": 34,
+    "reason": "홀리 로드의 두 데이터 슬롯을 한 항목으로 묶었다. 봉인 전후 검은 구분했다.",
+    "weapons": 18,
+    "armorAndAccessories": 16,
+    "excludedEditions": ["메가드라이브 원판 전용 항목", "2019/2020 리메이크", "모바일"],
+    "notVerified": ["실제 PC 실행 화면", "전체 직업별 장착 표", "아이템별 정상 획득 경로", "원본 실행 파일의 패치별 차이"]
+  },
+  "sources": [
+    {
+      "id": "pc-data",
+      "url": "https://langrisser2.blogspot.com/2020/06/11-2.html",
+      "title": "11. 랑그릿사2 아이템 데이터",
+      "kind": "PC판 직접 분석자의 기록",
+      "published": "2020-06-23",
+      "supports": "PC 내부 항목 순서·35개 슬롯·효과 필드 종류. 저자가 PC판만 분석했다고 명시한다.",
+      "caution": "홀리 로드 중복 이유는 저자도 미확인. 완드 바이트 설명 문단의 그레이트 소드 표기는 앞선 목록과 불일치하는 오기다."
+    },
+    {
+      "id": "pc-shop",
+      "url": "https://langrisser2.blogspot.com/2020/06/12-2.html",
+      "title": "12. 랑그릿사2 상점 데이터",
+      "kind": "PC판 직접 분석자의 기록",
+      "published": "2020-06-25",
+      "supports": "아이템 번호·가격 저장 단위. 게시된 가격 바이트로 롱 보우 1000과 아바레스트 5000을 교차 확인했다."
+    },
+    {
+      "id": "pc-wiki",
+      "url": "https://tcatmon.com/wiki/랑그릿사_2/아이템",
+      "title": "랑그릿사 2/아이템",
+      "kind": "PC 기준을 명시한 2차 자료",
+      "supports": "분류·한국어 명칭·가격·PC 효과 비교·일부 버전 주의점",
+      "caution": "2017년 보관본이며 게임 실행으로 검증한 자료는 아니다."
+    },
+    {
+      "id": "pc-wiki-current",
+      "url": "https://www.namu.moe/w/랑그릿사%202/아이템",
+      "title": "랑그릿사 2/아이템, 현재 미러",
+      "kind": "같은 위키 계보의 후속 편집본",
+      "supports": "완드 피해 증가 관찰·알하자드 획득 변형 주장",
+      "caution": "pc-wiki와 독립된 증거로 세지 않는다."
+    },
+    {
+      "id": "der-table",
+      "url": "https://langrisser.org/der/4.htm",
+      "title": "Der Langrisser 装备道具",
+      "kind": "PC 포함 여러 구판의 공통 표",
+      "supports": "아이템 효과와 공통 라인업 교차 비교",
+      "caution": "SFC·PC-FX·PS·PC·SS를 함께 표기한다. 번호 설명은 SFC 기준이므로 이 표만으로 PC 고유 수치를 확정하지 않는다."
+    }
+  ],
+  "notation": {
+    "AT": "지휘관 공격",
+    "DF": "지휘관 방어",
+    "A": "용병 공격 보정",
+    "D": "용병 방어 보정",
+    "MDF": "원작 마법 내성. 현재 게임의 RES와 같은 단위로 취급하지 않는다.",
+    "MV": "이동",
+    "CR": "지휘 범위",
+    "price": "참조 구매가. null은 일반 가격 미표기이며 획득 가능성을 뜻하지 않는다.",
+    "effects": "간략한 수치 사실. 범위·소환·MP·EXP·전직은 별도 규칙이 필요하다.",
+    "confidence": "cross-checked는 PC 라인업과 표의 일치를 뜻하며 원본 실행 검증을 뜻하지 않는다."
+  },
+  "defaultEvidence": {
+    "roster": ["pc-data", "pc-shop"],
+    "effects": ["der-table", "pc-wiki"],
+    "price": ["pc-wiki", "der-table"]
+  },
+  "items": [
+    { "id": "knife", "pcIdsHex": ["01"], "name": "나이프", "slot": "weapon", "group": "physical", "effects": ["AT+1"], "price": 50, "confidence": "cross-checked" },
+    { "id": "war-hammer", "pcIdsHex": ["02"], "name": "워 해머", "slot": "weapon", "group": "physical", "effects": ["AT+2"], "price": 120, "confidence": "cross-checked" },
+    { "id": "great-sword", "pcIdsHex": ["03"], "name": "그레이트 소드", "slot": "weapon", "group": "physical", "effects": ["AT+4"], "price": 300, "confidence": "cross-checked" },
+    { "id": "devil-axe", "pcIdsHex": ["06"], "name": "데빌 액스", "slot": "weapon", "group": "physical", "effects": ["AT+8", "DF-3"], "price": 2500, "confidence": "cross-checked" },
+    { "id": "flame-lance", "pcIdsHex": ["05"], "name": "플레임 랜스", "slot": "weapon", "group": "physical", "effects": ["AT+6"], "price": 8500, "confidence": "cross-checked" },
+    { "id": "dragon-slayer", "pcIdsHex": ["07"], "name": "D－슬레이어", "alias": "드래곤 슬레이어", "slot": "weapon", "group": "physical", "effects": ["AT+7"], "price": 10000, "confidence": "cross-checked" },
+    { "id": "langrisser-sealed", "pcIdsHex": ["08"], "name": "랑그릿사(봉인)", "slot": "weapon", "group": "story", "effects": ["AT+3", "DF+1"], "price": null, "confidence": "cross-checked" },
+    { "id": "langrisser", "pcIdsHex": ["09"], "name": "랑그릿사", "slot": "weapon", "group": "story", "effects": ["AT+9", "DF+2", "A+3", "D+1"], "price": null, "confidence": "cross-checked" },
+    { "id": "alhazard-sealed", "pcIdsHex": ["12"], "name": "알하자드(봉인)", "slot": "weapon", "group": "story", "effects": ["AT+10", "DF+1", "A+3", "D+1"], "price": null, "confidence": "availability-unresolved", "issueIds": ["alhazard-availability"] },
+    { "id": "alhazard", "pcIdsHex": ["13"], "name": "알하자드", "slot": "weapon", "group": "story", "effects": ["AT+12", "DF+1", "A+3", "D+1"], "price": null, "confidence": "availability-unresolved", "issueIds": ["alhazard-availability"] },
+    { "id": "wand", "pcIdsHex": ["04"], "name": "완드", "slot": "weapon", "group": "magic", "effects": ["마법사거리+2"], "displayedMagicDamage": 1, "price": 150, "confidence": "effect-direction-unresolved", "issueIds": ["magic-damage-direction"] },
+    { "id": "orb", "pcIdsHex": ["0C"], "name": "오브", "slot": "weapon", "group": "magic", "effects": ["MP×2", "마법사거리+3"], "price": 1000, "confidence": "cross-checked" },
+    { "id": "holy-rod", "pcIdsHex": ["0D", "0E"], "name": "홀리 로드", "slot": "weapon", "group": "magic", "effects": ["마법사거리+2", "MDF+30"], "displayedMagicDamage": 1, "price": null, "confidence": "effect-direction-unresolved", "issueIds": ["magic-damage-direction", "holy-rod-duplicate"] },
+    { "id": "dark-rod", "pcIdsHex": ["0F"], "name": "다크 로드", "slot": "weapon", "group": "magic", "effects": ["마법사거리+2"], "displayedMagicDamage": 2, "provisionalMdf": 15, "price": null, "confidence": "conflicting-sources", "issueIds": ["magic-damage-direction", "dark-rod-mdf"] },
+    { "id": "masayan-sword", "pcIdsHex": ["0B"], "name": "메사이얀 소드", "alias": "메사이안 소드 / 메사이어 소드", "slot": "weapon", "group": "special", "effects": ["AT-4", "DF-3", "A-2", "EXP×2"], "price": 600, "confidence": "cross-checked" },
+    { "id": "iron-dumbbell", "pcIdsHex": ["0A"], "name": "철 아령", "slot": "weapon", "group": "summon", "effects": ["AT+1", "MV-1", "소환:아니키"], "price": 10, "confidence": "cross-checked" },
+    { "id": "longbow", "pcIdsHex": ["10"], "name": "롱 보우", "slot": "weapon", "group": "ranged", "effects": ["AT-2", "MV-2", "공격사거리1~3"], "price": 1000, "confidence": "pc-price-corroborated", "issueIds": ["bow-prices"] },
+    { "id": "arbalest", "pcIdsHex": ["11"], "name": "아바 레스트", "alias": "아바레스트", "slot": "weapon", "group": "ranged", "effects": ["AT-4", "MV-3", "공격사거리1~6"], "price": 5000, "confidence": "pc-price-corroborated", "issueIds": ["bow-prices", "arbalest-description"] },
+    { "id": "small-shield", "pcIdsHex": ["15"], "name": "스몰 실드", "slot": "armor", "group": "physical", "effects": ["DF+1"], "price": 60, "confidence": "cross-checked" },
+    { "id": "large-shield", "pcIdsHex": ["16"], "name": "라지 실드", "slot": "armor", "group": "physical", "effects": ["DF+2"], "price": 200, "confidence": "cross-checked" },
+    { "id": "chain-mail", "pcIdsHex": ["17"], "name": "체인 메일", "slot": "armor", "group": "physical", "effects": ["DF+3"], "price": 400, "confidence": "cross-checked" },
+    { "id": "plate-armor", "pcIdsHex": ["18"], "name": "플레이트아머", "slot": "armor", "group": "physical", "effects": ["DF+4"], "price": 600, "confidence": "cross-checked" },
+    { "id": "dragon-scale", "pcIdsHex": ["1B"], "name": "드래곤 스케일", "slot": "armor", "group": "physical", "effects": ["DF+4"], "price": 2000, "confidence": "cross-checked" },
+    { "id": "assault-suit", "pcIdsHex": ["19"], "name": "아절트 슈트", "alias": "어설트 슈트", "slot": "armor", "group": "physical", "effects": ["AT+10", "DF+10"], "price": 30000, "confidence": "cross-checked" },
+    { "id": "robe", "pcIdsHex": ["1A"], "name": "로브", "slot": "armor", "group": "magic", "effects": ["DF+1", "MDF+10"], "price": 80, "confidence": "cross-checked" },
+    { "id": "mirage-robe", "pcIdsHex": ["1C"], "name": "미라쥬 로브", "slot": "armor", "group": "magic", "effects": ["DF+2", "MDF+20"], "price": 1000, "confidence": "cross-checked" },
+    { "id": "speed-boots", "pcIdsHex": ["20"], "name": "스피드 부츠", "slot": "armor", "group": "squad", "effects": ["부대MV+2"], "price": 600, "confidence": "cross-checked" },
+    { "id": "amulet", "pcIdsHex": ["1D"], "name": "아뮬렛", "slot": "armor", "group": "squad", "effects": ["부대MDF+15"], "price": 1000, "confidence": "cross-checked" },
+    { "id": "cross", "pcIdsHex": ["1E"], "name": "크로스", "slot": "armor", "group": "squad", "effects": ["D+2", "MDF+20"], "price": 300, "confidence": "cross-checked" },
+    { "id": "necklace", "pcIdsHex": ["1F"], "name": "넥크리스", "alias": "넥클리스", "slot": "armor", "group": "squad", "effects": ["CR+2", "D+3"], "price": 900, "confidence": "cross-checked" },
+    { "id": "crown", "pcIdsHex": ["21"], "name": "크라운", "slot": "armor", "group": "squad", "effects": ["CR+2", "A+3", "D+2"], "price": 5000, "confidence": "cross-checked" },
+    { "id": "runestone", "pcIdsHex": ["23"], "name": "룬스톤", "slot": "armor", "group": "class-reset", "effects": ["Lv10에서초기직업복귀"], "price": 15000, "confidence": "cross-checked" },
+    { "id": "gleipnir", "pcIdsHex": ["22"], "name": "그레이프 닐", "alias": "그레이프니르", "slot": "armor", "group": "summon", "effects": ["DF+1", "소환:펜릴"], "provisionalMdf": 10, "price": 3000, "confidence": "conflicting-sources", "issueIds": ["gleipnir-mdf"] },
+    { "id": "odins-shield", "pcIdsHex": ["14"], "name": "오딘의 방패", "slot": "armor", "group": "summon", "effects": ["DF+3", "D+1", "소환:슬레이프닐"], "price": 4600, "confidence": "cross-checked" }
+  ],
+  "issues": [
+    { "id": "bow-prices", "summary": "공통 표는 롱 보우 250·아바레스트 1250이다. PC 가격표의 바이트를 해석하면 1000·5000이므로 PC값을 채택했다.", "sourceIds": ["der-table", "pc-shop", "pc-wiki"], "status": "pc-price-resolved" },
+    { "id": "dark-rod-mdf", "summary": "PC 위키는 MDF 15, 공통 표는 10이다. 현재는 15를 잠정 기록하며 실제 실행 검증이 필요하다.", "sourceIds": ["pc-wiki", "der-table"], "status": "unresolved" },
+    { "id": "gleipnir-mdf", "summary": "PC 위키에만 MDF 10이 있다. 공통 표의 누락인지 버전 차이인지 미확인이다.", "sourceIds": ["pc-wiki", "der-table"], "status": "unresolved" },
+    { "id": "magic-damage-direction", "summary": "PC 데이터는 마법데미지 필드를 확인하지만 적용 방향은 설명하지 않는다. 위키에는 완드 착용자의 받는 피해가 증가한다는 관찰도 있어 공격 피해 보너스로 확정하지 않았다.", "sourceIds": ["pc-data", "pc-wiki-current", "der-table"], "status": "unresolved" },
+    { "id": "holy-rod-duplicate", "summary": "PC에는 0D·0E 두 슬롯이 존재한다. 공통 표는 같은 효과로 묶으며 구분 용도는 미확인이다.", "sourceIds": ["pc-data", "der-table"], "status": "unresolved" },
+    { "id": "arbalest-description", "summary": "MV -2라는 표시와 실제 -3이 다르다는 위키 기록이 있다. 공통 효과 표도 -3이다.", "sourceIds": ["pc-wiki", "der-table"], "status": "documented-unverified" },
+    { "id": "alhazard-availability", "summary": "현재 위키는 정상 진행에서 AT 10 변형을 얻고 AT 12 변형은 편집기로만 가능하다고 주장한다. 두 데이터 슬롯의 존재와 정상 획득 여부는 별개다.", "sourceIds": ["pc-data", "pc-wiki-current"], "status": "unresolved" }
+  ],
+  "pcNotes": [
+    { "summary": "장착 제한은 직업과 일부 인물에 의존한다. 크로스의 승려 제한과 스피드 부츠의 탑승 직업 제한은 자료에 있으나 전체 허용 행렬은 미확정이다.", "sourceIds": ["pc-wiki"] },
+    { "summary": "원작 전용으로 분리된 카벙클·걀라르호른·천사의 날개·오로라는 이번 PC 목록에 넣지 않았다.", "sourceIds": ["pc-wiki", "pc-data"] },
+    { "summary": "수치표와 버그 재현 여부는 별도 결정한다. 현재 게임의 AT·DF·RES·MP·EXP 단위에 원작 수치를 직접 대입하지 않는다.", "sourceIds": [] }
+  ]
+}

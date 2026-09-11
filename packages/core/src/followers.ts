@@ -2,6 +2,7 @@ import type { BattleState, Content, ActCommand, Action } from "./types";
 import { distance, reachable } from "./movement";
 import { evaluate } from "./commands";
 import { inAttackRange } from "./combat";
+import { effectiveUnit } from "./effective";
 
 /** Unacted player mercenaries follow their own leader; manual wait is an explicit hold order. */
 export function nextFollowerCommand(
@@ -31,7 +32,7 @@ export function nextFollowerCommand(
     (a, b) => a.cost - b.cost || a.pos.y - b.pos.y || a.pos.x - b.pos.x,
   );
   const nearest = Math.min(...tiles.map((t) => distance(t.pos, leader.pos)));
-  const radius = leader.command?.radius ?? 0;
+  const radius = effectiveUnit(content, state, leader).command?.radius ?? 0;
   const enemies = state.units
     .filter((u) => u.side === "enemy")
     .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
@@ -43,7 +44,7 @@ export function nextFollowerCommand(
     const actions: Action[] = [{ type: "wait" }];
     if (gap <= radius)
       for (const target of enemies)
-        if (inAttackRange({ ...unit, pos: tile.pos }, target))
+        if (inAttackRange({ ...unit, pos: tile.pos }, target, content, state))
           actions.push({ type: "attack", targetId: target.id });
     for (const action of actions) {
       const command: ActCommand = { ...base, path: tile.path, action };
@@ -67,7 +68,10 @@ export function nextFollowerCommand(
         );
         if (
           mission.route
-            .slice(index + 1, index + 1 + escort.stats.move)
+            .slice(
+              index + 1,
+              index + 1 + effectiveUnit(content, state, escort).stats.move,
+            )
             .some((p) => p.x === tile.pos.x && p.y === tile.pos.y)
         )
           score -= 60;

@@ -1,13 +1,17 @@
 import type Phaser from "phaser";
-import type { Content } from "@orden/core";
+import { terrainAt, type Content, type BattleState } from "@orden/core";
 
 /** Original 24px terrain art, painted once at a crisp 2× scale. */
-export function drawTerrain(g: Phaser.GameObjects.Graphics, content: Content) {
+export function drawTerrain(
+  g: Phaser.GameObjects.Graphics,
+  content: Content,
+  state?: BattleState,
+) {
   const s = content.scenario;
   const tile = (x: number, y: number) =>
     x < 0 || y < 0 || x >= s.width || y >= s.height
       ? ""
-      : s.tiles[y * s.width + x];
+      : (terrainAt(content, { x, y }, state)?.id ?? "");
   for (let y = 0; y < s.height; y++)
     for (let x = 0; x < s.width; x++) {
       const id = tile(x, y);

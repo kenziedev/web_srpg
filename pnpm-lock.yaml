@@ -34,6 +34,9 @@ importers:
       "@orden/core":
         specifier: workspace:*
         version: link:../../packages/core
+      "@orden/schema":
+        specifier: workspace:*
+        version: link:../../packages/schema
       phaser:
         specifier: 4.2.1
         version: 4.2.1

@@ -1,11 +1,28 @@
+import { GrowthDialog } from "./GrowthDialog";
+import { EquipmentPanel } from "./EquipmentPanel";
+import { SpellTraining } from "./SpellTraining";
+import { magicEventText, statusNames } from "./magicText";
 import { DetailedBattle } from "./DetailedBattle";
+import { DetailedSpell } from "./DetailedSpell";
+import "./spells.css";
 import { useEffect, useState } from "react";
 import { content } from "@orden/content";
-import { commandBonus, terrainAt } from "@orden/core";
+import {
+  commandBonus,
+  terrainAt,
+  effectiveUnit,
+  effectiveSpellRange,
+} from "@orden/core";
 import { BattleMap } from "../game/BattleMap";
 import { MissionPanel, BattleResult } from "./MissionPanel";
 import { Portrait } from "./Portrait";
 import { useBattle } from "./useBattle";
+import { SavePanel } from "./SavePanel";
+import {
+  spellRangeLabel,
+  spellShapeLabel,
+  spellEffectLabel,
+} from "./spellLabels";
 
 const names: Record<string, string> = {
   infantry: "보병",
@@ -22,10 +39,20 @@ export function App() {
   const [showCommand, setShowCommand] = useState(true);
   const [showRoster, setShowRoster] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
-  const bonus = unit ? commandBonus(state, unit) : null;
-  const terrain = unit ? terrainAt(content, destination ?? unit.pos) : null;
+  const viewUnit = unit ? effectiveUnit(content, state, unit) : undefined;
+  const bonus = unit ? commandBonus(state, unit, content) : null;
+  const terrain = unit
+    ? terrainAt(content, destination ?? unit.pos, state)
+    : null;
   useEffect(() => {
     const handle = (event: KeyboardEvent) => {
+      if (
+        battle.showSaves ||
+        battle.showEquipment ||
+        battle.showGrowth ||
+        !battle.ready
+      )
+        return;
       if ((event.target as HTMLElement).closest("input, textarea, select"))
         return;
       if (battle.animation?.detailed) return;
@@ -53,383 +80,635 @@ export function App() {
     return () => window.removeEventListener("keydown", handle);
   });
   return (
-    <main className="game-shell">
-      {battle.animation?.detailed && (
-        <DetailedBattle
-          key={battle.animation.id}
-          animation={battle.animation}
-          skip={battle.skipAnimation}
-        />
-      )}
-      <header className="system-bar">
-        <h1>
-          오르덴 연대기 <span>― 두 개의 건널목 ―</span>
-        </h1>
-        <nav>
-          <button onClick={() => setShowInfo(true)}>안내</button>
-          <button
-            onClick={() => {
-              setShowRoster((v) => !v);
-              battle.cancel();
-            }}
-            disabled={busy}
-          >
-            부대 목록
-          </button>
-          <button onClick={battle.reset}>연습 초기화</button>
-        </nav>
-      </header>
-      <section
-        className="battlefield"
-        aria-label="전술 지도와 명령"
-        onContextMenu={(event) => {
-          event.preventDefault();
-          battle.cancel();
-        }}
+    <>
+      <main
+        className="game-shell"
+        inert={battle.showSaves || battle.showEquipment || battle.showGrowth}
       >
-        <BattleMap
-          state={state}
-          animation={battle.animation?.detailed ? null : battle.animation}
-          selectedId={busy ? (battle.enemyActor ?? "") : battle.selectedId}
-          destination={destination}
-          reachable={battle.moves}
-          showCommand={showCommand && !busy}
-          onTile={battle.onTile}
-        />
-        <div
-          className={`turn-window classic-window ${state.activeSide === "enemy" ? "enemy-turn" : ""}`}
-          aria-live="polite"
-        >
-          <span>
-            TURN{" "}
-            <strong data-testid="round">
-              {String(state.round).padStart(2, "0")}
-            </strong>
-          </span>
-          <b data-testid="phase">
-            {state.activeSide === "player"
-              ? "아군 턴"
-              : state.activeSide === "enemy"
-                ? "적군 턴"
-                : "중립 페이즈"}
-          </b>
-        </div>
-        <div className="command-window classic-window" aria-label="전투 명령">
-          <div className="window-caption">COMMAND</div>
-          <button disabled={!canAct} onClick={() => battle.prepare("wait")}>
-            대기
-          </button>
-          <button
-            disabled={!canAct || unit?.kind !== "commander"}
-            onClick={() => battle.prepare("treat")}
-          >
-            정비
-          </button>
-          <button
-            disabled={!canAct || !unit?.canHeal || unit.mp < 3}
-            onClick={() => battle.prepare("heal")}
-          >
-            회복
-          </button>
-          <div className="menu-separator" />
-          <button
-            onClick={battle.nextUnit}
-            disabled={busy || !battle.remaining}
-          >
-            다음 부대 <kbd>N</kbd>
-          </button>
-          <button
-            aria-pressed={showCommand}
-            onClick={() => setShowCommand((v) => !v)}
-          >
-            지휘 범위 <small>{showCommand ? "ON" : "OFF"}</small>
-          </button>
-          <button
-            className="end-turn"
-            onClick={battle.requestEnd}
-            disabled={busy}
-          >
-            턴 종료 <kbd>E</kbd>
-          </button>
-          <label className="combat-mode">
-            전투 연출
-            <select
-              aria-label="전투 연출"
-              disabled={busy}
-              value={battle.combatMode}
-              onChange={(e) =>
-                battle.setCombatMode(e.target.value as "simple" | "detailed")
-              }
-            >
-              <option value="simple">간략</option>
-              <option value="detailed">상세</option>
-            </select>
-          </label>
-          <label className="speed-option">
-            <input
-              type="checkbox"
-              checked={battle.autoFollow}
-              disabled={busy}
-              onChange={(e) => battle.setAutoFollow(e.target.checked)}
+        {battle.animation?.detailed &&
+          (battle.animation.events.some(
+            (event) => event.type === "spellCast",
+          ) ? (
+            <DetailedSpell
+              key={battle.animation.id}
+              animation={battle.animation}
+              skip={battle.skipAnimation}
             />
-            용병 자동 행동
-          </label>
-          <label className="speed-option">
-            <input
-              type="checkbox"
-              checked={battle.fast}
-              onChange={(e) => battle.setFast(e.target.checked)}
-            />{" "}
-            빠른 진행
-          </label>
-        </div>
-        {busy && !state.outcome && !battle.animation && (
-          <div className="phase-banner" aria-hidden="true">
-            {battle.finishing
-              ? "FOLLOW ORDERS"
-              : state.activeSide === "enemy"
-                ? "ENEMY PHASE"
-                : "NEXT TURN"}
-          </div>
-        )}
-        {battle.animation && !battle.animation.detailed && (
+          ) : (
+            <DetailedBattle
+              key={battle.animation.id}
+              animation={battle.animation}
+              skip={battle.skipAnimation}
+            />
+          ))}
+        <header className="system-bar">
+          <h1>
+            오르덴 연대기 <span>― 두 개의 건널목 ―</span>
+          </h1>
+          <nav>
+            <button
+              disabled={
+                !battle.ready ||
+                battle.saving ||
+                battle.restoring ||
+                !!battle.animation ||
+                battle.finishing ||
+                (!state.outcome && state.activeSide !== "player")
+              }
+              onClick={() => {
+                battle.cancel();
+                battle.setConfirmEnd(false);
+                setShowInfo(false);
+                setShowRoster(false);
+                battle.setShowGrowth(true);
+              }}
+            >
+              성장 · 전직
+            </button>
+            <button
+              disabled={
+                !battle.ready ||
+                battle.saving ||
+                battle.restoring ||
+                !!battle.animation ||
+                battle.finishing ||
+                state.activeSide !== "player"
+              }
+              onClick={() => {
+                battle.cancel();
+                battle.setConfirmEnd(false);
+                setShowInfo(false);
+                setShowRoster(false);
+                battle.setShowEquipment(true);
+              }}
+            >
+              장비 · 마법 편성
+            </button>
+            <button
+              disabled={!battle.ready || !!battle.animation || battle.restoring}
+              onClick={() => {
+                battle.cancel();
+                battle.setConfirmEnd(false);
+                setShowInfo(false);
+                setShowRoster(false);
+                battle.setShowSaves(true);
+              }}
+            >
+              저장 · 복구
+            </button>
+            <button onClick={() => setShowInfo(true)}>안내</button>
+            <button
+              onClick={() => {
+                setShowRoster((v) => !v);
+                battle.cancel();
+              }}
+              disabled={busy}
+            >
+              부대 목록
+            </button>
+            <button
+              disabled={!battle.ready || battle.restoring}
+              onClick={battle.reset}
+            >
+              연습 초기화
+            </button>
+          </nav>
+        </header>
+        <section
+          className="battlefield"
+          aria-label="전술 지도와 명령"
+          onContextMenu={(event) => {
+            event.preventDefault();
+            battle.cancel();
+          }}
+        >
+          <BattleMap
+            state={state}
+            animation={battle.animation?.detailed ? null : battle.animation}
+            selectedId={busy ? (battle.enemyActor ?? "") : battle.selectedId}
+            destination={destination}
+            reachable={battle.moves}
+            spellCenters={battle.spellCenters}
+            spellTiles={battle.spellTiles}
+            showCommand={showCommand && !busy}
+            onTile={battle.onTile}
+          />
           <div
-            className="battle-feedback classic-window"
-            data-testid="battle-feedback"
+            className={`turn-window classic-window ${state.activeSide === "enemy" ? "enemy-turn" : ""}`}
             aria-live="polite"
           >
-            {battle.feedback}
+            <span>
+              TURN{" "}
+              <strong data-testid="round">
+                {String(state.round).padStart(2, "0")}
+              </strong>
+            </span>
+            <b data-testid="phase">
+              {state.activeSide === "player"
+                ? "아군 턴"
+                : state.activeSide === "enemy"
+                  ? "적군 턴"
+                  : "중립 페이즈"}
+            </b>
           </div>
-        )}
-        <MissionPanel state={state} />
-        {showRoster && (
-          <section
-            className="roster-window classic-window"
-            role="dialog"
-            aria-label="부대 목록"
-          >
-            <div className="window-caption">
-              출격 부대{" "}
-              <button
-                onClick={() => setShowRoster(false)}
-                aria-label="부대 목록 닫기"
+          <div className="command-window classic-window" aria-label="전투 명령">
+            <div className="window-caption">COMMAND</div>
+            <button disabled={!canAct} onClick={() => battle.prepare("wait")}>
+              대기
+            </button>
+            <button
+              disabled={!canAct || unit?.kind !== "commander"}
+              onClick={() => battle.prepare("treat")}
+            >
+              정비
+            </button>
+            <button
+              disabled={
+                !canAct ||
+                !battle.healingSpell ||
+                (unit?.mp ?? 0) < battle.healingSpell.mpCost
+              }
+              onClick={() => battle.prepare("heal")}
+            >
+              회복
+            </button>
+            <button
+              disabled={!canAct || !battle.spells.length}
+              aria-expanded={battle.spellMenuOpen}
+              aria-controls="spell-menu"
+              onClick={() => battle.setSpellMenuOpen(!battle.spellMenuOpen)}
+            >
+              마법
+            </button>
+            {battle.spellMenuOpen && canAct && (
+              <section
+                id="spell-menu"
+                className="spell-menu classic-window"
+                aria-label="마법 목록"
               >
-                ×
-              </button>
-            </div>
-            {content.scenario.units
-              .filter((u) => u.side === "player" && u.kind === "commander")
-              .map((leader) => (
-                <div className="squad" key={leader.id}>
+                <div className="window-caption">마법 선택 · MP {unit?.mp}</div>
+                {battle.spells.map((spell) => (
                   <button
-                    className={
-                      battle.selectedId === leader.id
-                        ? "selected squad-leader"
-                        : "squad-leader"
-                    }
-                    disabled={!state.units.some((u) => u.id === leader.id)}
-                    aria-label={`${leader.name} 선택`}
-                    onClick={() => {
-                      battle.select(leader.id);
-                      setShowRoster(false);
-                    }}
+                    key={spell.id}
+                    onClick={() => battle.prepareSpell(spell.id)}
                   >
-                    <b>{leader.name}</b>
+                    <strong>{spell.name}</strong>
+                    <span>MP {spell.mpCost}</span>
                     <small>
-                      {state.units.find((u) => u.id === leader.id)?.acted
-                        ? "행동 완료"
-                        : "지휘관"}
+                      {spellRangeLabel({
+                        ...spell,
+                        range: effectiveSpellRange(content, unit!, spell),
+                      })}{" "}
+                      · {spellShapeLabel(spell)}
+                      {(unit?.mp ?? 0) < spell.mpCost ? " · MP 부족" : ""}
                     </small>
+                    <small>{spellEffectLabel(spell)}</small>
                   </button>
-                  <div className="soldiers">
-                    {state.units
-                      .filter((u) => u.commanderId === leader.id)
-                      .map((u) => (
-                        <button
-                          key={u.id}
-                          aria-label={`${u.id} ${u.name} 선택`}
-                          onClick={() => {
-                            battle.select(u.id);
-                            setShowRoster(false);
-                          }}
-                        >
-                          {names[u.unitType]}{" "}
-                          <span>{u.acted ? "✓" : u.hp}</span>
-                        </button>
-                      ))}
-                  </div>
-                </div>
-              ))}
-          </section>
-        )}
-      </section>
-      <section className="bottom-hud classic-window">
-        <div className="unit-summary">
-          <Portrait unit={unit} />
-          <div>
-            <div className="unit-name">
-              <h2>{unit?.name ?? "부대 선택"}</h2>
-              <small>
-                {unit ? (names[unit.unitType] ?? unit.unitType) : ""}
-              </small>
-              {unit?.acted && <em data-testid="acted">행동 완료</em>}
-            </div>
-            <div className="stats-line">
-              <span>
-                AT{" "}
-                <b>
-                  {unit?.stats.at ?? "―"}
-                  {bonus?.active && <i>+{bonus.at}</i>}
-                </b>
-              </span>
-              <span>
-                DF{" "}
-                <b>
-                  {unit?.stats.df ?? "―"}
-                  {bonus?.active && <i>+{bonus.df}</i>}
-                </b>
-              </span>
-              <span>
-                MV <b>{unit?.stats.move ?? "―"}</b>
-              </span>
-              <span className="health-line">
-                HP <strong>{unit?.hp ?? "―"}</strong>
-              </span>
-              <span>
-                MP <b>{unit?.mp ?? "―"}</b>
-              </span>
-            </div>
-            <div className="terrain-line">
-              {terrain?.name ?? "―"}　지형 DF +
-              {unit?.moveType === "flying" ? 0 : (terrain?.defense ?? 0)}　
-              {unit?.command
-                ? `지휘 ${unit.command.radius}`
-                : bonus?.active
-                  ? "지휘 범위 안"
-                  : "지휘 보정 없음"}
-            </div>
-          </div>
-        </div>
-        <div className="order-panel">
-          <p role="status">
-            {busy
-              ? battle.message
-              : preview && !preview.ok
-                ? preview.error
-                : destination
-                  ? `${unit?.name} → (${destination.x}, ${destination.y})`
-                  : battle.message}
-          </p>
-          {preview?.ok && (
-            <div className="prediction" data-testid="prediction">
-              {preview.events
-                .filter(
-                  (e) =>
-                    e.type === "damaged" ||
-                    e.type === "healed" ||
-                    e.type === "removed",
-                )
-                .map((e, i) => (
-                  <span key={i}>
-                    {state.units.find((u) => u.id === e.unitId)?.name}{" "}
-                    {e.type === "removed"
-                      ? e.reason === "retreated"
-                        ? "부대 퇴각"
-                        : "전투불능"
-                      : `${e.type === "damaged" ? "−" : "+"}${e.amount} HP`}
-                  </span>
                 ))}
+                <p>이동 위치를 먼저 정한 뒤 마법과 중심 칸을 선택하세요.</p>
+                <button onClick={() => battle.setSpellMenuOpen(false)}>
+                  마법 목록 닫기
+                </button>
+              </section>
+            )}
+            <div className="menu-separator" />
+            <button
+              onClick={battle.nextUnit}
+              disabled={busy || !battle.remaining}
+            >
+              다음 부대 <kbd>N</kbd>
+            </button>
+            <button
+              aria-pressed={showCommand}
+              onClick={() => setShowCommand((v) => !v)}
+            >
+              지휘 범위 <small>{showCommand ? "ON" : "OFF"}</small>
+            </button>
+            <button
+              className="end-turn"
+              onClick={battle.requestEnd}
+              disabled={busy}
+            >
+              턴 종료 <kbd>E</kbd>
+            </button>
+            <label className="combat-mode">
+              전투 연출
+              <select
+                aria-label="전투 연출"
+                disabled={busy}
+                value={battle.combatMode}
+                onChange={(e) =>
+                  battle.setCombatMode(e.target.value as "simple" | "detailed")
+                }
+              >
+                <option value="simple">간략</option>
+                <option value="detailed">상세</option>
+              </select>
+            </label>
+            <label className="speed-option">
+              <input
+                type="checkbox"
+                checked={battle.autoFollow}
+                disabled={busy}
+                onChange={(e) => battle.setAutoFollow(e.target.checked)}
+              />
+              용병 자동 행동
+            </label>
+            <label className="speed-option">
+              <input
+                type="checkbox"
+                checked={battle.fast}
+                onChange={(e) => battle.setFast(e.target.checked)}
+              />{" "}
+              빠른 진행
+            </label>
+          </div>
+          {busy &&
+            !state.outcome &&
+            !battle.animation &&
+            !battle.saving &&
+            !battle.showSaves &&
+            !battle.showEquipment &&
+            !battle.showGrowth && (
+              <div className="phase-banner" aria-hidden="true">
+                {!battle.ready
+                  ? "저장 확인 중…"
+                  : battle.finishing
+                    ? "FOLLOW ORDERS"
+                    : state.activeSide === "enemy"
+                      ? "ENEMY PHASE"
+                      : "NEXT TURN"}
+              </div>
+            )}
+          {battle.animation && !battle.animation.detailed && (
+            <div
+              className="battle-feedback classic-window"
+              data-testid="battle-feedback"
+              aria-live="polite"
+            >
+              {battle.feedback}
             </div>
           )}
-          <div className="order-buttons">
-            <button disabled={!destination || busy} onClick={battle.cancel}>
-              취소 <kbd>Esc</kbd>
-            </button>
-            <button disabled={!preview?.ok || busy} onClick={battle.commit}>
-              행동 확정 <kbd>↵</kbd>
-            </button>
-            <small>미행동 {battle.remaining}기</small>
-          </div>
-        </div>
-      </section>
-      <div className="key-guide">
-        <span>
-          부대 → 이동 위치 → 적 선택 → 확정　│　드래그: 지도 이동　우클릭: 취소
-        </span>
-        <span>전투 연습판 · 적 자동 행동 / 저장 없음</span>
-      </div>
-      {!battle.animation && (
-        <BattleResult state={state} restart={battle.reset} />
-      )}
-      {battle.confirmEnd && (
-        <div className="modal-scrim">
-          <section
-            className="classic-window confirm-window"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="end-title"
-          >
-            <h2 id="end-title">아군 턴을 종료합니까?</h2>
-            <p>아직 행동하지 않은 부대가 {battle.remaining}기 있습니다.</p>
-            <p>
-              {battle.autoFollow
-                ? "미행동 용병은 지휘관을 따라 이동·공격한 뒤 적군 턴으로 넘어갑니다. 미행동 지휘관은 대기합니다."
-                : "남은 행동을 포기하고 적군 턴으로 넘어갑니다."}
-            </p>
-            <div>
-              <button autoFocus onClick={() => battle.setConfirmEnd(false)}>
-                계속 조작
-              </button>
-              <button onClick={battle.finishTurn}>턴 종료 확인</button>
-            </div>
-          </section>
-        </div>
-      )}
-      {showInfo && (
-        <div className="modal-scrim">
-          <section
-            className="classic-window info-window"
-            role="dialog"
-            aria-modal="true"
-            aria-label="전투 안내"
-          >
-            <h2>전투 연습 안내</h2>
-            <p>
-              턴 종료 → 미행동 용병 추종·공격 → 적군 행동 → 다음 아군 턴
-              순서입니다. 직접 대기·공격한 용병은 자동 행동하지 않습니다. 아군
-              턴 시작에 지휘관과 인접한 소속 용병은 HP 3, 거점 위 지상 유닛은 HP
-              2를 회복합니다. 두 회복은 중첩되지 않습니다.
-            </p>
-            <p>
-              10라운드 내 호송대를 동쪽 탈출 지점으로 보내십시오. 카이엘 또는
-              호송대가 쓰러지면 패배합니다. 호송대는 NPC 턴마다 도로를 2칸
-              이동하며 아군은 통과하지만 점유 칸에는 멈추지 못합니다.
-              새로고침하면 초기화됩니다.
-            </p>
-            <p>
-              봉화 (7, 2)는 아군 지휘관이 라운드 끝까지 점유해야 합니다.
-              2라운드까지 점령하면 보너스, 증원 전 점령하면 비병 등장이
-              취소됩니다. 호송 HP 7 이상 탈출도 보너스입니다.
-            </p>
-            <p>
-              비병 3기는 3라운드 종료에 (13, 1), (12, 1), (14, 1)로 등장합니다.
-              예비 칸은 각 위치의 바로 위입니다. 공간 부족 시 전체 부대가
-              보류되며 등장 다음 적 턴부터 행동합니다.
-            </p>
-            <details>
-              <summary>최근 전투 기록</summary>
-              <ol>
-                {battle.history.map((line, i) => (
-                  <li key={i}>{line}</li>
+          <MissionPanel state={state} />
+          {showRoster && (
+            <section
+              className="roster-window classic-window"
+              role="dialog"
+              aria-label="부대 목록"
+            >
+              <div className="window-caption">
+                출격 부대{" "}
+                <button
+                  onClick={() => setShowRoster(false)}
+                  aria-label="부대 목록 닫기"
+                >
+                  ×
+                </button>
+              </div>
+              {content.scenario.units
+                .filter((u) => u.side === "player" && u.kind === "commander")
+                .map((leader) => (
+                  <div className="squad" key={leader.id}>
+                    <button
+                      className={
+                        battle.selectedId === leader.id
+                          ? "selected squad-leader"
+                          : "squad-leader"
+                      }
+                      disabled={!state.units.some((u) => u.id === leader.id)}
+                      aria-label={`${leader.name} 선택`}
+                      onClick={() => {
+                        battle.select(leader.id);
+                        setShowRoster(false);
+                      }}
+                    >
+                      <b>{leader.name}</b>
+                      <small>
+                        {state.units.find((u) => u.id === leader.id)?.acted
+                          ? "행동 완료"
+                          : "지휘관"}
+                      </small>
+                    </button>
+                    <div className="soldiers">
+                      {state.units
+                        .filter((u) => u.commanderId === leader.id)
+                        .map((u) => (
+                          <button
+                            key={u.id}
+                            aria-label={`${u.id} ${u.name} 선택`}
+                            onClick={() => {
+                              battle.select(u.id);
+                              setShowRoster(false);
+                            }}
+                          >
+                            {u.summon ? u.name : (names[u.unitType] ?? u.name)}{" "}
+                            <span>{u.acted ? "✓" : u.hp}</span>
+                          </button>
+                        ))}
+                    </div>
+                  </div>
                 ))}
-              </ol>
-            </details>
-            <button autoFocus onClick={() => setShowInfo(false)}>
-              닫기
-            </button>
-          </section>
+            </section>
+          )}
+        </section>
+        <section className="bottom-hud classic-window">
+          <div className="unit-summary">
+            <Portrait unit={unit} />
+            <div>
+              <div className="unit-name">
+                <h2>{unit?.name ?? "부대 선택"}</h2>
+                <small>
+                  {unit ? (names[unit.unitType] ?? unit.unitType) : ""}
+                </small>
+                {unit?.progression && (
+                  <span className="growth-level">
+                    Lv.{unit.progression.level}{" "}
+                    {
+                      content.classes.find(
+                        (entry) => entry.id === unit.progression?.classId,
+                      )?.name
+                    }
+                  </span>
+                )}
+                {unit?.acted && <em data-testid="acted">행동 완료</em>}
+              </div>
+              <div className="stats-line">
+                <span>
+                  AT{" "}
+                  <b>
+                    {viewUnit?.stats.at ?? "―"}
+                    {bonus?.active && <i>+{bonus.at}</i>}
+                  </b>
+                </span>
+                <span>
+                  DF{" "}
+                  <b>
+                    {viewUnit?.stats.df ?? "―"}
+                    {bonus?.active && <i>+{bonus.df}</i>}
+                  </b>
+                </span>
+                <span>
+                  MV <b>{viewUnit?.stats.move ?? "―"}</b>
+                </span>
+                <span className="health-line">
+                  HP <strong>{unit?.hp ?? "―"}</strong>
+                </span>
+                <span>
+                  MP{" "}
+                  <b>
+                    {unit?.mp ?? "―"} / {viewUnit?.stats.maxMp ?? "―"}
+                  </b>
+                </span>
+              </div>
+              <div className="terrain-line">
+                {terrain?.name ?? "―"}　지형 DF +
+                {unit?.moveType === "flying" ? 0 : (terrain?.defense ?? 0)}　
+                {viewUnit?.command
+                  ? `지휘 ${viewUnit.command.radius}`
+                  : bonus?.active
+                    ? "지휘 범위 안"
+                    : "지휘 보정 없음"}
+              </div>
+              <div className="status-badges" aria-label="상태 효과">
+                {state.statuses
+                  .filter((effect) => effect.unitId === unit?.id)
+                  .map((effect) => (
+                    <span
+                      key={effect.status}
+                      title={`${effect.expiresRound}라운드 ${effect.expiresSide} 페이즈에 종료`}
+                    >
+                      {statusNames[effect.status]}
+                      {effect.power
+                        ? ` ${effect.status === "decline" ? "−" : "+"}${effect.power}`
+                        : ""}
+                    </span>
+                  ))}
+              </div>
+              <div className="magic-stats">
+                MAG {viewUnit?.stats.mag ?? "―"} · RES{" "}
+                {viewUnit?.stats.res ?? "―"}
+              </div>
+            </div>
+          </div>
+          <div className="order-panel">
+            <p role="status">
+              {busy
+                ? battle.message
+                : preview && !preview.ok
+                  ? preview.error
+                  : battle.selectedSpell
+                    ? `${battle.selectedSpell.name}${battle.selectedSpell.effect.type === "teleport" ? (battle.spellAnchor ? ` · 도착 ${battle.spellDestination ? `(${battle.spellDestination.x}, ${battle.spellDestination.y})` : "칸 선택"}` : " · 이동할 아군 선택") : ""} · ${battle.spellCenter ? `중심 (${battle.spellCenter.x}, ${battle.spellCenter.y})` : "중심 칸 선택"} · MP ${unit?.mp}${preview?.ok ? ` → ${preview.nextState.units.find((u) => u.id === unit?.id)?.mp ?? 0}` : ` / 소모 ${battle.selectedSpell.mpCost}`}`
+                    : destination
+                      ? `${unit?.name} → (${destination.x}, ${destination.y})`
+                      : battle.message}
+            </p>
+            {preview?.ok && (
+              <div
+                className={`prediction ${battle.selectedSpell ? "spell-prediction" : ""}`}
+                data-testid="prediction"
+                aria-live="polite"
+              >
+                {preview.events
+                  .filter(
+                    (e) =>
+                      e.type === "damaged" ||
+                      e.type === "healed" ||
+                      e.type === "removed",
+                  )
+                  .map((e, i) => (
+                    <span key={i}>
+                      {state.units.find((u) => u.id === e.unitId)?.name}{" "}
+                      {battle.selectedSpell ? `${e.unitId} ` : ""}
+                      {e.type === "removed"
+                        ? e.reason === "retreated"
+                          ? "부대 퇴각"
+                          : "전투불능"
+                        : battle.selectedSpell
+                          ? `HP ${state.units.find((u) => u.id === e.unitId)?.hp} → ${preview.nextState.units.find((u) => u.id === e.unitId)?.hp ?? "전장 이탈"} (${e.type === "damaged" ? "−" : "+"}${e.amount})`
+                          : `${e.type === "damaged" ? "−" : "+"}${e.amount} HP`}
+                    </span>
+                  ))}
+                {preview.events.flatMap((event, index) => {
+                  const text = magicEventText(
+                    content,
+                    state,
+                    preview.nextState,
+                    event,
+                  );
+                  return text
+                    ? [<span key={`magic-${index}`}>{text}</span>]
+                    : [];
+                })}
+              </div>
+            )}
+            <div className="order-buttons">
+              {battle.spellAnchor && (
+                <button
+                  disabled={busy}
+                  onClick={() => battle.prepareSpell(battle.selectedSpell!.id)}
+                >
+                  대상 다시 선택
+                </button>
+              )}
+              <button disabled={!destination || busy} onClick={battle.cancel}>
+                취소 <kbd>Esc</kbd>
+              </button>
+              <button disabled={!preview?.ok || busy} onClick={battle.commit}>
+                행동 확정 <kbd>↵</kbd>
+              </button>
+              <small>미행동 {battle.remaining}기</small>
+            </div>
+          </div>
+        </section>
+        <div className="key-guide">
+          <span>
+            부대 → 이동 위치 → 적 선택 → 확정　│　드래그: 지도 이동　우클릭:
+            취소
+          </span>
+          <span
+            data-testid="save-status"
+            className={battle.saveError ? "save-error" : ""}
+            title={battle.saveError}
+            aria-live="polite"
+          >
+            {battle.saveStatus}
+            {battle.saveError ? " · 저장/복구 확인" : ""}
+          </span>
         </div>
+        {!battle.animation && (
+          <BattleResult
+            state={state}
+            restart={battle.deploy}
+            growth={() => battle.setShowGrowth(true)}
+            locked={battle.saving || battle.restoring}
+            error={battle.preparationError}
+          />
+        )}
+        {battle.confirmEnd && (
+          <div className="modal-scrim">
+            <section
+              className="classic-window confirm-window"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="end-title"
+            >
+              <h2 id="end-title">아군 턴을 종료합니까?</h2>
+              <p>아직 행동하지 않은 부대가 {battle.remaining}기 있습니다.</p>
+              <p>
+                {battle.autoFollow
+                  ? "미행동 용병은 지휘관을 따라 이동·공격한 뒤 적군 턴으로 넘어갑니다. 미행동 지휘관은 대기합니다."
+                  : "남은 행동을 포기하고 적군 턴으로 넘어갑니다."}
+              </p>
+              <div>
+                <button autoFocus onClick={() => battle.setConfirmEnd(false)}>
+                  계속 조작
+                </button>
+                <button onClick={battle.finishTurn}>턴 종료 확인</button>
+              </div>
+            </section>
+          </div>
+        )}
+        {showInfo && (
+          <div className="modal-scrim">
+            <section
+              className="classic-window info-window"
+              role="dialog"
+              aria-modal="true"
+              aria-label="전투 안내"
+            >
+              <h2>전투 연습 안내</h2>
+              <p>
+                턴 종료 → 미행동 용병 추종·공격 → 적군 행동 → 다음 아군 턴
+                순서입니다. 직접 대기·공격한 용병은 자동 행동하지 않습니다. 아군
+                턴 시작에 지휘관과 인접한 소속 용병은 HP 3, 거점 위 지상 유닛은
+                HP 2를 회복합니다. 두 회복은 중첩되지 않습니다.
+              </p>
+              <p>
+                10라운드 내 호송대를 동쪽 탈출 지점으로 보내십시오. 카이엘 또는
+                호송대가 쓰러지면 패배합니다. 호송대는 NPC 턴마다 도로를 2칸
+                이동하며 아군은 통과하지만 점유 칸에는 멈추지 못합니다. 확정된
+                전투는 자동 저장하며 새로고침 후 이어집니다. 저장·복구에서 파일
+                백업과 직전 저장 복구를 할 수 있습니다.
+              </p>
+              <p>
+                마법은 이동 위치 → 마법 목록 → 중심 칸 → 행동 확정 순서로
+                사용합니다. 보라색은 중심 사거리, 밝은 테두리는 효과 범위입니다.
+                지역 마법은 빈 칸을 중심으로 선택할 수 있습니다. 부대 마법은
+                지휘관이나 소속 용병을 누르면 같은 부대 전체에 적용됩니다. 모든
+                대상의 피해·회복과 MP 변화를 먼저 확인하세요. 마법에는 반격이
+                없으며 Esc로 선택을 취소할 수 있습니다.
+              </p>
+              <p>
+                봉화 (7, 2)는 아군 지휘관이 라운드 끝까지 점유해야 합니다.
+                2라운드까지 점령하면 보너스, 증원 전 점령하면 비병 등장이
+                취소됩니다. 호송 HP 7 이상 탈출도 보너스입니다.
+              </p>
+              <p>
+                비병 3기는 3라운드 종료에 (13, 1), (12, 1), (14, 1)로
+                등장합니다. 예비 칸은 각 위치의 바로 위입니다. 공간 부족 시 전체
+                부대가 보류되며 등장 다음 적 턴부터 행동합니다.
+              </p>
+              <details>
+                <summary>최근 전투 기록</summary>
+                <ol>
+                  {battle.history.map((line, i) => (
+                    <li key={i}>{line}</li>
+                  ))}
+                </ol>
+              </details>
+              <button autoFocus onClick={() => setShowInfo(false)}>
+                닫기
+              </button>
+            </section>
+          </div>
+        )}
+      </main>
+      {battle.showGrowth && (
+        <GrowthDialog
+          state={state}
+          locked={battle.saving || battle.restoring}
+          error={battle.preparationError}
+          close={() => battle.setShowGrowth(false)}
+          promote={battle.promote}
+          reclass={battle.reclass}
+          deploy={battle.deploy}
+        />
       )}
-    </main>
+      {battle.showEquipment && (
+        <EquipmentPanel
+          content={content}
+          state={state}
+          locked={battle.saving || battle.restoring}
+          error={battle.preparationError}
+          close={() => battle.setShowEquipment(false)}
+          equip={battle.equip}
+        >
+          <SpellTraining
+            state={state}
+            locked={battle.saving || battle.restoring}
+            train={battle.train}
+          />
+        </EquipmentPanel>
+      )}
+      {battle.showSaves && (
+        <SavePanel
+          status={battle.saveStatus}
+          error={battle.saveError}
+          notice={battle.saveNotice}
+          savedAt={battle.savedAt}
+          locked={battle.saving || battle.restoring}
+          close={() => battle.setShowSaves(false)}
+          exportSave={battle.exportSave}
+          exportStoredSave={battle.exportStoredSave}
+          importSave={(file) => {
+            void battle.loadSave(file);
+          }}
+          restorePrevious={() => {
+            void battle.loadSave();
+          }}
+          retry={battle.retrySave}
+        />
+      )}
+    </>
   );
 }
