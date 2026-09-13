@@ -17,13 +17,29 @@ jobs:
       - run: pnpm check
       - run: pnpm build
       - run: pnpm build:srpg
+  browser:
+    name: Chromium ${{ matrix.shard }}/3
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm install --global pnpm@11.1.2
+      - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm test:e2e --workers=1
+      - run: pnpm test:e2e --workers=1 --shard=${{ matrix.shard }}/3 --reporter=line
       - name: Upload failed browser test artifacts
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-failures
+          name: playwright-failures-${{ matrix.shard }}
           path: test-results/
           if-no-files-found: ignore
           retention-days: 7

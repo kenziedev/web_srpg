@@ -11,6 +11,19 @@ import {
   effectiveUnit,
   type Command,
 } from "../../packages/core/src/index";
+
+// These full-battle journeys continuously redraw the canvas for nine rounds.
+// Keep action/DOM/source traces and the explicit spell/victory screenshots,
+// without recording thousands of redundant screencast frames along the way.
+test.use({
+  trace: {
+    mode: "retain-on-failure",
+    screenshots: false,
+    snapshots: true,
+    sources: true,
+  },
+});
+
 for (const route of ["beacon", "frontal"]) {
   const fixture = JSON.parse(
     readFileSync(`packages/sim/fixtures/${route}-clear.json`, "utf8"),
@@ -18,7 +31,10 @@ for (const route of ["beacon", "frontal"]) {
   test(`recorded ${route} strategy wins through real map inputs and automatic enemy turns`, async ({
     page,
   }) => {
-    test.setTimeout(180000);
+    // CI reached rounds 7–8 with every individual action/poll still within its
+    // own limit. Budget the complete 153/160-command journey separately from
+    // those unchanged, bounded interaction checks.
+    test.setTimeout(300000);
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
     page.on("console", (message) => {
