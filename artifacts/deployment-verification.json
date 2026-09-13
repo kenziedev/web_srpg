@@ -1,0 +1,115 @@
+{
+  "checkedAt": "2026-09-13T14:50:52.703Z",
+  "url": "https://kenzie.kr/srpg/",
+  "sourceCommit": "7e3d1a606dfd75ab46283e6c411617443da803cd",
+  "rulesVersion": "0.8",
+  "sourceValidation": {
+    "url": "https://github.com/kenziedev/web_srpg/actions/runs/34763220483",
+    "status": "success",
+    "unitTests": 401,
+    "browserTests": 69,
+    "browserShards": [
+      24,
+      25,
+      20
+    ],
+    "typecheck": true,
+    "build": true,
+    "buildSrpg": true,
+    "missionReplays": {
+      "beacon": 153,
+      "frontal": 160
+    }
+  },
+  "deployment": {
+    "commit": "62f8172b86dd1909c8a4f436050f5581934c80e8",
+    "url": "https://github.com/kenziedev/kenziedev.github.io/actions/runs/34763774489",
+    "status": "success"
+  },
+  "http": {
+    "sourceCommit": "7e3d1a606dfd75ab46283e6c411617443da803cd",
+    "rulesVersion": "0.8",
+    "assets": [
+      {
+        "path": "assets/index-DDNy7D-h.js",
+        "status": 200,
+        "contentType": "application/javascript",
+        "sha256": "6945e7650080aa3d673d2dc1d51388b226348c57d7d355c7dc0e21cb76c202f5",
+        "bytes": 1892498
+      },
+      {
+        "path": "assets/index-DLQ17z8Z.css",
+        "status": 200,
+        "contentType": "text/css",
+        "sha256": "1c4d4184b92b0a1b5195c8c0e28249f15ab7068ff27a3774ef4adb7bfe6950cb",
+        "bytes": 37921
+      },
+      {
+        "path": "index.html",
+        "status": 200,
+        "contentType": "text/html",
+        "sha256": "1bb38ebecc79e3a3413772ad16bcb05ef78c8d8f43c89849f68313a5d8f50ef7",
+        "bytes": 484
+      }
+    ],
+    "redirect": {
+      "status": 200,
+      "url": "https://kenzie.kr/srpg/"
+    },
+    "status": "passed"
+  },
+  "operation": {
+    "revision": 4,
+    "mode": "operation",
+    "phase": "battle",
+    "knifeOwned": 1,
+    "equipmentFunds": 250,
+    "hire": "pike",
+    "exactReloadMatch": true,
+    "preparationLocked": true
+  },
+  "legacyUpgrade": {
+    "originalRules": "0.7",
+    "originalRevision": 1,
+    "originalChecksum": "43735fc0",
+    "rawPreserved": true,
+    "backupExactMatch": true,
+    "newRules": "0.8",
+    "newRecordSeparatelyStored": true
+  },
+  "browserContexts": [
+    {
+      "label": "fresh-operation-08",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "networkErrors": []
+    },
+    {
+      "label": "restored-real-07-context-on-08",
+      "pageErrors": [],
+      "consoleErrors": [],
+      "networkErrors": []
+    }
+  ],
+  "blogServiceWorker": {
+    "status": "passed",
+    "checkedAt": "2026-09-13T14:51:07.148Z",
+    "errors": [],
+    "worker": {
+      "scope": "https://kenzie.kr/",
+      "active": "https://kenzie.kr/sw.min.js"
+    },
+    "game": {
+      "controller": "https://kenzie.kr/sw.min.js",
+      "scripts": [
+        "https://kenzie.kr/srpg/assets/index-DDNy7D-h.js"
+      ],
+      "cachedGameFiles": []
+    }
+  },
+  "limitations": [
+    "The 0.7 save was created in an isolated test browser, not taken from a user profile.",
+    "The 0.7 battle is preserved and exportable; it is not automatically migrated.",
+    "Browser verification uses Chromium; human playtesting, Safari, Firefox and low-end device testing remain separate."
+  ]
+}
