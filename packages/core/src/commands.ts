@@ -19,6 +19,8 @@ import { evaluatePromotion, evaluateReclass } from "./advancement";
 import { evaluateDeploy } from "./deployment";
 import { recordContribution, syncRoster } from "./experience";
 import { MAX_SAVE_COMMANDS } from "@orden/schema";
+import { evaluateMastery } from "./mastery";
+import { evaluateHire, evaluateTrade, evaluateStartBattle } from "./operation";
 
 /** Pure preview and reducer share one path. On rejection, no state or log is mutated. */
 export function evaluate(
@@ -43,12 +45,26 @@ export function evaluate(
     if (result.ok) syncRoster(state, result.nextState);
     return result;
   };
+  if (command.type === "mastery")
+    return prepared(evaluateMastery(content, state, command));
+  if (command.type === "hire")
+    return prepared(evaluateHire(content, state, command));
+  if (command.type === "buy" || command.type === "sell")
+    return prepared(evaluateTrade(content, state, command));
+  if (command.type === "startBattle")
+    return prepared(evaluateStartBattle(content, state, command));
   if (command.type === "promote")
     return prepared(evaluatePromotion(content, state, command));
   if (command.type === "reclass")
     return prepared(evaluateReclass(content, state, command));
   if (command.type === "deploy") return evaluateDeploy(content, state, command);
   if (state.outcome) return reject("이미 종료된 전투입니다.");
+  if (
+    (command.type === "act" || command.type === "endPhase") &&
+    state.mode === "operation" &&
+    state.operation?.phase !== "battle"
+  )
+    return reject("작전 준비를 마치고 출격을 확정하세요.");
   if (command.type === "endPhase")
     return prepared(endPhase(content, state, command));
   if (command.type === "equip")
@@ -102,7 +118,7 @@ export function evaluate(
       return reject("공격할 수 없는 대상 또는 사거리입니다.");
     const dealt = Math.min(
       target.hp,
-      damage(content, nextState, actor, target),
+      damage(content, nextState, actor, target, command.path),
     );
     const returned = canCounter(content, nextState, target, actor)
       ? Math.min(actor.hp, damage(content, nextState, target, actor))

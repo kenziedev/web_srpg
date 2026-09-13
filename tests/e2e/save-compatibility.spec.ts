@@ -83,25 +83,27 @@ test("incompatible saves survive gameplay and both originals download unchanged"
   const originals = await seedOldSaves(page);
   expect(originals.latest.rulesVersion).not.toBe(content.rulesVersion);
   await page.reload();
-  await expect(page.getByTestId("save-status")).toContainText("저장 확인 실패");
-  await expect(page.getByTestId("save-status")).toHaveAttribute(
-    "title",
-    /기존 저장은 보존했습니다/,
+  await expect(page.getByTestId("save-status")).toContainText(
+    "이전 버전 원본 보존",
   );
   await page.getByRole("button", { name: "대기", exact: true }).click();
   await page.getByRole("button", { name: "행동 확정" }).click();
   await expect(page.getByTestId("acted")).toHaveText("행동 완료");
-  await expect(page.getByTestId("save-status")).toContainText("자동 저장 중지");
+  await expect(page.getByTestId("save-status")).toContainText("자동 저장 완료");
   expect(await readSlots(page)).toEqual(originals);
 
   await page.getByRole("button", { name: "저장 · 복구", exact: true }).click();
-  await page.getByText("기존 저장 원본 백업", { exact: true }).click();
+  await page
+    .getByText("이전 버전(0.7 이하) 원본 백업", { exact: true })
+    .click();
   for (const [slot, label] of [
     ["latest", "최신"],
     ["previous", "직전"],
   ] as const) {
     const pending = page.waitForEvent("download");
-    await page.getByRole("button", { name: `기존 ${label} 저장 백업` }).click();
+    await page
+      .getByRole("button", { name: `이전 버전 ${label} 저장 백업` })
+      .click();
     const download = await pending;
     expect(download.suggestedFilename()).toBe(`original-save-${slot}.json`);
     const path = testInfo.outputPath(download.suggestedFilename());
@@ -154,15 +156,19 @@ test("absent slots show a useful error while a stored null remains exportable", 
     db.close();
   });
   await page.reload();
-  await expect(page.getByTestId("save-status")).toContainText("저장 확인 실패");
+  await expect(page.getByTestId("save-status")).toContainText(
+    "이전 버전 원본 보존",
+  );
   await page.getByRole("button", { name: "저장 · 복구", exact: true }).click();
-  await page.getByText("기존 저장 원본 백업", { exact: true }).click();
-  await page.getByRole("button", { name: "기존 직전 저장 백업" }).click();
+  await page
+    .getByText("이전 버전(0.7 이하) 원본 백업", { exact: true })
+    .click();
+  await page.getByRole("button", { name: "이전 버전 직전 저장 백업" }).click();
   await expect(page.getByTestId("save-notice")).toHaveText(
     "백업할 기존 직전 저장이 없습니다.",
   );
   const pending = page.waitForEvent("download");
-  await page.getByRole("button", { name: "기존 최신 저장 백업" }).click();
+  await page.getByRole("button", { name: "이전 버전 최신 저장 백업" }).click();
   const download = await pending;
   const path = testInfo.outputPath("null-original.json");
   await download.saveAs(path);
@@ -176,9 +182,13 @@ test("unserializable and oversized originals report bounded errors without chang
   await start(page);
   const originals = await seedOldSaves(page);
   await page.reload();
-  await expect(page.getByTestId("save-status")).toContainText("저장 확인 실패");
+  await expect(page.getByTestId("save-status")).toContainText(
+    "이전 버전 원본 보존",
+  );
   await page.getByRole("button", { name: "저장 · 복구", exact: true }).click();
-  await page.getByText("기존 저장 원본 백업", { exact: true }).click();
+  await page
+    .getByText("이전 버전(0.7 이하) 원본 백업", { exact: true })
+    .click();
   let downloads = 0;
   page.on("download", () => downloads++);
   for (const [kind, error] of [
@@ -206,7 +216,9 @@ test("unserializable and oversized originals report bounded errors without chang
       });
       db.close();
     }, kind);
-    await page.getByRole("button", { name: "기존 최신 저장 백업" }).click();
+    await page
+      .getByRole("button", { name: "이전 버전 최신 저장 백업" })
+      .click();
     await expect(page.getByTestId("save-notice")).toContainText(error);
     expect(
       (await page.getByTestId("save-notice").innerText()).length,
@@ -252,8 +264,10 @@ test("a failed original backup keeps current battle export available with storag
   await page.getByRole("button", { name: "행동 확정" }).click();
   await expect(page.getByTestId("acted")).toHaveText("행동 완료");
   await page.getByRole("button", { name: "저장 · 복구", exact: true }).click();
-  await page.getByText("기존 저장 원본 백업", { exact: true }).click();
-  await page.getByRole("button", { name: "기존 최신 저장 백업" }).click();
+  await page
+    .getByText("이전 버전(0.7 이하) 원본 백업", { exact: true })
+    .click();
+  await page.getByRole("button", { name: "이전 버전 최신 저장 백업" }).click();
   await expect(page.getByTestId("save-notice")).toContainText(
     "허용하지 않습니다",
   );

@@ -85,8 +85,6 @@ export function checksumForSave(save: Omit<BattleSave, "checksum">): string {
 }
 
 const currentContentHash = hash(canonicalStringify(content));
-const initialState = createBattle(content);
-const initialJson = canonicalStringify(initialState);
 
 function fail(message: string): never {
   throw new Error(message);
@@ -115,7 +113,10 @@ export function validateSave(input: unknown): BattleSave {
   const { checksum, ...body } = save;
   if (checksumForSave(body) !== checksum)
     fail("저장 파일이 손상되었습니다. 체크섬이 일치하지 않습니다.");
-  if (canonicalStringify(save.initialState) !== initialJson)
+  if (
+    canonicalStringify(save.initialState) !==
+    canonicalStringify(createBattle(content, save.initialState.mode))
+  )
     fail("저장 파일의 초기 배치가 현재 시나리오와 다릅니다.");
   if (
     save.revision !== save.commands.length ||
@@ -135,7 +136,7 @@ export function validateSave(input: unknown): BattleSave {
   )
     fail("턴 종료 진행 정보가 현재 전투 페이즈와 일치하지 않습니다.");
 
-  let replay = createBattle(content);
+  let replay = createBattle(content, save.initialState.mode);
   const commandIds = new Set<string>();
   for (const [index, command] of save.commands.entries()) {
     if (commandIds.has(command.commandId))
@@ -163,7 +164,7 @@ export function createSave(
     contentHash: currentContentHash,
     revision: state.revision,
     lastCommandId: state.commands.at(-1)?.commandId ?? null,
-    initialState: structuredClone(initialState),
+    initialState: createBattle(content, state.mode),
     commands: structuredClone(state.commands),
     battle: structuredClone(state),
     continuation: { ...continuation },

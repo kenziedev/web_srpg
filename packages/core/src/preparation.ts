@@ -1,5 +1,19 @@
 import type { BattleState, Content, Evaluation, TrainCommand } from "./types";
 import { canPrepare } from "./equipment";
+import type { Unit } from "./types";
+
+export function learnableSpells(
+  content: Content,
+  state: BattleState,
+  unit: Unit,
+) {
+  return content.spells.filter(
+    (spell) =>
+      spell.learnable !== false &&
+      (state.mode === "practice" ||
+        unit.progression?.learnedSpellIds.includes(spell.id)),
+  );
+}
 
 /** The practice battle's spell loadout, before the first tactical command. */
 export function evaluateTrain(
@@ -25,9 +39,7 @@ export function evaluateTrain(
     new Set(command.spellIds).size !== command.spellIds.length ||
     command.spellIds.some(
       (id) =>
-        !content.spells.some(
-          (spell) => spell.id === id && spell.learnable !== false,
-        ),
+        !learnableSpells(content, state, unit).some((spell) => spell.id === id),
     )
   )
     return { ok: false, error: "편성할 수 없는 마법이 포함되어 있습니다." };

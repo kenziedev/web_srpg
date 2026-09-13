@@ -175,8 +175,18 @@ export const unitProgressionSchema = z
     totalExp: z.number().int().min(0).max(1_000_000_000),
     learnedSpellIds: z.array(growthId).max(64),
     classHistory: z.array(growthId).min(1).max(1024),
+    unlockedMasteryIds: z.array(growthId).max(6).optional(),
+    equippedMasteryId: growthId.nullable().optional(),
   })
   .superRefine((progression, ctx) => {
+    const masteries = progression.unlockedMasteryIds ?? [];
+    if (new Set(masteries).size !== masteries.length)
+      ctx.addIssue({ code: "custom", message: "마스터리 ID 중복" });
+    if (
+      progression.equippedMasteryId &&
+      !masteries.includes(progression.equippedMasteryId)
+    )
+      ctx.addIssue({ code: "custom", message: "습득하지 않은 마스터리 장착" });
     if (progression.level < 10 && progression.exp >= 100)
       ctx.addIssue({
         code: "custom",
@@ -229,6 +239,41 @@ export const classSchema = z.object({
     .max(10),
   description: z.string().min(1).max(1024),
   squadRes: z.number().int().min(0).max(8).optional(),
+  hireTemplateIds: z.array(growthId).min(1).max(7).optional(),
+});
+export const masterySchema = z.object({
+  id: growthId,
+  name: z.string().min(1).max(80),
+  description: z.string().min(1).max(1024),
+  sourceClassId: growthId,
+  effect: z.enum([
+    "command-radius",
+    "defense",
+    "charge",
+    "forest-move",
+    "mana",
+    "resistance",
+  ]),
+});
+export const mercenaryTemplateSchema = z.object({
+  id: growthId,
+  name: z.string().min(1).max(80),
+  unitType: z.enum([
+    "infantry",
+    "pike",
+    "cavalry",
+    "archer",
+    "flier",
+    "sailor",
+    "cleric",
+  ]),
+  moveType: moveTypeSchema,
+  stats: statsSchema,
+  range: z.tuple([
+    z.number().int().min(1).max(63),
+    z.number().int().min(1).max(63),
+  ]),
+  cost: z.number().int().min(1).max(1000000),
 });
 export const growthProfileSchema = z.object({
   id: growthId,
@@ -356,6 +401,35 @@ export const terrainSchema = z.object({
   noLanding: z.boolean(),
   water: z.boolean(),
   destroyedTo: z.string().min(1).max(128).optional(),
+  masteryTags: z
+    .array(z.enum(["charge", "forest"]))
+    .max(2)
+    .optional(),
+});
+const money = z.number().int().min(0).max(1000000000);
+const inventorySchema = z.record(growthId, z.number().int().min(0).max(9999));
+export const preparationSchema = z.object({
+  equipmentFunds: money,
+  inventory: inventorySchema,
+  operationBudget: money,
+  slots: z
+    .array(
+      z.object({
+        unitId: growthId,
+        commanderId: growthId,
+        templateId: growthId,
+      }),
+    )
+    .min(1)
+    .max(36),
+  shop: z
+    .array(z.object({ itemId: growthId, buyPrice: money, sellPrice: money }))
+    .max(128),
+  rewards: z.object({
+    equipmentFunds: money,
+    items: inventorySchema,
+    bonusSupport: z.number().int().min(0).max(200),
+  }),
 });
 export const enemyPlanSchema = z.object({
   commanderId: z.string().min(1),
@@ -386,6 +460,7 @@ export const scenarioSchema = z.object({
     .optional(),
   seed: z.number().int().min(0).max(0xffffffff).optional(),
   enemyPlans: z.array(enemyPlanSchema).optional(),
+  preparation: preparationSchema.optional(),
   reinforcement: z.object({
     round: z.number().int().positive(),
     units: z.array(unitSchema),
@@ -418,6 +493,8 @@ export const contentSchema = z
     items: z.array(itemSchema),
     classes: z.array(classSchema).min(1),
     growthProfiles: z.array(growthProfileSchema).min(1),
+    masteries: z.array(masterySchema).max(6).optional(),
+    mercenaryTemplates: z.array(mercenaryTemplateSchema).max(7).default([]),
     scenario: scenarioSchema,
     affinities: z.array(
       z.object({
@@ -443,6 +520,41 @@ export const contentSchema = z
     if (spellIds.size !== content.spells.length) fail("마법 ID 중복");
     const classIds = new Set(content.classes.map((job) => job.id));
     if (classIds.size !== content.classes.length) fail("직업 ID 중복");
+    const masteryIds = new Set(
+      (content.masteries ?? []).map((entry) => entry.id),
+    );
+    if (masteryIds.size !== (content.masteries ?? []).length)
+      fail("마스터리 ID 중복");
+    const masteryClasses = new Set<string>();
+    for (const mastery of content.masteries ?? []) {
+      if (
+        content.classes.find((entry) => entry.id === mastery.sourceClassId)
+          ?.tier !== 1
+      )
+        fail(`마스터리 기본 직업 참조 오류: ${mastery.id}`);
+      if (masteryClasses.has(mastery.sourceClassId))
+        fail(`기본 직업 마스터리 중복: ${mastery.id}`);
+      masteryClasses.add(mastery.sourceClassId);
+    }
+    for (const terrain of content.terrains)
+      if (
+        new Set(terrain.masteryTags ?? []).size !==
+        (terrain.masteryTags ?? []).length
+      )
+        fail(`지형 마스터리 태그 중복: ${terrain.id}`);
+    const templateIds = new Set(
+      content.mercenaryTemplates.map((entry) => entry.id),
+    );
+    if (templateIds.size !== content.mercenaryTemplates.length)
+      fail("용병 템플릿 ID 중복");
+    for (const template of content.mercenaryTemplates) {
+      if (
+        template.range[0] > template.range[1] ||
+        template.stats.maxMp !== 0 ||
+        template.stats.mag !== 0
+      )
+        fail(`용병 템플릿 능력치 오류: ${template.id}`);
+    }
     const growthIds = new Set(
       content.growthProfiles.map((profile) => profile.id),
     );
@@ -455,6 +567,12 @@ export const contentSchema = z
     );
     const parentCount = new Map<string, number>();
     for (const job of content.classes) {
+      if (
+        new Set(job.hireTemplateIds ?? []).size !==
+          (job.hireTemplateIds ?? []).length ||
+        (job.hireTemplateIds ?? []).some((id) => !templateIds.has(id))
+      )
+        fail(`직업 고용 템플릿 참조·중복 오류: ${job.id}`);
       if (job.range[0] > job.range[1]) fail(`직업 사거리 오류: ${job.id}`);
       if (new Set(job.promotions).size !== job.promotions.length)
         fail(`전직 경로 중복: ${job.id}`);
@@ -539,6 +657,89 @@ export const contentSchema = z
     if (s.tiles.length !== s.width * s.height) fail("타일 수와 맵 크기 불일치");
     if (s.tiles.some((t) => !terrainIds.has(t))) fail("정의되지 않은 지형");
     const all = [...s.units, ...s.reinforcement.units];
+    if (s.preparation) {
+      const prep = s.preparation;
+      if (
+        new Set(prep.slots.map((slot) => slot.unitId)).size !==
+        prep.slots.length
+      )
+        fail("고용 슬롯 ID 중복");
+      for (const slot of prep.slots) {
+        const unit = s.units.find((entry) => entry.id === slot.unitId);
+        const leader = s.units.find((entry) => entry.id === slot.commanderId);
+        const template = content.mercenaryTemplates.find(
+          (entry) => entry.id === slot.templateId,
+        );
+        const job = content.classes.find(
+          (entry) => entry.id === leader?.progression?.classId,
+        );
+        if (
+          !unit ||
+          unit.side !== "player" ||
+          unit.kind !== "mercenary" ||
+          unit.commanderId !== slot.commanderId ||
+          !leader ||
+          leader.side !== "player" ||
+          leader.kind !== "commander" ||
+          !leader.progression ||
+          !template ||
+          !job?.hireTemplateIds?.includes(slot.templateId)
+        )
+          fail(`고용 슬롯 참조 오류: ${slot.unitId}`);
+        if (
+          template &&
+          unit &&
+          (unit.unitType !== template.unitType ||
+            unit.moveType !== template.moveType ||
+            JSON.stringify(unit.stats) !== JSON.stringify(template.stats) ||
+            JSON.stringify(unit.range) !== JSON.stringify(template.range))
+        )
+          fail(`초기 고용 편성 불일치: ${slot.unitId}`);
+      }
+      if (
+        s.units.some(
+          (unit) =>
+            unit.side === "player" &&
+            unit.kind === "mercenary" &&
+            !prep.slots.some((slot) => slot.unitId === unit.id),
+        )
+      )
+        fail("고용 슬롯 누락");
+      const initialCost = prep.slots.reduce(
+        (sum, slot) =>
+          sum +
+          (content.mercenaryTemplates.find(
+            (entry) => entry.id === slot.templateId,
+          )?.cost ?? 0),
+        0,
+      );
+      if (initialCost > prep.operationBudget)
+        fail("기본 작전비로 초기 편성을 고용할 수 없습니다.");
+      if (
+        new Set(prep.shop.map((offer) => offer.itemId)).size !==
+        prep.shop.length
+      )
+        fail("상점 아이템 중복");
+      for (const offer of prep.shop)
+        if (
+          !itemIds.has(offer.itemId) ||
+          offer.buyPrice <= 0 ||
+          offer.sellPrice > offer.buyPrice
+        )
+          fail(`상점 참조·가격 오류: ${offer.itemId}`);
+      for (const id of [
+        ...Object.keys(prep.inventory),
+        ...Object.keys(prep.rewards.items),
+      ])
+        if (!itemIds.has(id)) fail(`작전 아이템 참조 오류: ${id}`);
+      const initialWorn = new Map<string, number>();
+      for (const unit of s.units.filter((entry) => entry.side === "player"))
+        for (const id of Object.values(unit.equipment ?? {}))
+          if (id) initialWorn.set(id, (initialWorn.get(id) ?? 0) + 1);
+      for (const [id, count] of initialWorn)
+        if ((prep.inventory[id] ?? 0) < count)
+          fail(`작전 초기 장착 수량이 소유 수량 초과: ${id}`);
+    }
     if (new Set(all.map((u) => u.id)).size !== all.length) fail("유닛 ID 중복");
     if (all.length > 42) fail("동시 유닛 상한 초과");
     const inside = (p: Position) => p.x < s.width && p.y < s.height;
@@ -674,6 +875,22 @@ export const contentSchema = z
         }
         if (u.progression) {
           const progression = u.progression;
+          if (
+            (progression.unlockedMasteryIds ?? []).some(
+              (id) => !masteryIds.has(id),
+            )
+          )
+            fail(`마스터리 참조 오류: ${u.id}`);
+          for (const id of progression.unlockedMasteryIds ?? []) {
+            const mastery = (content.masteries ?? []).find(
+              (entry) => entry.id === id,
+            );
+            if (
+              mastery &&
+              !progression.classHistory.includes(mastery.sourceClassId)
+            )
+              fail(`다른 계열 마스터리 습득: ${u.id}`);
+          }
           if (u.kind !== "commander" || u.side !== "player" || u.summon)
             fail(`정규 아군 지휘관만 성장 가능: ${u.id}`);
           const currentClass = content.classes.find(

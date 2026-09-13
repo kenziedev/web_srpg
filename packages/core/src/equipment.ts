@@ -12,13 +12,20 @@ export type EquipmentSlot = Item["slot"];
 
 /** Preparation closes permanently when the first tactical action/phase is logged. */
 export function canPrepare(state: BattleState): boolean {
+  if (state.mode === "operation")
+    return (
+      !state.outcome &&
+      state.operation?.phase === "preparation" &&
+      state.round === 1 &&
+      state.activeSide === "player"
+    );
   return (
     !state.outcome &&
     state.round === 1 &&
     state.activeSide === "player" &&
-    !state.commands.slice(state.progression.battleStartRevision).some(
-      (command) => command.type === "act" || command.type === "endPhase",
-    )
+    !state.commands
+      .slice(state.progression.battleStartRevision)
+      .some((command) => command.type === "act" || command.type === "endPhase")
   );
 }
 
@@ -53,15 +60,17 @@ export function equipmentOptions(
         ? "첫 전투 행동 이후에는 장비를 바꿀 수 없습니다."
         : unit.kind !== "commander" || unit.side !== "player" || unit.hp <= 0
           ? "생존한 아군 지휘관만 장착할 수 있습니다."
-          : (item.useEffect === "class-reset" ? "룬스톤은 성장·전직 화면에서 사용합니다." : item.unavailableReason ??
-            (item.allowedUnitTypes &&
-            !item.allowedUnitTypes.includes(unit.unitType)
-              ? "이 병종의 지휘관은 장착할 수 없습니다."
-              : equipped
-                ? "이미 장착한 장비입니다."
-                : available < 1
-                  ? "남는 소유 장비가 없습니다."
-                  : null));
+          : item.useEffect === "class-reset"
+            ? "룬스톤은 성장·전직 화면에서 사용합니다."
+            : (item.unavailableReason ??
+              (item.allowedUnitTypes &&
+              !item.allowedUnitTypes.includes(unit.unitType)
+                ? "이 병종의 지휘관은 장착할 수 없습니다."
+                : equipped
+                  ? "이미 장착한 장비입니다."
+                  : available < 1
+                    ? "남는 소유 장비가 없습니다."
+                    : null));
       return { item, owned, available, equipped, reason };
     });
 }

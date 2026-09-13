@@ -12,6 +12,8 @@ import spellReference from "../references/langrisser2-pc-spells.json";
 import itemReference from "../references/langrisser2-pc-items.json";
 
 const baseBattle = () => ({
+  mode: "practice",
+  operation: null,
   rulesVersion: content.rulesVersion,
   revision: 0,
   round: 1,
@@ -167,6 +169,7 @@ describe("S02 full PC catalogs and reference integrity", () => {
     const caster = valid.scenario.units.find((unit) => unit.id === "A3")!;
     caster.equipment = { weapon: "orb", armor: null };
     caster.mp = 18;
+    valid.scenario.preparation!.inventory.orb = 1;
     expect(contentSchema.safeParse(valid).success).toBe(true);
     caster.mp = 19;
     expect(contentSchema.safeParse(valid).success).toBe(false);
@@ -219,6 +222,8 @@ describe("S02 strict saved systems", () => {
     const battle = baseBattle();
     expect(savedBattleSchema.parse(battle)).toEqual(battle);
     for (const key of [
+      "mode",
+      "operation",
       "statuses",
       "terrainChanges",
       "inventory",

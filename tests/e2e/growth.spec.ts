@@ -26,10 +26,10 @@ function victory() {
 async function latest(page: Page): Promise<BattleSave> {
   return page.evaluate(async () => {
     const path = "/src/storage/battleSaveStore.ts";
-    const { createBattleSaveStore } = (await import(
+    const { createCurrentBattleSaveStore } = (await import(
       path
     )) as typeof import("../../apps/web/src/storage/battleSaveStore");
-    return createBattleSaveStore().readRaw("latest");
+    return createCurrentBattleSaveStore().readRaw("latest");
   }) as Promise<BattleSave>;
 }
 async function load(page: Page, state: BattleState) {
@@ -43,10 +43,10 @@ async function load(page: Page, state: BattleState) {
     const { createSave } = (await import(
       formatPath
     )) as typeof import("../../apps/web/src/storage/saveFormat");
-    const { createBattleSaveStore } = (await import(
+    const { createCurrentBattleSaveStore } = (await import(
       storePath
     )) as typeof import("../../apps/web/src/storage/battleSaveStore");
-    await createBattleSaveStore().write(
+    await createCurrentBattleSaveStore().write(
       createSave(battle, { finishing: false, autoFollow: false }),
     );
   }, state);

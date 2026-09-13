@@ -1,6 +1,8 @@
 import { useState } from "react";
 import {
   commanderGrowth,
+  masteryOptions,
+  canPrepare,
   type BattleState,
   type ClassChangeOption,
   type Content,
@@ -14,6 +16,7 @@ export interface GrowthPanelProps {
   error?: string;
   promote: (unitId: string, classId: string) => void;
   reclass: (unitId: string) => void;
+  mastery: (unitId: string, masteryId: string | null) => void;
 }
 const movementNames = {
   foot: "보행",
@@ -298,11 +301,52 @@ export function GrowthPanel(props: GrowthPanelProps) {
         </div>
       )}
       <div className="growth-earned">
+        <h4>마스터리 · 장착 1개</h4>
+        <p>
+          1차 직업 Lv10에 계열 패시브를 해금합니다. 출격 준비 중 선택하며 전직과
+          룬스톤 사용 뒤에도 보존합니다.
+        </p>
+        <ul className="mastery-options" aria-label="마스터리 목록">
+          {masteryOptions(props.content, props.state, growth.unit).map(
+            (option) => (
+              <li key={option.definition.id}>
+                <strong>
+                  {option.definition.name}
+                  {option.equipped
+                    ? " · 장착 중"
+                    : option.unlocked
+                      ? " · 해금"
+                      : " · 잠김"}
+                </strong>
+                <p>{option.definition.description}</p>
+                <small>{option.reason}</small>
+                <button
+                  disabled={
+                    props.locked ||
+                    (option.equipped
+                      ? !canPrepare(props.state)
+                      : !!option.reason)
+                  }
+                  onClick={() =>
+                    props.mastery(
+                      unitId,
+                      option.equipped ? null : option.definition.id,
+                    )
+                  }
+                >
+                  {option.definition.name} {option.equipped ? "해제" : "장착"}
+                </button>
+              </li>
+            ),
+          )}
+        </ul>
+      </div>
+      <div className="growth-earned">
         <h4>정식 학습 마법</h4>
         <p>{learned.join(" · ") || "없음"}</p>
         <p>
-          직업과 레벨로 배운 마법입니다. 전투 준비의 연습 마법 편성과 별도로
-          보존됩니다.
+          직업과 레벨로 배운 마법입니다. 정식 출격에서는 이 목록 안에서 마법을
+          편성합니다.
         </p>
       </div>
       <p>
@@ -330,7 +374,7 @@ export function GrowthPanel(props: GrowthPanelProps) {
       </ul>
       <p className="growth-notice">
         전직에는 지휘관별 EXP를 모아 Lv10에 도달해야 합니다. 현재는 첫 맵만
-        제공하며, 이후 장과 고용·마스터리는 아직 연결되지 않았습니다.
+        제공하므로 이후 장의 성장 진행은 새 시나리오에서 이어집니다.
       </p>
     </section>
   );

@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { contentSchema } from "../../packages/schema/src/index";
+import type { BattleSave } from "../../apps/web/src/storage/saveFormat";
 const content = contentSchema.parse(
   JSON.parse(readFileSync("packages/content/data/two-crossings.json", "utf8")),
 );
@@ -112,6 +113,25 @@ for (const route of ["beacon", "frontal"]) {
               .getByRole("button", { name: "턴 종료 확인", exact: true })
               .click();
         }
+      } else {
+        // Await each automatic command, rather than fitting a whole enemy/NPC
+        // phase into the next round assertion's single five-second timeout.
+        await expect
+          .poll(
+            () =>
+              page.evaluate(async (revision) => {
+                const storePath = "/src/storage/battleSaveStore.ts";
+                const { createCurrentBattleSaveStore } = (await import(
+                  storePath
+                )) as typeof import("../../apps/web/src/storage/battleSaveStore");
+                const saved = (await createCurrentBattleSaveStore().readRaw(
+                  "latest",
+                )) as BattleSave | undefined;
+                return saved?.commands[revision];
+              }, command.expectedRevision),
+            { message: `Automatic command ${command.commandId} is saved` },
+          )
+          .toEqual(command);
       }
       const result = apply(content, state, command);
       if (!result.ok) throw Error(result.error);

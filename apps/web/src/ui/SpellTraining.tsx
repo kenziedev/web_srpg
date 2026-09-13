@@ -3,7 +3,7 @@ import { content } from "@orden/content";
 import { canPrepare, effectiveUnit, type BattleState } from "@orden/core";
 import { spellShapeLabel, spellEffectLabel } from "./spellLabels";
 
-/** Before-battle loadout for the practice map while class learning is still pending. */
+/** The core validates the selected loadout against the current mode and learning. */
 export function SpellTraining({
   state,
   locked,
@@ -31,10 +31,19 @@ export function SpellTraining({
   const disabled = locked || !canPrepare(state);
   const cap = effectiveUnit(content, state, caster).stats.maxMp;
   return (
-    <section className="spell-training" aria-label="연습 마법 편성">
-      <h3>연습 마법 편성</h3>
+    <section
+      className="spell-training"
+      aria-label={
+        state.mode === "operation" ? "학습 마법 편성" : "연습 마법 편성"
+      }
+    >
+      <h3>
+        {state.mode === "operation" ? "학습 마법 편성" : "연습 마법 편성"}
+      </h3>
       <p>
-        전투 시작 전에 사용할 마법을 선택합니다. 전직별 습득은 후속 단계이며,
+        {state.mode === "operation"
+          ? "직업과 레벨로 배운 마법 중 사용할 것을 선택합니다."
+          : "연습에서는 학습 여부와 관계없이 사용할 마법을 선택합니다."}
         편성을 바꿔도 MP는 회복되지 않습니다.
       </p>
       <label>
@@ -58,6 +67,11 @@ export function SpellTraining({
       <div className="training-spells">
         {content.spells
           .filter((spell) => spell.learnable !== false)
+          .filter(
+            (spell) =>
+              state.mode !== "operation" ||
+              caster.progression?.learnedSpellIds.includes(spell.id),
+          )
           .map((spell) => (
             <label key={spell.id} title={spellEffectLabel(spell)}>
               <input

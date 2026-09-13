@@ -1,0 +1,71 @@
+.save-slots {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #7892b4;
+}
+.save-slots h3 {
+  margin: 0 0 10px;
+  font-size: 17px;
+  color: #f9e9bf;
+}
+.save-slots p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #cbd9eb;
+}
+.save-slots ul {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.save-slots li {
+  background: #142a49;
+  border: 1px solid #617fa7;
+  padding: 13px;
+}
+.save-slots li.save-checkpoint {
+  border-color: #c0aa77;
+  background: #23344c;
+}
+.save-slot-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.save-slot-heading strong {
+  color: #ffeabe;
+  font-size: 14px;
+}
+.save-slot-heading small {
+  color: #b6c9e1;
+  font-size: 11px;
+  text-align: right;
+}
+.save-slot-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.save-slot-actions button {
+  padding: 7px 10px;
+  font-size: 12px;
+}
+.save-slots p.save-error {
+  color: #ffc2a0;
+}
+@media (max-width: 540px) {
+  .save-slot-heading {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .save-slot-heading small {
+    text-align: left;
+  }
+  .save-slot-actions button {
+    flex: 1 1 auto;
+  }
+}

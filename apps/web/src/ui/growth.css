@@ -172,3 +172,20 @@
     font-size: 13px;
   }
 }
+.mastery-options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+.mastery-options li {
+  border: 1px solid #7699b8;
+  border-radius: 4px;
+  padding: 12px;
+}
+.mastery-options small {
+  display: block;
+  margin-bottom: 8px;
+}

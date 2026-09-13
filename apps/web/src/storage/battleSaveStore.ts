@@ -1,4 +1,6 @@
+import { content } from "@orden/content";
 import { type BattleSave, validateSave } from "./saveFormat";
+import { preparationCheckpoint } from "./saveCheckpoints";
 
 const DATABASE = "orden-battle";
 const STORE = "saves";
@@ -17,7 +19,7 @@ function storageError(cause: unknown): Error {
   const name = cause instanceof Error ? cause.name : "";
   if (name === "QuotaExceededError")
     return new Error("저장 공간이 부족합니다. 전투를 파일로 내보내 주세요.");
-  if (name === "AbortError")
+  if (name === "AbortError" || name === "TransactionInactiveError")
     return new Error("저장이 중단되었습니다. 기존 저장은 유지됩니다.");
   if (name === "VersionError")
     return new Error("이 브라우저 저장소의 버전을 지원하지 않습니다.");
@@ -163,10 +165,27 @@ async function transact<T>(
   }
 }
 
-function validOrNull(value: unknown): BattleSave | null {
+type BattleMode = BattleSave["battle"]["mode"];
+
+function validateStoredSave(
+  value: unknown,
+  expectedMode?: BattleMode,
+): BattleSave {
+  const save = validateSave(value);
+  if (expectedMode !== undefined && save.battle.mode !== expectedMode)
+    throw new Error(
+      "현재 저장 영역과 다른 플레이 모드의 기록입니다. 원본을 내보낸 뒤 해당 모드에서 가져와 주세요.",
+    );
+  return save;
+}
+
+function validOrNull(
+  value: unknown,
+  expectedMode?: BattleMode,
+): BattleSave | null {
   if (value === undefined) return null;
   try {
-    return validateSave(value);
+    return validateStoredSave(value, expectedMode);
   } catch {
     return null;
   }
@@ -178,27 +197,102 @@ export interface LoadedBattleSave {
   warning: string | null;
 }
 
-export type StoredSaveSlot = "latest" | "previous";
+export type AutoSaveSlot = "latest" | "previous";
+export type ManualSaveSlot = "manual-1" | "manual-2" | "manual-3";
+export type ManagedSaveSlot = ManualSaveSlot | "preparation";
+export type StoredSaveSlot = AutoSaveSlot | ManagedSaveSlot;
 
-export function createBattleSaveStore() {
+export interface StoredSlotInfo {
+  slot: ManagedSaveSlot;
+  status: "empty" | "ready" | "unreadable";
+  summary: null | {
+    updatedAt: string;
+    round: number;
+    revision: number;
+    side: BattleSave["battle"]["activeSide"];
+    outcome: "victory" | "defeat" | null;
+    commanders: string[];
+  };
+  error: string | null;
+}
+
+export const managedSaveSlots: readonly ManagedSaveSlot[] = [
+  "manual-1",
+  "manual-2",
+  "manual-3",
+  "preparation",
+];
+
+function slotInfo(
+  slot: ManagedSaveSlot,
+  value: unknown,
+  expectedMode?: BattleMode,
+): StoredSlotInfo {
+  if (value === undefined)
+    return { slot, status: "empty", summary: null, error: null };
+  try {
+    const save = validateStoredSave(value, expectedMode);
+    return {
+      slot,
+      status: "ready",
+      summary: {
+        updatedAt: save.updatedAt,
+        round: save.battle.round,
+        revision: save.revision,
+        side: save.battle.activeSide,
+        outcome: save.battle.outcome?.status ?? null,
+        commanders: save.battle.progression.roster.map(
+          (unit) => `${unit.name} Lv.${unit.progression?.level ?? 1}`,
+        ),
+      },
+      error: null,
+    };
+  } catch (error) {
+    return {
+      slot,
+      status: "unreadable",
+      summary: null,
+      error:
+        error instanceof Error ? error.message : "저장을 읽을 수 없습니다.",
+    };
+  }
+}
+
+/** Production passes rulesVersion + mode. Omission accesses the legacy keys. */
+export function createBattleSaveStore(
+  namespace?: string,
+  expectedMode?: BattleMode,
+) {
+  if (namespace !== undefined && (!namespace.trim() || namespace.length > 128))
+    throw new Error("저장 영역 이름이 올바르지 않습니다.");
+  const key = (slot: StoredSaveSlot) =>
+    namespace === undefined ? slot : `${namespace}:${slot}`;
+  const readKey = (slotKey: string): Promise<unknown> =>
+    enqueue(() =>
+      transact("readonly", (store, result) => {
+        const request = store.get(slotKey);
+        request.onsuccess = () => result(request.result);
+      }),
+    );
+  const loadSlot = async (slot: StoredSaveSlot): Promise<BattleSave | null> => {
+    const raw = await readKey(key(slot));
+    return raw === undefined ? null : validateStoredSave(raw, expectedMode);
+  };
   return {
-    // Keep unknown versions and even malformed JSON values available for backup.
-    // undefined denotes an absent slot; a stored null is still original data.
+    // undefined means absent; even stored null remains available for raw backup.
     readRaw(slot: StoredSaveSlot): Promise<unknown> {
-      return enqueue(() =>
-        transact("readonly", (store, result) => {
-          const request = store.get(slot);
-          request.onsuccess = () => result(request.result);
-        }),
-      );
+      return readKey(key(slot));
+    },
+    readLegacyRaw(slot: AutoSaveSlot): Promise<unknown> {
+      return readKey(slot);
     },
     load(): Promise<LoadedBattleSave> {
       return enqueue(() =>
         transact("readonly", (store, result) => {
-          const latest = store.get("latest");
-          const previous = store.get("previous");
+          const latest = store.get(key("latest"));
+          const previous = store.get(key("previous"));
           previous.onsuccess = () => {
-            const currentSave = validOrNull(latest.result);
+            const currentSave = validOrNull(latest.result, expectedMode);
             if (currentSave) {
               result({
                 save: currentSave,
@@ -207,7 +301,7 @@ export function createBattleSaveStore() {
               });
               return;
             }
-            const previousSave = validOrNull(previous.result);
+            const previousSave = validOrNull(previous.result, expectedMode);
             if (previousSave) {
               result({
                 save: previousSave,
@@ -223,24 +317,26 @@ export function createBattleSaveStore() {
               warning:
                 latest.result === undefined && previous.result === undefined
                   ? null
-                  : "저장 데이터가 손상되었거나 지원하지 않는 버전입니다. 기존 저장은 보존했습니다. 파일 가져오기 또는 새 전투를 선택해 주세요.",
+                  : "저장 데이터가 손상되었거나 지원하지 않는 버전 또는 플레이 모드입니다. 기존 저장은 보존했습니다. 파일 가져오기 또는 새 전투를 선택해 주세요.",
             });
           };
         }),
       );
     },
     async write(save: BattleSave): Promise<void> {
-      // Validation returns a detached snapshot before this operation joins the queue.
-      // Invalid imports therefore cannot start a transaction or alter either slot.
-      const snapshot = validateSave(save);
+      // Validate before queueing: failed imports cannot alter any slot.
+      const snapshot = validateStoredSave(save, expectedMode);
+      const checkpoint = preparationCheckpoint(snapshot);
       return enqueue(() =>
         transact<void>("readwrite", (store, result, abort) => {
-          const latest = store.get("latest");
+          const latest = store.get(key("latest"));
           latest.onsuccess = () => {
             try {
-              const previous = validOrNull(latest.result);
-              if (previous) store.put(previous, "previous");
-              store.put(snapshot, "latest");
+              const previous = validOrNull(latest.result, expectedMode);
+              if (previous) store.put(previous, key("previous"));
+              store.put(snapshot, key("latest"));
+              if (checkpoint) store.put(checkpoint, key("preparation"));
+              else store.delete(key("preparation"));
               result(undefined);
             } catch (error) {
               abort(storageError(error));
@@ -250,22 +346,37 @@ export function createBattleSaveStore() {
       );
     },
     loadPrevious(): Promise<BattleSave | null> {
+      return loadSlot("previous");
+    },
+    loadSlot,
+    async listSlots(): Promise<StoredSlotInfo[]> {
+      // Read all raw rows in one transaction, then perform replay checks outside it.
+      const rows = await enqueue(() =>
+        transact<unknown[]>("readonly", (store, result) => {
+          const requests = managedSaveSlots.map((slot) => store.get(key(slot)));
+          requests.at(-1)!.onsuccess = () =>
+            result(requests.map((request) => request.result));
+        }),
+      );
+      return managedSaveSlots.map((slot, index) =>
+        slotInfo(slot, rows[index], expectedMode),
+      );
+    },
+    async saveManual(slot: ManualSaveSlot, save: BattleSave): Promise<void> {
+      if (!["manual-1", "manual-2", "manual-3"].includes(slot))
+        throw new Error("수동 저장 슬롯이 올바르지 않습니다.");
+      const snapshot = validateStoredSave(save, expectedMode);
       return enqueue(() =>
-        transact("readonly", (store, result, abort) => {
-          const request = store.get("previous");
-          request.onsuccess = () => {
-            try {
-              result(
-                request.result === undefined
-                  ? null
-                  : validateSave(request.result),
-              );
-            } catch (error) {
-              abort(error);
-            }
-          };
+        transact<void>("readwrite", (store, result) => {
+          store.put(snapshot, key(slot));
+          result(undefined);
         }),
       );
     },
   };
+}
+
+/** Current application keys never overwrite the unnamespaced public 0.7 saves. */
+export function createCurrentBattleSaveStore(mode: BattleMode = "practice") {
+  return createBattleSaveStore(`${content.rulesVersion}:${mode}`, mode);
 }

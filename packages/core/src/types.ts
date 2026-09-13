@@ -39,6 +39,8 @@ export interface BattleProgression {
   settlement: ExperienceSettlement | null;
 }
 export interface BattleState {
+  mode: "practice" | "operation";
+  operation: OperationState | null;
   rulesVersion: string;
   revision: number;
   round: number;
@@ -60,6 +62,34 @@ export interface BattleState {
     round: number;
     bonuses: string[];
   } | null;
+}
+export interface SurvivorContract {
+  commanderId: string;
+  templateId: string;
+  count: number;
+}
+export interface OperationResources {
+  equipmentFunds: number;
+  operationBudget: number;
+  pendingSupport: number;
+  contracts: SurvivorContract[];
+  hires: Record<string, string | null>;
+}
+export interface OperationCheckpoint extends OperationResources {
+  roster: Unit[];
+  inventory: Record<string, number>;
+}
+export interface OperationState extends OperationResources {
+  phase: "preparation" | "battle";
+  checkpoint: OperationCheckpoint;
+  settlement: null | {
+    firstClear: boolean;
+    equipmentFunds: number;
+    support: number;
+    items: Record<string, number>;
+    contracts: SurvivorContract[];
+    operationSpent: number;
+  };
 }
 export type Action =
   | { type: "wait" }
@@ -115,6 +145,31 @@ export interface DeployCommand {
   commandId: string;
   expectedRevision: number;
 }
+export interface MasteryCommand {
+  type: "mastery";
+  commandId: string;
+  expectedRevision: number;
+  unitId: string;
+  masteryId: string | null;
+}
+export interface HireCommand {
+  type: "hire";
+  commandId: string;
+  expectedRevision: number;
+  unitId: string;
+  templateId: string | null;
+}
+export type TradeCommand = {
+  commandId: string;
+  expectedRevision: number;
+  itemId: string;
+  quantity: number;
+} & ({ type: "buy" } | { type: "sell" });
+export interface StartBattleCommand {
+  type: "startBattle";
+  commandId: string;
+  expectedRevision: number;
+}
 export type Command =
   | ActCommand
   | EndPhaseCommand
@@ -122,7 +177,11 @@ export type Command =
   | TrainCommand
   | PromoteCommand
   | ReclassCommand
-  | DeployCommand;
+  | DeployCommand
+  | MasteryCommand
+  | HireCommand
+  | TradeCommand
+  | StartBattleCommand;
 export type BattleEvent =
   | { type: "moved"; unitId: string; to: Position }
   | { type: "damaged"; unitId: string; amount: number }
@@ -167,13 +226,37 @@ export type BattleEvent =
       reset: boolean;
     }
   | { type: "battleDeployed"; scenarioId: string }
+  | { type: "masteryChanged"; unitId: string; masteryId: string | null }
+  | { type: "hired"; unitId: string; templateId: string | null }
+  | {
+      type: "traded";
+      itemId: string;
+      quantity: number;
+      total: number;
+      trade: "buy" | "sell";
+    }
+  | { type: "battleStarted"; operationSpent: number }
+  | {
+      type: "operationRewarded";
+      equipmentFunds: number;
+      support: number;
+      items: Record<string, number>;
+    }
   | { type: "scenario"; message: string };
 export type Evaluation =
   | { ok: false; error: string }
   | { ok: true; nextState: BattleState; events: BattleEvent[] };
 
-export function createBattle(content: Content): BattleState {
-  return {
+export function createBattle(
+  content: Content,
+  mode: BattleState["mode"] = "practice",
+): BattleState {
+  const preparation = content.scenario.preparation;
+  if (mode === "operation" && !preparation)
+    throw new Error("이 시나리오는 정식 작전 준비를 제공하지 않습니다.");
+  const state: BattleState = {
+    mode,
+    operation: null,
     rulesVersion: content.rulesVersion,
     revision: 0,
     round: 1,
@@ -203,4 +286,27 @@ export function createBattle(content: Content): BattleState {
     mission: { capturedRound: null, reinforcement: "scheduled" },
     outcome: null,
   };
+  if (mode === "operation" && preparation) {
+    state.inventory = structuredClone(preparation.inventory);
+    const resources: OperationResources = {
+      equipmentFunds: preparation.equipmentFunds,
+      operationBudget: preparation.operationBudget,
+      pendingSupport: 0,
+      contracts: [],
+      hires: Object.fromEntries(
+        preparation.slots.map((slot) => [slot.unitId, slot.templateId]),
+      ),
+    };
+    state.operation = {
+      ...resources,
+      phase: "preparation",
+      settlement: null,
+      checkpoint: {
+        ...structuredClone(resources),
+        roster: structuredClone(state.progression.roster),
+        inventory: structuredClone(state.inventory),
+      },
+    };
+  }
+  return state;
 }

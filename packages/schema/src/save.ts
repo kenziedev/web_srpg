@@ -100,6 +100,49 @@ export const savedCommandSchema = z.discriminatedUnion("type", [
       expectedRevision: revision,
     })
     .strict(),
+  z
+    .object({
+      type: z.literal("mastery"),
+      commandId: id,
+      expectedRevision: revision,
+      unitId: id,
+      masteryId: id.nullable(),
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal("hire"),
+      commandId: id,
+      expectedRevision: revision,
+      unitId: id,
+      templateId: id.nullable(),
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal("buy"),
+      commandId: id,
+      expectedRevision: revision,
+      itemId: id,
+      quantity: z.number().int().min(1).max(9999),
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal("sell"),
+      commandId: id,
+      expectedRevision: revision,
+      itemId: id,
+      quantity: z.number().int().min(1).max(9999),
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal("startBattle"),
+      commandId: id,
+      expectedRevision: revision,
+    })
+    .strict(),
 ]);
 
 // Resolve the shared content schema lazily because index.ts also exports saves.
@@ -206,8 +249,68 @@ export const savedProgressionSchema = z
   })
   .strict();
 
+const savedInventorySchema = z.record(id, z.number().int().min(0).max(9999));
+const contractsSchema = z
+  .array(
+    z
+      .object({
+        commanderId: id,
+        templateId: id,
+        count: z.number().int().min(1).max(42),
+      })
+      .strict(),
+  )
+  .max(42)
+  .refine(
+    (contracts) =>
+      new Set(
+        contracts.map((entry) => `${entry.commanderId}/${entry.templateId}`),
+      ).size === contracts.length,
+    { message: "생존 계약 중복" },
+  );
+const operationResources = {
+  equipmentFunds: expAmount,
+  operationBudget: expAmount,
+  pendingSupport: z.number().int().min(0).max(200),
+  contracts: contractsSchema,
+  hires: z.record(id, id.nullable()),
+};
+export const savedOperationSchema = z
+  .object({
+    ...operationResources,
+    phase: z.enum(["preparation", "battle"]),
+    checkpoint: z
+      .object({
+        ...operationResources,
+        roster: z
+          .array(savedUnitSchema)
+          .max(42)
+          .refine(
+            (units) =>
+              new Set(units.map((unit) => unit.id)).size === units.length,
+            { message: "작전 체크포인트 명부 중복" },
+          ),
+        inventory: savedInventorySchema,
+      })
+      .strict(),
+    settlement: z
+      .object({
+        firstClear: z.boolean(),
+        equipmentFunds: expAmount,
+        support: z.number().int().min(0).max(200),
+        items: savedInventorySchema,
+        contracts: contractsSchema,
+        operationSpent: expAmount,
+      })
+      .strict()
+      .nullable(),
+  })
+  .strict();
+
 export const savedBattleSchema = z
   .object({
+    mode: z.enum(["practice", "operation"]),
+    operation: savedOperationSchema.nullable(),
     rulesVersion: id,
     revision,
     round: z.number().int().positive(),
@@ -245,7 +348,26 @@ export const savedBattleSchema = z
       .strict()
       .nullable(),
   })
-  .strict();
+  .strict()
+  .superRefine((state, ctx) => {
+    if ((state.mode === "operation") !== (state.operation !== null))
+      ctx.addIssue({
+        code: "custom",
+        message: "플레이 모드와 작전 상태 불일치",
+      });
+    if (
+      state.operation?.phase === "preparation" &&
+      (state.round !== 1 ||
+        state.activeSide !== "player" ||
+        state.outcome !== null)
+    )
+      ctx.addIssue({ code: "custom", message: "작전 준비 시점 불일치" });
+    if (
+      state.operation &&
+      (state.operation.settlement !== null) !== (state.outcome !== null)
+    )
+      ctx.addIssue({ code: "custom", message: "작전 정산과 승패 불일치" });
+  });
 
 export const saveContinuationSchema = z
   .object({

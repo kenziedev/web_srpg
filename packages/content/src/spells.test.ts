@@ -22,7 +22,7 @@ function rejectionAfter(mutate: (value: Content) => void, message?: string) {
 
 describe("S01b PC spell content", () => {
   it("preserves the first ten implemented PC targeting profiles within the full catalog", () => {
-    expect(content.rulesVersion).toBe("0.7");
+    expect(content.rulesVersion).toBe("0.8");
     expect(content.spells).toHaveLength(35);
     expect(
       content.spells
@@ -98,6 +98,9 @@ describe("S01b PC spell content", () => {
     value.summons = [];
     value.items = [];
     value.scenario.inventory = {};
+    value.scenario.preparation!.inventory = {};
+    value.scenario.preparation!.shop = [];
+    value.scenario.preparation!.rewards.items = {};
     for (const unit of value.scenario.units) {
       unit.spellIds = [];
       if (unit.progression) unit.progression.learnedSpellIds = [];
@@ -308,6 +311,8 @@ describe("S01 saved cast commands", () => {
 
 describe("S01 saved learned spells", () => {
   const battle = {
+    mode: "practice",
+    operation: null,
     rulesVersion: content.rulesVersion,
     revision: 0,
     round: 1,

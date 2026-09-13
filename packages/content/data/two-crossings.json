@@ -1,5 +1,5 @@
 {
-  "rulesVersion": "0.7",
+  "rulesVersion": "0.8",
   "terrains": [
     {
       "id": "plain",
@@ -14,7 +14,8 @@
       "defense": 0,
       "recovery": 0,
       "noLanding": false,
-      "water": false
+      "water": false,
+      "masteryTags": ["charge"]
     },
     {
       "id": "road",
@@ -29,7 +30,8 @@
       "defense": 0,
       "recovery": 0,
       "noLanding": false,
-      "water": false
+      "water": false,
+      "masteryTags": ["charge"]
     },
     {
       "id": "forest",
@@ -45,7 +47,8 @@
       "recovery": 0,
       "noLanding": false,
       "water": false,
-      "destroyedTo": "plain"
+      "destroyedTo": "plain",
+      "masteryTags": ["forest"]
     },
     {
       "id": "hill",
@@ -559,7 +562,9 @@
           "exp": 0,
           "totalExp": 0,
           "learnedSpellIds": [],
-          "classHistory": ["lord"]
+          "classHistory": ["lord"],
+          "unlockedMasteryIds": [],
+          "equippedMasteryId": null
         }
       },
       {
@@ -600,7 +605,9 @@
           "exp": 0,
           "totalExp": 0,
           "learnedSpellIds": [],
-          "classHistory": ["warrior"]
+          "classHistory": ["warrior"],
+          "unlockedMasteryIds": [],
+          "equippedMasteryId": null
         }
       },
       {
@@ -646,7 +653,9 @@
             "fireball",
             "force-heal-1"
           ],
-          "classHistory": ["mage"]
+          "classHistory": ["mage"],
+          "unlockedMasteryIds": [],
+          "equippedMasteryId": null
         }
       },
       {
@@ -1431,7 +1440,208 @@
       "gleipnir": 1,
       "odins-shield": 1
     },
-    "seed": 20260911
+    "seed": 20260911,
+    "preparation": {
+      "equipmentFunds": 300,
+      "inventory": {},
+      "operationBudget": 1200,
+      "slots": [
+        {
+          "unitId": "A11",
+          "commanderId": "A1",
+          "templateId": "infantry"
+        },
+        {
+          "unitId": "A12",
+          "commanderId": "A1",
+          "templateId": "infantry"
+        },
+        {
+          "unitId": "A13",
+          "commanderId": "A1",
+          "templateId": "infantry"
+        },
+        {
+          "unitId": "A21",
+          "commanderId": "A2",
+          "templateId": "pike"
+        },
+        {
+          "unitId": "A22",
+          "commanderId": "A2",
+          "templateId": "pike"
+        },
+        {
+          "unitId": "A23",
+          "commanderId": "A2",
+          "templateId": "pike"
+        },
+        {
+          "unitId": "A31",
+          "commanderId": "A3",
+          "templateId": "archer"
+        },
+        {
+          "unitId": "A32",
+          "commanderId": "A3",
+          "templateId": "archer"
+        },
+        {
+          "unitId": "A33",
+          "commanderId": "A3",
+          "templateId": "archer"
+        }
+      ],
+      "shop": [
+        {
+          "itemId": "knife",
+          "buyPrice": 50,
+          "sellPrice": 25
+        },
+        {
+          "itemId": "war-hammer",
+          "buyPrice": 120,
+          "sellPrice": 60
+        },
+        {
+          "itemId": "great-sword",
+          "buyPrice": 300,
+          "sellPrice": 150
+        },
+        {
+          "itemId": "devil-axe",
+          "buyPrice": 2500,
+          "sellPrice": 1250
+        },
+        {
+          "itemId": "flame-lance",
+          "buyPrice": 8500,
+          "sellPrice": 4250
+        },
+        {
+          "itemId": "dragon-slayer",
+          "buyPrice": 10000,
+          "sellPrice": 5000
+        },
+        {
+          "itemId": "wand",
+          "buyPrice": 150,
+          "sellPrice": 75
+        },
+        {
+          "itemId": "orb",
+          "buyPrice": 1000,
+          "sellPrice": 500
+        },
+        {
+          "itemId": "masayan-sword",
+          "buyPrice": 600,
+          "sellPrice": 300
+        },
+        {
+          "itemId": "iron-dumbbell",
+          "buyPrice": 10,
+          "sellPrice": 5
+        },
+        {
+          "itemId": "longbow",
+          "buyPrice": 1000,
+          "sellPrice": 500
+        },
+        {
+          "itemId": "arbalest",
+          "buyPrice": 5000,
+          "sellPrice": 2500
+        },
+        {
+          "itemId": "small-shield",
+          "buyPrice": 60,
+          "sellPrice": 30
+        },
+        {
+          "itemId": "large-shield",
+          "buyPrice": 200,
+          "sellPrice": 100
+        },
+        {
+          "itemId": "chain-mail",
+          "buyPrice": 400,
+          "sellPrice": 200
+        },
+        {
+          "itemId": "plate-armor",
+          "buyPrice": 600,
+          "sellPrice": 300
+        },
+        {
+          "itemId": "dragon-scale",
+          "buyPrice": 2000,
+          "sellPrice": 1000
+        },
+        {
+          "itemId": "assault-suit",
+          "buyPrice": 30000,
+          "sellPrice": 15000
+        },
+        {
+          "itemId": "robe",
+          "buyPrice": 80,
+          "sellPrice": 40
+        },
+        {
+          "itemId": "mirage-robe",
+          "buyPrice": 1000,
+          "sellPrice": 500
+        },
+        {
+          "itemId": "speed-boots",
+          "buyPrice": 600,
+          "sellPrice": 300
+        },
+        {
+          "itemId": "amulet",
+          "buyPrice": 1000,
+          "sellPrice": 500
+        },
+        {
+          "itemId": "cross",
+          "buyPrice": 300,
+          "sellPrice": 150
+        },
+        {
+          "itemId": "necklace",
+          "buyPrice": 900,
+          "sellPrice": 450
+        },
+        {
+          "itemId": "crown",
+          "buyPrice": 5000,
+          "sellPrice": 2500
+        },
+        {
+          "itemId": "runestone",
+          "buyPrice": 15000,
+          "sellPrice": 7500
+        },
+        {
+          "itemId": "gleipnir",
+          "buyPrice": 3000,
+          "sellPrice": 1500
+        },
+        {
+          "itemId": "odins-shield",
+          "buyPrice": 4600,
+          "sellPrice": 2300
+        }
+      ],
+      "rewards": {
+        "equipmentFunds": 400,
+        "items": {
+          "small-shield": 1
+        },
+        "bonusSupport": 100
+      }
+    }
   },
   "spells": [
     {
@@ -2417,7 +2627,8 @@
       },
       "statBonus": {},
       "learns": [],
-      "description": "보병 지휘의 기본 직업. 전열을 넓히거나 기동을 강화하는 방향으로 전직한다."
+      "description": "보병 지휘의 기본 직업. 전열을 넓히거나 기동을 강화하는 방향으로 전직한다.",
+      "hireTemplateIds": ["infantry", "pike"]
     },
     {
       "id": "frontline-captain",
@@ -2437,7 +2648,8 @@
         "df": 1
       },
       "learns": [],
-      "description": "방어 +1, 지휘 범위 4. 이동 4를 유지하며 넓은 전열을 지휘한다."
+      "description": "방어 +1, 지휘 범위 4. 이동 4를 유지하며 넓은 전열을 지휘한다.",
+      "hireTemplateIds": ["infantry", "pike", "archer"]
     },
     {
       "id": "raider-lord",
@@ -2457,7 +2669,8 @@
         "at": 1
       },
       "learns": [],
-      "description": "공격 +1, 이동 5. 지휘 범위 3을 유지하며 빠르게 전선을 옮긴다."
+      "description": "공격 +1, 이동 5. 지휘 범위 3을 유지하며 빠르게 전선을 옮긴다.",
+      "hireTemplateIds": ["infantry", "archer"]
     },
     {
       "id": "warrior",
@@ -2475,7 +2688,8 @@
       },
       "statBonus": {},
       "learns": [],
-      "description": "창병 지휘의 기본 직업. 방어 유지와 부대 공격 강화 중에서 선택한다."
+      "description": "창병 지휘의 기본 직업. 방어 유지와 부대 공격 강화 중에서 선택한다.",
+      "hireTemplateIds": ["infantry", "pike"]
     },
     {
       "id": "iron-guard",
@@ -2495,7 +2709,8 @@
         "df": 1
       },
       "learns": [],
-      "description": "방어 +1, 지휘 방어 +3. 이동이 3으로 줄지만 전선을 단단하게 지킨다."
+      "description": "방어 +1, 지휘 방어 +3. 이동이 3으로 줄지만 전선을 단단하게 지킨다.",
+      "hireTemplateIds": ["infantry", "pike"]
     },
     {
       "id": "assault-captain",
@@ -2515,7 +2730,8 @@
         "at": 1
       },
       "learns": [],
-      "description": "공격 +1, 지휘 공격 +3. 보병으로 바뀌며 이동 4를 유지한다."
+      "description": "공격 +1, 지휘 공격 +3. 보병으로 바뀌며 이동 4를 유지한다.",
+      "hireTemplateIds": ["infantry", "pike", "cavalry"]
     },
     {
       "id": "knight",
@@ -2533,7 +2749,8 @@
       },
       "statBonus": {},
       "learns": [],
-      "description": "기승 이동 5의 기병. 방어를 강화하거나 비병으로 전직한다."
+      "description": "기승 이동 5의 기병. 방어를 강화하거나 비병으로 전직한다.",
+      "hireTemplateIds": ["cavalry", "infantry"]
     },
     {
       "id": "heavy-knight",
@@ -2553,7 +2770,8 @@
         "df": 1
       },
       "learns": [],
-      "description": "방어 +1, 지휘 방어 +3. 기승 이동 5를 유지한다."
+      "description": "방어 +1, 지휘 방어 +3. 기승 이동 5를 유지한다.",
+      "hireTemplateIds": ["cavalry", "pike"]
     },
     {
       "id": "sky-knight",
@@ -2573,7 +2791,8 @@
         "at": 1
       },
       "learns": [],
-      "description": "공격 +1, 비행 이동 6. 강과 산을 넘지만 궁병 특효의 대상이 된다."
+      "description": "공격 +1, 비행 이동 6. 강과 산을 넘지만 궁병 특효의 대상이 된다.",
+      "hireTemplateIds": ["flier", "infantry"]
     },
     {
       "id": "scout",
@@ -2591,7 +2810,8 @@
       },
       "statBonus": {},
       "learns": [],
-      "description": "사거리 2–3의 궁병. 원거리 전열과 수상 기동 중에서 선택한다."
+      "description": "사거리 2–3의 궁병. 원거리 전열과 수상 기동 중에서 선택한다.",
+      "hireTemplateIds": ["archer", "infantry"]
     },
     {
       "id": "longbow-captain",
@@ -2611,7 +2831,8 @@
         "at": 1
       },
       "learns": [],
-      "description": "공격 +1. 보행 4와 공격 사거리 2–3으로 원거리 전열을 운용한다."
+      "description": "공격 +1. 보행 4와 공격 사거리 2–3으로 원거리 전열을 운용한다.",
+      "hireTemplateIds": ["archer", "infantry"]
     },
     {
       "id": "naval-captain",
@@ -2631,7 +2852,8 @@
         "df": 1
       },
       "learns": [],
-      "description": "방어 +1, 수륙 이동 5, 근접 사거리 1. 수상 기동과 지형 효과를 활용한다."
+      "description": "방어 +1, 수륙 이동 5, 근접 사거리 1. 수상 기동과 지형 효과를 활용한다.",
+      "hireTemplateIds": ["sailor", "archer"]
     },
     {
       "id": "mage",
@@ -2690,7 +2912,8 @@
           "spellIds": ["zone"]
         }
       ],
-      "description": "미라의 기본 역할. 초기 궁병 공격과 네 마법을 유지하고 레벨별 마법을 배운다."
+      "description": "미라의 기본 역할. 초기 궁병 공격과 네 마법을 유지하고 레벨별 마법을 배운다.",
+      "hireTemplateIds": ["infantry", "archer"]
     },
     {
       "id": "elementalist",
@@ -2735,7 +2958,8 @@
           "spellIds": ["summon-demon-lord"]
         }
       ],
-      "description": "마력 +1, 마법병, 근접 사거리 1. 광역 공격과 강력한 소환 마법을 배운다."
+      "description": "마력 +1, 마법병, 근접 사거리 1. 광역 공격과 강력한 소환 마법을 배운다.",
+      "hireTemplateIds": ["infantry", "archer"]
     },
     {
       "id": "arcane-commander",
@@ -2777,7 +3001,8 @@
         }
       ],
       "description": "저항 +1, 지휘 범위 4, 소속 용병 저항 +2. 새로운 광역 피해 마법 대신 강화·제어 마법을 배운다.",
-      "squadRes": 2
+      "squadRes": 2,
+      "hireTemplateIds": ["infantry", "archer"]
     },
     {
       "id": "monk",
@@ -2820,7 +3045,8 @@
           "spellIds": ["turn-undead"]
         }
       ],
-      "description": "치유와 보호를 배우는 성직병. 상위 회복과 근접 운용 중에서 선택한다."
+      "description": "치유와 보호를 배우는 성직병. 상위 회복과 근접 운용 중에서 선택한다.",
+      "hireTemplateIds": ["cleric", "pike"]
     },
     {
       "id": "bishop",
@@ -2857,7 +3083,8 @@
           "spellIds": ["summon-freya"]
         }
       ],
-      "description": "마력 +1. 상위 힐·포스 힐과 성직 소환으로 아군을 지원한다."
+      "description": "마력 +1. 상위 힐·포스 힐과 성직 소환으로 아군을 지원한다.",
+      "hireTemplateIds": ["cleric", "pike"]
     },
     {
       "id": "holy-warrior",
@@ -2890,7 +3117,8 @@
           "spellIds": ["quick"]
         }
       ],
-      "description": "공격 +1, 보행 이동 5. 기존 치유 마법을 유지하면서 근접 전선을 돕는다."
+      "description": "공격 +1, 보행 이동 5. 기존 치유 마법을 유지하면서 근접 전선을 돕는다.",
+      "hireTemplateIds": ["cleric", "infantry"]
     }
   ],
   "growthProfiles": [
@@ -2998,6 +3226,164 @@
           }
         }
       ]
+    }
+  ],
+  "mercenaryTemplates": [
+    {
+      "id": "infantry",
+      "name": "보병",
+      "unitType": "infantry",
+      "moveType": "foot",
+      "stats": {
+        "at": 9,
+        "df": 6,
+        "res": 3,
+        "mag": 0,
+        "maxMp": 0,
+        "move": 4
+      },
+      "range": [1, 1],
+      "cost": 100
+    },
+    {
+      "id": "pike",
+      "name": "창병",
+      "unitType": "pike",
+      "moveType": "foot",
+      "stats": {
+        "at": 8,
+        "df": 7,
+        "res": 3,
+        "mag": 0,
+        "maxMp": 0,
+        "move": 4
+      },
+      "range": [1, 1],
+      "cost": 110
+    },
+    {
+      "id": "cavalry",
+      "name": "기병",
+      "unitType": "cavalry",
+      "moveType": "mounted",
+      "stats": {
+        "at": 10,
+        "df": 6,
+        "res": 2,
+        "mag": 0,
+        "maxMp": 0,
+        "move": 6
+      },
+      "range": [1, 1],
+      "cost": 160
+    },
+    {
+      "id": "archer",
+      "name": "궁병",
+      "unitType": "archer",
+      "moveType": "foot",
+      "stats": {
+        "at": 8,
+        "df": 4,
+        "res": 3,
+        "mag": 0,
+        "maxMp": 0,
+        "move": 4
+      },
+      "range": [2, 3],
+      "cost": 130
+    },
+    {
+      "id": "flier",
+      "name": "비병",
+      "unitType": "flier",
+      "moveType": "flying",
+      "stats": {
+        "at": 9,
+        "df": 5,
+        "res": 3,
+        "mag": 0,
+        "maxMp": 0,
+        "move": 6
+      },
+      "range": [1, 1],
+      "cost": 220
+    },
+    {
+      "id": "sailor",
+      "name": "수병",
+      "unitType": "sailor",
+      "moveType": "amphibious",
+      "stats": {
+        "at": 8,
+        "df": 6,
+        "res": 3,
+        "mag": 0,
+        "maxMp": 0,
+        "move": 5
+      },
+      "range": [1, 1],
+      "cost": 140
+    },
+    {
+      "id": "cleric",
+      "name": "성직병",
+      "unitType": "cleric",
+      "moveType": "foot",
+      "stats": {
+        "at": 7,
+        "df": 5,
+        "res": 5,
+        "mag": 0,
+        "maxMp": 0,
+        "move": 4
+      },
+      "range": [1, 1],
+      "cost": 150
+    }
+  ],
+  "masteries": [
+    {
+      "id": "lord-mastery",
+      "name": "지휘 숙련",
+      "description": "지휘 범위 +1. 전체 지휘 범위 상한은 4다.",
+      "sourceClassId": "lord",
+      "effect": "command-radius"
+    },
+    {
+      "id": "warrior-mastery",
+      "name": "방어 숙련",
+      "description": "자신의 방어 +1.",
+      "sourceClassId": "warrior",
+      "effect": "defense"
+    },
+    {
+      "id": "knight-mastery",
+      "name": "돌격 숙련",
+      "description": "평지·도로만 3칸 이상 이동한 공격의 공격 +1.",
+      "sourceClassId": "knight",
+      "effect": "charge"
+    },
+    {
+      "id": "scout-mastery",
+      "name": "숲길 숙련",
+      "description": "보행 시 숲 이동 비용을 1로 만든다.",
+      "sourceClassId": "scout",
+      "effect": "forest-move"
+    },
+    {
+      "id": "mage-mastery",
+      "name": "마력 숙련",
+      "description": "자신의 최대 MP +2.",
+      "sourceClassId": "mage",
+      "effect": "mana"
+    },
+    {
+      "id": "monk-mastery",
+      "name": "저항 숙련",
+      "description": "자신의 저항 +1.",
+      "sourceClassId": "monk",
+      "effect": "resistance"
     }
   ]
 }

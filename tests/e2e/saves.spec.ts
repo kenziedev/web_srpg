@@ -11,23 +11,11 @@ async function start(page: Page) {
 
 async function readLatest(page: Page): Promise<BattleSave | undefined> {
   return page.evaluate(async () => {
-    const db = await new Promise<IDBDatabase>((resolve, reject) => {
-      const request = indexedDB.open("orden-battle", 1);
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-    });
-    try {
-      return await new Promise((resolve, reject) => {
-        const request = db
-          .transaction("saves")
-          .objectStore("saves")
-          .get("latest");
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-      });
-    } finally {
-      db.close();
-    }
+    const path = "/src/storage/battleSaveStore.ts";
+    const { createCurrentBattleSaveStore } = (await import(
+      path
+    )) as typeof import("../../apps/web/src/storage/battleSaveStore");
+    return createCurrentBattleSaveStore().readRaw("latest");
   }) as Promise<BattleSave | undefined>;
 }
 
@@ -118,13 +106,11 @@ test("file backup restores after reset and invalid imports preserve the current 
     JSON.stringify({ ...original, schemaVersion: 99 }),
     JSON.stringify({ ...original, contentHash: "old-content" }),
   ]) {
-    await page
-      .getByLabel("전투 저장 파일")
-      .setInputFiles({
-        name: "bad.json",
-        mimeType: "application/json",
-        buffer: Buffer.from(bad),
-      });
+    await page.getByLabel("전투 저장 파일").setInputFiles({
+      name: "bad.json",
+      mimeType: "application/json",
+      buffer: Buffer.from(bad),
+    });
     await expect(page.getByTestId("save-notice")).not.toContainText(
       "불러왔습니다",
     );
@@ -158,19 +144,19 @@ test("previous save is available and a broken latest automatically falls back wi
   expect((await readLatest(page))!.battle).toEqual(previous!.battle);
   await page.getByRole("button", { name: "전투로 돌아가기" }).click();
   await waitUnit(page, "미라 선택");
-  await page.evaluate(async () => {
+  await page.evaluate(async (saveKey) => {
     const db = await new Promise<IDBDatabase>((resolve) => {
       const request = indexedDB.open("orden-battle", 1);
       request.onsuccess = () => resolve(request.result);
     });
     await new Promise<void>((resolve, reject) => {
       const tx = db.transaction("saves", "readwrite");
-      tx.objectStore("saves").put({ broken: true }, "latest");
+      tx.objectStore("saves").put({ broken: true }, saveKey);
       tx.oncomplete = () => resolve();
       tx.onabort = () => reject(tx.error);
     });
     db.close();
-  });
+  }, `${previous!.rulesVersion}:practice:latest`);
   await page.reload();
   await expect(page.getByTestId("save-status")).toContainText("직전 저장 복구");
   expect(await readLatest(page)).toEqual({ broken: true });

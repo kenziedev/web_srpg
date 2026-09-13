@@ -5,19 +5,26 @@ import { magicEventText, statusNames } from "./magicText";
 import { DetailedBattle } from "./DetailedBattle";
 import { DetailedSpell } from "./DetailedSpell";
 import "./spells.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { content } from "@orden/content";
 import {
   commandBonus,
   terrainAt,
   effectiveUnit,
   effectiveSpellRange,
+  previewCommandRange,
 } from "@orden/core";
-import { BattleMap } from "../game/BattleMap";
+import {
+  BattleMap,
+  type BattleMapControls,
+  type BattleMapView,
+} from "../game/BattleMap";
 import { MissionPanel, BattleResult } from "./MissionPanel";
 import { Portrait } from "./Portrait";
 import { useBattle } from "./useBattle";
 import { SavePanel } from "./SavePanel";
+import { SaveSlotsPanel } from "./SaveSlotsPanel";
+import { OperationPanel } from "./OperationPanel";
 import {
   spellRangeLabel,
   spellShapeLabel,
@@ -37,10 +44,35 @@ export function App() {
   const battle = useBattle();
   const { state, unit, busy, canAct, destination, preview } = battle;
   const [showCommand, setShowCommand] = useState(true);
+  const [showThreat, setShowThreat] = useState(false);
+  const mapControls = useRef<BattleMapControls | null>(null);
+  const [mapView, setMapView] = useState<BattleMapView>({
+    zoom: 1,
+    cursor: null,
+  });
   const [showRoster, setShowRoster] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const mapLocked =
+    !battle.ready ||
+    battle.saving ||
+    battle.restoring ||
+    battle.showOperation ||
+    battle.showSaves ||
+    battle.showEquipment ||
+    battle.showGrowth ||
+    !!battle.animation ||
+    battle.finishing ||
+    battle.confirmEnd ||
+    showInfo ||
+    showRoster;
   const viewUnit = unit ? effectiveUnit(content, state, unit) : undefined;
-  const bonus = unit ? commandBonus(state, unit, content) : null;
+  const commandPreview = unit
+    ? previewCommandRange(content, state, unit.id, destination)
+    : null;
+  const bonus = unit
+    ? (commandPreview?.bonuses.find((entry) => entry.unitId === unit.id)
+        ?.after ?? commandBonus(state, unit, content))
+    : null;
   const terrain = unit
     ? terrainAt(content, destination ?? unit.pos, state)
     : null;
@@ -50,6 +82,7 @@ export function App() {
         battle.showSaves ||
         battle.showEquipment ||
         battle.showGrowth ||
+        battle.showOperation ||
         !battle.ready
       )
         return;
@@ -64,6 +97,7 @@ export function App() {
       }
       if (battle.confirmEnd || showInfo || showRoster || state.outcome) return;
       if (event.key.toLowerCase() === "c") setShowCommand((v) => !v);
+      if (event.key.toLowerCase() === "t") setShowThreat((v) => !v);
       if (event.key.toLowerCase() === "e" && !showInfo && !showRoster)
         battle.requestEnd();
       if (event.key.toLowerCase() === "n") battle.nextUnit();
@@ -83,7 +117,12 @@ export function App() {
     <>
       <main
         className="game-shell"
-        inert={battle.showSaves || battle.showEquipment || battle.showGrowth}
+        inert={
+          battle.showSaves ||
+          battle.showEquipment ||
+          battle.showGrowth ||
+          battle.showOperation
+        }
       >
         {battle.animation?.detailed &&
           (battle.animation.events.some(
@@ -106,6 +145,35 @@ export function App() {
             오르덴 연대기 <span>― 두 개의 건널목 ―</span>
           </h1>
           <nav>
+            <button
+              disabled={
+                !battle.ready ||
+                battle.saving ||
+                battle.restoring ||
+                !!battle.animation ||
+                battle.finishing
+              }
+              onClick={battle.switchMode}
+            >
+              {state.mode === "operation" ? "연습 기록 열기" : "정식 출격 열기"}
+            </button>
+            {state.mode === "operation" && (
+              <button
+                disabled={
+                  !battle.ready ||
+                  battle.saving ||
+                  battle.restoring ||
+                  !!battle.animation ||
+                  battle.finishing
+                }
+                onClick={() => {
+                  battle.cancel();
+                  battle.setShowOperation(true);
+                }}
+              >
+                출격 준비 · 상점
+              </button>
+            )}
             <button
               disabled={
                 !battle.ready ||
@@ -170,7 +238,7 @@ export function App() {
               disabled={!battle.ready || battle.restoring}
               onClick={battle.reset}
             >
-              연습 초기화
+              {state.mode === "operation" ? "정식 기록 초기화" : "연습 초기화"}
             </button>
           </nav>
         </header>
@@ -182,17 +250,61 @@ export function App() {
             battle.cancel();
           }}
         >
+          {battle.operationPreparing && (
+            <div className="operation-banner" role="status">
+              정식 출격 준비 중 · 용병과 장비를 준비한 뒤 출격을 확정하세요.
+              <button onClick={() => battle.setShowOperation(true)}>
+                출격 준비 열기
+              </button>
+            </div>
+          )}
+          {battle.commandLimit && (
+            <div className="operation-banner" role="status">
+              명령 기록 1,024개에 도달해 전투를 멈췄습니다. 저장·복구에서 파일을
+              백업하거나 준비 체크포인트를 불러올 수 있습니다.
+              <button onClick={() => battle.setShowSaves(true)}>
+                저장 · 복구 열기
+              </button>
+            </div>
+          )}
           <BattleMap
             state={state}
             animation={battle.animation?.detailed ? null : battle.animation}
-            selectedId={busy ? (battle.enemyActor ?? "") : battle.selectedId}
+            selectedId={
+              busy && !battle.operationPreparing
+                ? (battle.enemyActor ?? "")
+                : battle.selectedId
+            }
             destination={destination}
             reachable={battle.moves}
             spellCenters={battle.spellCenters}
             spellTiles={battle.spellTiles}
             showCommand={showCommand && !busy}
+            showThreat={showThreat}
+            inputDisabled={mapLocked}
+            onControlsReady={(controls) => {
+              mapControls.current = controls;
+            }}
+            onViewChange={setMapView}
             onTile={battle.onTile}
           />
+
+          {(showThreat || mapView.cursor) && (
+            <div className="map-help classic-window" aria-live="polite">
+              {showThreat && (
+                <span>
+                  현재 적의 이동 후 물리 공격 범위 · 행동 완료 포함 · 마법·미래
+                  증원 제외
+                </span>
+              )}
+              {mapView.cursor && (
+                <span>
+                  타일 {mapView.cursor.x}, {mapView.cursor.y} · 방향키 이동 ·
+                  Space 선택 · WASD 카메라 · Home 부대 중앙 · Esc 취소
+                </span>
+              )}
+            </div>
+          )}
           <div
             className={`turn-window classic-window ${state.activeSide === "enemy" ? "enemy-turn" : ""}`}
             aria-live="polite"
@@ -561,10 +673,47 @@ export function App() {
           </div>
         </section>
         <div className="key-guide">
-          <span>
-            부대 → 이동 위치 → 적 선택 → 확정　│　드래그: 지도 이동　우클릭:
-            취소
-          </span>
+          <div className="map-tools" aria-label="지도 보기 도구">
+            <button
+              aria-pressed={showThreat}
+              onClick={() => setShowThreat((value) => !value)}
+            >
+              적 위협 T
+            </button>
+            <button
+              aria-label="지도 축소"
+              disabled={mapLocked || mapView.zoom <= 0.5}
+              onClick={() => mapControls.current?.zoomOut()}
+            >
+              −
+            </button>
+            <button
+              aria-label="지도 확대"
+              disabled={mapLocked || mapView.zoom >= 1.5}
+              onClick={() => mapControls.current?.zoomIn()}
+            >
+              +
+            </button>
+            <button
+              aria-label="지도 배율 초기화"
+              disabled={mapLocked}
+              onClick={() => mapControls.current?.resetZoom()}
+            >
+              {Math.round(mapView.zoom * 100)}%
+            </button>
+            <button
+              disabled={mapLocked}
+              onClick={() => mapControls.current?.centerOn(battle.unit?.pos)}
+            >
+              부대 중앙
+            </button>
+            <button
+              disabled={mapLocked}
+              onClick={() => mapControls.current?.focusTile(battle.unit?.pos)}
+            >
+              키보드 타일 선택
+            </button>
+          </div>
           <span
             data-testid="save-status"
             className={battle.saveError ? "save-error" : ""}
@@ -663,6 +812,25 @@ export function App() {
           </div>
         )}
       </main>
+      {battle.showOperation && (
+        <OperationPanel
+          state={state}
+          locked={battle.saving || battle.restoring}
+          error={battle.preparationError}
+          close={() => battle.setShowOperation(false)}
+          hire={battle.hire}
+          trade={battle.trade}
+          startBattle={battle.startBattle}
+          openEquipment={() => {
+            battle.setShowOperation(false);
+            battle.setShowEquipment(true);
+          }}
+          openGrowth={() => {
+            battle.setShowOperation(false);
+            battle.setShowGrowth(true);
+          }}
+        />
+      )}
       {battle.showGrowth && (
         <GrowthDialog
           state={state}
@@ -671,6 +839,7 @@ export function App() {
           close={() => battle.setShowGrowth(false)}
           promote={battle.promote}
           reclass={battle.reclass}
+          mastery={battle.mastery}
           deploy={battle.deploy}
         />
       )}
@@ -707,7 +876,28 @@ export function App() {
             void battle.loadSave();
           }}
           retry={battle.retrySave}
-        />
+          exportLegacySave={(slot) => {
+            void battle.exportStoredSave(slot, true);
+          }}
+          modeLabel={state.mode === "operation" ? "정식 출격" : "연습"}
+          commandCount={state.commands.length}
+        >
+          <SaveSlotsPanel
+            slots={battle.saveSlots}
+            loading={battle.slotsLoading}
+            locked={battle.saving || battle.restoring}
+            error={battle.slotsError}
+            save={(slot) => {
+              void battle.saveManual(slot);
+            }}
+            load={(slot) => {
+              void battle.loadSave(undefined, slot);
+            }}
+            exportSlot={(slot) => {
+              void battle.exportStoredSave(slot);
+            }}
+          />
+        </SavePanel>
       )}
     </>
   );

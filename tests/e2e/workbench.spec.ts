@@ -156,7 +156,9 @@ test("reset cancels pending enemy automation and 1280×720 keeps controls visibl
 test("mission announces escort movement, ends in defeat and restarts cleanly", async ({
   page,
 }) => {
-  test.setTimeout(60000);
+  // Budget all ten possible rounds at the existing 15-second per-round limit,
+  // plus startup and retry, just like the full victory-route tests.
+  test.setTimeout(180000);
   await start(page);
   await expect(page.getByTestId("escort-status")).toContainText(
     "현재 (1, 10) → 다음 (3, 10)",

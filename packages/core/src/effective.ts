@@ -1,5 +1,6 @@
 import type { Item } from "@orden/schema";
 import type { BattleState, Content, Unit } from "./types";
+import { hasMastery } from "./masteryEffects";
 
 /** The current MVP command radius ceiling applies after all equipment bonuses. */
 export const MAX_COMMAND_RADIUS = 4;
@@ -83,7 +84,7 @@ export function effectiveUnit(
   const maxMp = Math.max(
     0,
     Math.floor(
-      unit.stats.maxMp *
+      (unit.stats.maxMp + (hasMastery(content, unit, "mana") ? 2 : 0)) *
         items.reduce(
           (value, item) => value * (item.modifiers.maxMpMultiplier ?? 1),
           1,
@@ -92,11 +93,18 @@ export function effectiveUnit(
   );
   const stats: Unit["stats"] = {
     at: Math.max(0, unit.stats.at + sum("at") + personalBuff("attack")),
-    df: Math.max(0, unit.stats.df + sum("df") + personalBuff("protection")),
+    df: Math.max(
+      0,
+      unit.stats.df +
+        sum("df") +
+        personalBuff("protection") +
+        (hasMastery(content, unit, "defense") ? 1 : 0),
+    ),
     mag: Math.max(0, unit.stats.mag + sum("mag")),
     res: Math.max(
       0,
       unit.stats.res +
+        (hasMastery(content, unit, "resistance") ? 1 : 0) +
         sum("res") +
         squadSum("squadRes") +
         (squadClass?.squadRes ?? 0) +
@@ -126,7 +134,12 @@ export function effectiveUnit(
             ? 0
             : Math.min(
                 MAX_COMMAND_RADIUS,
-                Math.max(0, unit.command.radius + sum("commandRadius")),
+                Math.max(
+                  0,
+                  unit.command.radius +
+                    sum("commandRadius") +
+                    (hasMastery(content, unit, "command-radius") ? 1 : 0),
+                ),
               ),
           at: Math.max(
             0,

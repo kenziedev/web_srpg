@@ -1,5 +1,6 @@
 import type { BattleState, Content, Position, Unit } from "./types";
 import { effectiveUnit } from "./effective";
+import { hasMastery } from "./masteryEffects";
 
 export const distance = (a: Position, b: Position) =>
   Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
@@ -39,7 +40,12 @@ export function stepCost(
     )
   )
     return null;
-  return terrain.costs[unit.moveType];
+  const cost = terrain.costs[unit.moveType];
+  return cost !== null &&
+    terrain.masteryTags?.includes("forest") &&
+    hasMastery(content, unit, "forest-move")
+    ? 1
+    : cost;
 }
 export function canStop(
   content: Content,

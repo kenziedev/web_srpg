@@ -3,8 +3,11 @@ import type { BattleAnimation } from "../game/BattleAnimation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { content } from "@orden/content";
 import {
-  createBattleSaveStore,
+  createCurrentBattleSaveStore,
   type StoredSaveSlot,
+  type StoredSlotInfo,
+  type ManualSaveSlot,
+  type ManagedSaveSlot,
 } from "../storage/battleSaveStore";
 import {
   createSave,
@@ -15,6 +18,7 @@ import {
   type BattleSave,
   type SaveContinuation,
 } from "../storage/saveFormat";
+import { MAX_SAVE_COMMANDS } from "@orden/schema";
 import {
   apply,
   createBattle,
@@ -52,7 +56,16 @@ function downloadJson(text: string, filename: string) {
 }
 
 export function useBattle() {
-  const [state, setState] = useState(() => createBattle(content));
+  const [state, setState] = useState(() => {
+    let mode: "practice" | "operation" = "practice";
+    try {
+      if (localStorage.getItem("orden-play-mode") === "operation")
+        mode = "operation";
+    } catch {
+      /* Optional preference. */
+    }
+    return createBattle(content, mode);
+  });
   const current = useRef(state);
   const [selectedId, setSelectedId] = useState("A2");
   const [destination, setDestination] = useState<Position | null>(null);
@@ -61,6 +74,7 @@ export function useBattle() {
   const [spellAnchor, setSpellAnchor] = useState<Position | null>(null);
   const [showEquipment, setShowEquipment] = useState(false);
   const [showGrowth, setShowGrowth] = useState(false);
+  const [showOperation, setShowOperation] = useState(false);
   const [preparationError, setPreparationError] = useState("");
   const [spellMenuOpen, setSpellMenuOpen] = useState(false);
   const [message, setMessage] = useState("부대를 선택하십시오.");
@@ -88,7 +102,12 @@ export function useBattle() {
   const [autoFollow, setAutoFollow] = useState(true);
   const [animation, setAnimation] = useState<BattleAnimation | null>(null);
   const [confirmEnd, setConfirmEnd] = useState(false);
-  const [saveStore] = useState(createBattleSaveStore);
+  const [saveStore, setSaveStore] = useState(() =>
+    createCurrentBattleSaveStore(state.mode),
+  );
+  const [saveSlots, setSaveSlots] = useState<StoredSlotInfo[]>([]);
+  const [slotsLoading, setSlotsLoading] = useState(false);
+  const [slotsError, setSlotsError] = useState("");
   const [ready, setReady] = useState(false);
   const [saving, setSaving] = useState(false);
   const [restoring, setRestoring] = useState(false);
@@ -105,7 +124,9 @@ export function useBattle() {
     session.current++;
     current.current = restored;
     setState(restored);
-    setFinishing(save.continuation.finishing);
+    setFinishing(
+      save.revision < MAX_SAVE_COMMANDS && save.continuation.finishing,
+    );
     setAutoFollow(save.continuation.autoFollow);
     setAnimation(null);
     setSelectedId(restored.units.find((u) => u.side === "player")?.id ?? "");
@@ -124,7 +145,7 @@ export function useBattle() {
     let cancelled = false;
     void saveStore
       .load()
-      .then((loaded) => {
+      .then(async (loaded) => {
         if (cancelled) return;
         if (loaded.save) {
           restore(loaded.save);
@@ -133,9 +154,20 @@ export function useBattle() {
             loaded.recoveredPrevious ? "직전 저장 복구" : "저장 복구 완료",
           );
         } else {
+          const legacy = await saveStore.readLegacyRaw("latest");
+          const legacyPrevious = await saveStore.readLegacyRaw("previous");
+          if (cancelled) return;
           setSaveStatus(
-            loaded.warning ? "저장 확인 실패" : "새 전투 · 아직 저장 없음",
+            loaded.warning
+              ? "저장 확인 실패"
+              : legacy !== undefined || legacyPrevious !== undefined
+                ? "새 전투 · 이전 버전 원본 보존"
+                : "새 전투 · 아직 저장 없음",
           );
+          if (legacy !== undefined || legacyPrevious !== undefined)
+            setSaveNotice(
+              "이전 버전 기록은 별도로 보존됩니다. 아래 이전 버전 원본 백업에서 내보낼 수 있습니다.",
+            );
           preserveUnreadSave.current = !!loaded.warning;
         }
         setSaveError(loaded.warning ?? "");
@@ -155,6 +187,22 @@ export function useBattle() {
       cancelled = true;
     };
   }, [saveStore]);
+  const refreshSlots = async () => {
+    setSlotsLoading(true);
+    setSlotsError("");
+    try {
+      setSaveSlots(await saveStore.listSlots());
+    } catch (error) {
+      setSlotsError(
+        error instanceof Error ? error.message : "저장 목록을 읽지 못했습니다.",
+      );
+    } finally {
+      setSlotsLoading(false);
+    }
+  };
+  useEffect(() => {
+    if (showSaves && ready) void refreshSlots();
+  }, [showSaves, ready, saveStore]);
   // Persist each committed boundary before allowing the next automatic command.
   // A failed write leaves play available and the failure visible for file backup.
   const persist = async (next: BattleState, continuation: SaveContinuation) => {
@@ -183,6 +231,8 @@ export function useBattle() {
     }
   };
   const unit = state.units.find((u) => u.id === selectedId);
+  const commandLimit = state.commands.length >= MAX_SAVE_COMMANDS;
+  const operationPreparing = state.operation?.phase === "preparation";
   const busy =
     !ready ||
     saving ||
@@ -190,6 +240,9 @@ export function useBattle() {
     showSaves ||
     showEquipment ||
     showGrowth ||
+    showOperation ||
+    operationPreparing ||
+    commandLimit ||
     state.activeSide !== "player" ||
     !!state.outcome ||
     finishing ||
@@ -376,9 +429,19 @@ export function useBattle() {
       showSaves ||
       showEquipment ||
       showGrowth ||
+      showOperation ||
       animation
     )
       return;
+    if (commandLimit || operationPreparing) {
+      setEnemyActor(null);
+      setFinishing(false);
+      if (commandLimit)
+        setMessage(
+          "명령 기록 상한에 도달했습니다. 저장·복구에서 백업하거나 준비 상태를 불러오세요.",
+        );
+      return;
+    }
     if ((state.activeSide === "player" && !finishing) || state.outcome) {
       setEnemyActor(null);
       return;
@@ -426,6 +489,9 @@ export function useBattle() {
     showSaves,
     showEquipment,
     showGrowth,
+    showOperation,
+    commandLimit,
+    operationPreparing,
   ]);
   const select = (id: string) => {
     if (busy) return;
@@ -465,9 +531,16 @@ export function useBattle() {
   };
   const reset = () => {
     if (!ready || restoring) return;
+    if (
+      current.current.mode === "operation" &&
+      !window.confirm(
+        "현재 정식 출격 기록을 처음부터 시작합니다. 필요한 진행은 저장 슬롯이나 파일에 보관하세요. 초기화할까요?",
+      )
+    )
+      return;
     session.current++;
     preserveUnreadSave.current = false;
-    const initial = createBattle(content);
+    const initial = createBattle(content, current.current.mode);
     current.current = initial;
     setState(initial);
     setAnimation(null);
@@ -479,6 +552,65 @@ export function useBattle() {
     setConfirmEnd(false);
     setMessage("초기 배치로 돌아왔습니다.");
     void persist(initial, { finishing: false, autoFollow });
+  };
+  const switchMode = async () => {
+    if (!ready || saving || restoring || animation || finishing) return;
+    if (preserveUnreadSave.current) {
+      setSaveNotice(
+        "현재 진행을 안전하게 보관한 뒤 모드를 전환하세요. 기존 저장 원본을 백업하고 현재 전투 다시 저장을 이용할 수 있습니다.",
+      );
+      setShowSaves(true);
+      return;
+    }
+    if (saveError || !savedAt) {
+      setRestoring(true);
+      try {
+        await saveStore.write(
+          createSave(current.current, { finishing, autoFollow }),
+        );
+      } catch (error) {
+        setSaveNotice(
+          error instanceof Error
+            ? error.message
+            : "현재 진행을 저장하지 못해 모드 전환을 멈췄습니다.",
+        );
+        setShowSaves(true);
+        return;
+      } finally {
+        setRestoring(false);
+      }
+    }
+    const mode = state.mode === "operation" ? "practice" : "operation";
+    session.current++;
+    saveGeneration.current++;
+    preserveUnreadSave.current = false;
+    const initial = createBattle(content, mode);
+    current.current = initial;
+    setState(initial);
+    setReady(false);
+    setShowOperation(false);
+    setFinishing(false);
+    setEnemyActor(null);
+    setAnimation(null);
+    setConfirmEnd(false);
+    setHistory([]);
+    setSaveSlots([]);
+    setSavedAt(null);
+    setSaveError("");
+    setSaveNotice("");
+    setPreparationError("");
+    cancel();
+    setSaveStore(createCurrentBattleSaveStore(mode));
+    try {
+      localStorage.setItem("orden-play-mode", mode);
+    } catch {
+      /* Optional preference. */
+    }
+    setMessage(
+      mode === "operation"
+        ? "정식 출격 기록입니다. 출격 준비에서 편성을 확인하세요."
+        : "연습 기록으로 돌아왔습니다.",
+    );
   };
   const exportSave = () => {
     try {
@@ -494,12 +626,15 @@ export function useBattle() {
       );
     }
   };
-  const exportStoredSave = async (slot: StoredSaveSlot) => {
+  const exportStoredSave = async (slot: StoredSaveSlot, legacy = false) => {
     if (!ready || saving || restoring) return;
     setSaveNotice("");
     const label = slot === "latest" ? "최신" : "직전";
     try {
-      const original = await saveStore.readRaw(slot);
+      const original =
+        legacy && (slot === "latest" || slot === "previous")
+          ? await saveStore.readLegacyRaw(slot)
+          : await saveStore.readRaw(slot);
       if (original === undefined)
         throw new Error(`백업할 기존 ${label} 저장이 없습니다.`);
       downloadJson(serializeStoredSave(original), `original-save-${slot}.json`);
@@ -512,7 +647,7 @@ export function useBattle() {
       );
     }
   };
-  const loadSave = async (file?: File) => {
+  const loadSave = async (file?: File, slot?: ManagedSaveSlot) => {
     if (!ready || saving || restoring) return;
     const expectedSession = session.current;
     setRestoring(true);
@@ -522,8 +657,14 @@ export function useBattle() {
         throw new Error("저장 파일은 2MiB 이하여야 합니다.");
       const save = file
         ? parseSave(await file.text())
-        : await saveStore.loadPrevious();
-      if (!save) throw new Error("복구할 직전 저장이 없습니다.");
+        : slot
+          ? await saveStore.loadSlot(slot)
+          : await saveStore.loadPrevious();
+      if (!save) throw new Error("복구할 저장이 없습니다.");
+      if (save.battle.mode !== current.current.mode)
+        throw new Error(
+          "다른 모드의 파일입니다. 연습/정식 기록을 먼저 전환한 뒤 가져오세요.",
+        );
       if (session.current !== expectedSession) return;
       // Validate and commit to disk before replacing the live battle.
       await saveStore.write(save);
@@ -536,11 +677,33 @@ export function useBattle() {
       setSaveNotice(
         file
           ? "파일의 전투를 불러왔습니다. 창을 닫으면 이어갑니다."
-          : "직전 저장을 복구했습니다. 창을 닫으면 이어갑니다.",
+          : slot
+            ? "선택한 저장을 복구했습니다. 창을 닫으면 이어갑니다."
+            : "직전 저장을 복구했습니다. 창을 닫으면 이어갑니다.",
       );
+      await refreshSlots();
     } catch (error) {
       setSaveNotice(
         error instanceof Error ? error.message : "전투를 불러올 수 없습니다.",
+      );
+    } finally {
+      setRestoring(false);
+    }
+  };
+  const saveManual = async (slot: ManualSaveSlot) => {
+    if (!ready || saving || restoring) return;
+    setRestoring(true);
+    setSaveNotice("");
+    try {
+      await saveStore.saveManual(
+        slot,
+        createSave(current.current, { finishing, autoFollow }),
+      );
+      setSaveNotice("선택한 슬롯에 현재 진행을 저장했습니다.");
+      await refreshSlots();
+    } catch (error) {
+      setSaveNotice(
+        error instanceof Error ? error.message : "슬롯 저장에 실패했습니다.",
       );
     } finally {
       setRestoring(false);
@@ -659,6 +822,42 @@ export function useBattle() {
       expectedRevision: current.current.revision,
       unitId,
     });
+  const mastery = (unitId: string, masteryId: string | null) =>
+    prepareCommand({
+      type: "mastery",
+      commandId: `mastery-${current.current.revision + 1}`,
+      expectedRevision: current.current.revision,
+      unitId,
+      masteryId,
+    });
+  const hire = (unitId: string, templateId: string | null) =>
+    prepareCommand({
+      type: "hire",
+      commandId: `hire-${current.current.revision + 1}`,
+      expectedRevision: current.current.revision,
+      unitId,
+      templateId,
+    });
+  const trade = (type: "buy" | "sell", itemId: string) =>
+    prepareCommand({
+      type,
+      commandId: `${type}-${current.current.revision + 1}`,
+      expectedRevision: current.current.revision,
+      itemId,
+      quantity: 1,
+    });
+  const startBattle = () => {
+    if (
+      prepareCommand({
+        type: "startBattle",
+        commandId: `start-${current.current.revision + 1}`,
+        expectedRevision: current.current.revision,
+      })
+    ) {
+      setShowOperation(false);
+      setMessage("출격했습니다. 부대를 선택하십시오.");
+    }
+  };
   const deploy = () => {
     if (
       !prepareCommand({
@@ -675,7 +874,12 @@ export function useBattle() {
     setConfirmEnd(false);
     setSelectedId(current.current.progression.roster[0]?.id ?? "A1");
     setShowGrowth(false);
-    setMessage("성장한 부대로 다시 연습합니다. 장비와 마법을 준비하세요.");
+    setMessage(
+      current.current.mode === "operation"
+        ? "다음 출격을 준비합니다. 고용·장비·마법을 확인하세요."
+        : "성장한 부대로 다시 연습합니다. 장비와 마법을 준비하세요.",
+    );
+    if (current.current.mode === "operation") setShowOperation(true);
   };
   const nextUnit = () => {
     const available = state.units.filter(
@@ -697,6 +901,19 @@ export function useBattle() {
     setShowGrowth,
     promote,
     reclass,
+    mastery,
+    hire,
+    trade,
+    startBattle,
+    switchMode,
+    showOperation,
+    setShowOperation,
+    operationPreparing,
+    commandLimit,
+    saveSlots,
+    slotsLoading,
+    slotsError,
+    saveManual,
     deploy,
     preparationError,
     equip,

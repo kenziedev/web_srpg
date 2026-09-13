@@ -1,10 +1,12 @@
 # 성장 구현 계약 — S04/S05, rulesVersion 0.7
 
+0.8 갱신: 1차 Lv10의 6계열 마스터리 해금·한 슬롯 장착·전직/룬스톤 보존을 추가했다. 구체 효과와 수용 기준은 `combat-rules.md`의 0.8 절을 따른다. 정식 출격의 고용 제한과 패배 시 준비 진입 명부 복원은 `operation-system.md`를 따른다. 아래 0.7 기록의 마스터리·고용 미구현 표기는 해당 버전의 이력이다.
+
 현재 작업의 구현 기준. 상세 검증 결과는 handoff.md에 기록한다. 원작 복제가 아니라 plan.md의 기여 EXP와 고정 성장 설계를 적용한다.
 
 ## 공용 데이터
 
-- `Unit.progression?`: `{ classId, baseClassId, growthId, level, exp, totalExp, learnedSpellIds: string[], classHistory: string[] }`. 현재 출격하는 아군 정규 지휘관만 갖는다. Lv1~10, 일반 EXP 0~99, Lv10은 보관 EXP 0~100. 초기 Lv1/EXP0이며 현재 배치·능력치·미라 4마법을 유지한다.
+- `Unit.progression?`: `{ classId, baseClassId, growthId, level, exp, totalExp, learnedSpellIds: string[], classHistory: string[] }`. 현재 출격하는 아군 정규 지휘관만 갖는다. Lv1~~10, 일반 EXP 0~~99, Lv10은 보관 EXP 0~100. 초기 Lv1/EXP0이며 현재 배치·능력치·미라 4마법을 유지한다.
 - `Content.classes`: `{ id, name, tier:1|2, promotions:string[], unitType, moveType, move, range:[min,max], command:{radius,at,df}, statBonus:{at?,df?,mag?,res?}, learns:{level,spellIds:string[]}[], description, squadRes?:number }` 18종. 초기에는 클래스 이동/병종을 덮어쓰지 않으며 전직할 때 적용한다.
 - `Content.growthProfiles`: `{id, name, levels:{level,gains:{at?,df?,mag?,res?,maxMp?}}[]}`. Lv2~10 고정 성장, AT/DF/MAG/RES 증가 합계 4 이내. 미라 MP는 Lv2·4·6·8·10 각 +2. 다른 지휘관의 프로필도 콘텐츠에서 지정한다.
 - 아이템: `modifiers.expMultiplier?: 2`, `useEffect?: "class-reset"`. 메사이얀 소드의 사용 불가를 해제하고 EXP 배율 적용. 룬스톤은 장착이 아니라 전직 화면에서 소모한다.

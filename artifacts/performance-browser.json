@@ -1,0 +1,274 @@
+{
+  "generatedAt": "2026-09-13T14:05:05.287Z",
+  "environment": {
+    "node": "v24.16.0",
+    "browser": "153.0.8010.12",
+    "headless": true,
+    "platform": "darwin",
+    "arch": "arm64",
+    "osRelease": "25.6.0",
+    "cpu": "Apple M2 Max",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "source": {
+    "head": "defd083c93cfe525bc2b0f1bca174bab778de02e",
+    "dirty": true,
+    "rulesVersion": "0.8",
+    "productionIndexSha256": "1bb38ebecc79e3a3413772ad16bcb05ef78c8d8f43c89849f68313a5d8f50ef7",
+    "bundles": [
+      {
+        "urlPath": "/srpg/assets/index-DDNy7D-h.js",
+        "bytes": 1892498,
+        "sha256": "6945e7650080aa3d673d2dc1d51388b226348c57d7d355c7dc0e21cb76c202f5"
+      },
+      {
+        "urlPath": "/srpg/assets/index-DLQ17z8Z.css",
+        "bytes": 37921,
+        "sha256": "1c4d4184b92b0a1b5195c8c0e28249f15ab7068ff27a3774ef4adb7bfe6950cb"
+      }
+    ]
+  },
+  "method": {
+    "url": "http://127.0.0.1:4174/srpg/",
+    "runs": 5,
+    "network": {
+      "downloadMbps": 10,
+      "uploadMbps": 10,
+      "latencyMs": 100,
+      "implementation": "Chromium CDP Network.emulateNetworkConditions"
+    },
+    "cold": "Fresh isolated context and cleared HTTP cache per sample; measured navigation through ready canvas and actual Kaiel selection with enabled wait command. All document/script/style cache flags verified false.",
+    "reload": "Same context, normal warm-cache reload after a confirmed and saved wait; measured through ready canvas, restored save, spent actor and selectable roster; stored revision and checksum then verified unchanged.",
+    "exclusions": [
+      "low-spec device qualification",
+      "FPS and animation benchmarks",
+      "remote hosting and TLS latency",
+      "long battle save restore",
+      "other browser engines"
+    ]
+  },
+  "coldStartup": {
+    "samples": 5,
+    "medianMs": 1247.403,
+    "maxMs": 1295.498,
+    "budgetMs": 5000,
+    "passed": true
+  },
+  "reloadRestore": {
+    "samples": 5,
+    "medianMs": 635.052,
+    "maxMs": 642.672,
+    "budgetMs": 2000,
+    "passed": true
+  },
+  "samples": [
+    {
+      "run": 1,
+      "coldSelectableMs": 1295.498,
+      "coldResources": [
+        {
+          "type": "Document",
+          "url": "http://127.0.0.1:4174/srpg/",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 734
+        },
+        {
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-DLQ17z8Z.css",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 9651
+        },
+        {
+          "type": "Script",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-DDNy7D-h.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 509051
+        }
+      ],
+      "coldTransferredBytes": 519436,
+      "reloadRestoredMs": 640.521,
+      "savedRevision": 1,
+      "restoredWithoutDuplicateCommand": true,
+      "pageErrors": []
+    },
+    {
+      "run": 2,
+      "coldSelectableMs": 1247.403,
+      "coldResources": [
+        {
+          "type": "Document",
+          "url": "http://127.0.0.1:4174/srpg/",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 734
+        },
+        {
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-DLQ17z8Z.css",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 9651
+        },
+        {
+          "type": "Script",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-DDNy7D-h.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 509051
+        }
+      ],
+      "coldTransferredBytes": 519436,
+      "reloadRestoredMs": 642.672,
+      "savedRevision": 1,
+      "restoredWithoutDuplicateCommand": true,
+      "pageErrors": []
+    },
+    {
+      "run": 3,
+      "coldSelectableMs": 1244.109,
+      "coldResources": [
+        {
+          "type": "Document",
+          "url": "http://127.0.0.1:4174/srpg/",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 734
+        },
+        {
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-DLQ17z8Z.css",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 9651
+        },
+        {
+          "type": "Script",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-DDNy7D-h.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 509051
+        }
+      ],
+      "coldTransferredBytes": 519436,
+      "reloadRestoredMs": 629.8,
+      "savedRevision": 1,
+      "restoredWithoutDuplicateCommand": true,
+      "pageErrors": []
+    },
+    {
+      "run": 4,
+      "coldSelectableMs": 1264.426,
+      "coldResources": [
+        {
+          "type": "Document",
+          "url": "http://127.0.0.1:4174/srpg/",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 734
+        },
+        {
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-DLQ17z8Z.css",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 9651
+        },
+        {
+          "type": "Script",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-DDNy7D-h.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 509051
+        }
+      ],
+      "coldTransferredBytes": 519436,
+      "reloadRestoredMs": 635.052,
+      "savedRevision": 1,
+      "restoredWithoutDuplicateCommand": true,
+      "pageErrors": []
+    },
+    {
+      "run": 5,
+      "coldSelectableMs": 1226.595,
+      "coldResources": [
+        {
+          "type": "Document",
+          "url": "http://127.0.0.1:4174/srpg/",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 734
+        },
+        {
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-DLQ17z8Z.css",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 9651
+        },
+        {
+          "type": "Script",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-DDNy7D-h.js",
+          "status": 200,
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 509051
+        }
+      ],
+      "coldTransferredBytes": 519436,
+      "reloadRestoredMs": 634.124,
+      "savedRevision": 1,
+      "restoredWithoutDuplicateCommand": true,
+      "pageErrors": []
+    }
+  ]
+}

@@ -10,6 +10,7 @@ export function GrowthDialog({
   close,
   promote,
   reclass,
+  mastery,
   deploy,
 }: {
   state: BattleState;
@@ -18,6 +19,7 @@ export function GrowthDialog({
   close: () => void;
   promote: (unitId: string, classId: string) => void;
   reclass: (unitId: string) => void;
+  mastery: (unitId: string, masteryId: string | null) => void;
   deploy: () => void;
 }) {
   const panel = useRef<HTMLElement>(null);
@@ -78,6 +80,7 @@ export function GrowthDialog({
           error={error}
           promote={promote}
           reclass={reclass}
+          mastery={mastery}
         />
         {state.outcome && (
           <div className="growth-deploy">

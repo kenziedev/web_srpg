@@ -18,7 +18,9 @@
     "test:e2e": "playwright test",
     "check": "pnpm typecheck && pnpm test && pnpm content:check && pnpm sim:smoke && pnpm sim:mission && pnpm boundaries:check",
     "boundaries:check": "node tools/check-boundaries.mjs",
-    "sim:mission": "tsx packages/sim/src/mission.ts"
+    "sim:mission": "tsx packages/sim/src/mission.ts",
+    "perf:core": "tsx tools/performance.ts",
+    "perf:browser": "node tools/performance-browser.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",

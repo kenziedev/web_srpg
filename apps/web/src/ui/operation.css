@@ -1,0 +1,273 @@
+.operation-scrim {
+  z-index: 60;
+}
+.operation-window {
+  width: min(960px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 22px;
+  overflow-y: auto;
+}
+.operation-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.operation-heading h2 {
+  margin: 4px 0 0;
+  font-size: 24px;
+}
+.operation-heading > button {
+  flex-shrink: 0;
+}
+.operation-window p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #cbd9eb;
+}
+.operation-window h3 {
+  font-size: 15px;
+  margin: 0 0 10px;
+  color: #ffe8b5;
+}
+.operation-guidance {
+  margin: 13px 0;
+}
+.operation-budget {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+  margin: 15px 0 10px;
+}
+.operation-budget > div {
+  border: 1px solid #7995b5;
+  padding: 11px;
+  background: #132b4a;
+}
+.operation-budget dt {
+  font-size: 11px;
+  color: #c1d0e4;
+}
+.operation-budget dd {
+  margin: 5px 0 0;
+  color: #ffedba;
+  font-size: 21px;
+  font-variant-numeric: tabular-nums;
+}
+.operation-budget .over-budget dd,
+.operation-window p.operation-error {
+  color: #ffc29c;
+}
+.operation-money-note {
+  border-left: 3px solid #c2a66b;
+  padding: 7px 12px;
+  background: #263b56;
+}
+.operation-shortcuts,
+.operation-tabs,
+.operation-shop-filter {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.operation-shortcuts {
+  margin: 14px 0;
+}
+.operation-shortcuts button {
+  font-size: 12px;
+  padding: 8px 12px;
+}
+.operation-tabs {
+  margin: 18px 0 15px;
+  border-bottom: 1px solid #7189a8;
+  padding-bottom: 10px;
+}
+.operation-tabs button,
+.operation-shop-filter button {
+  padding: 8px 15px;
+}
+.operation-window button[aria-pressed="true"] {
+  background: #344762;
+  border-color: #e1c587;
+  color: #ffe5a6;
+}
+.operation-hiring {
+  display: grid;
+  grid-template-columns: 225px minmax(0, 1fr);
+  gap: 18px;
+}
+.operation-squad label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  color: #c8d6e9;
+}
+.operation-squad select {
+  width: 100%;
+  padding: 9px;
+  color: #ffecc4;
+  background: #163256;
+  border: 1px solid #87a0c0;
+  font: inherit;
+  font-size: 15px;
+}
+.operation-positions {
+  display: grid;
+  gap: 8px;
+}
+.operation-positions button {
+  text-align: left;
+  padding: 10px;
+}
+.operation-positions small,
+.operation-positions strong,
+.operation-positions span {
+  display: block;
+}
+.operation-positions strong {
+  margin: 5px 0;
+}
+.operation-positions small,
+.operation-positions span {
+  font-size: 11px;
+  color: #c6d3e8;
+}
+.operation-remove {
+  width: 100%;
+  margin-top: 9px;
+  padding: 8px;
+  font-size: 12px;
+}
+.operation-hire-options ul,
+.operation-shop ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 9px;
+}
+.operation-hire-options li,
+.operation-shop li {
+  padding: 12px;
+  border: 1px solid #627ea6;
+  background: #132c4b;
+}
+.operation-hire-options li.selected {
+  border-color: #d4b980;
+  background: #273c57;
+}
+.operation-offer-heading,
+.operation-offer-action {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+.operation-offer-heading strong {
+  font-size: 14px;
+  color: #ffe9bc;
+}
+.operation-offer-heading span,
+.operation-offer-action small {
+  font-size: 11px;
+  color: #c3d0e4;
+}
+.operation-offer-heading span {
+  text-align: right;
+}
+.operation-offer-heading small {
+  display: block;
+  color: #e6d699;
+}
+.operation-offer-action small {
+  line-height: 1.6;
+}
+.operation-offer-action button {
+  padding: 7px 12px;
+  flex-shrink: 0;
+}
+.operation-shop ul {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.operation-shop li {
+  display: flex;
+  flex-direction: column;
+}
+.operation-shop-trades {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: auto;
+}
+.operation-shop-trades > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.operation-shop-trades button {
+  padding: 8px 10px;
+}
+.operation-shop-trades small {
+  font-size: 11px;
+  line-height: 1.6;
+  color: #bccce2;
+}
+.operation-settlement {
+  border: 1px solid #a99b79;
+  background: #29394c;
+  padding: 13px;
+  margin: 15px 0;
+}
+.operation-start {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid #7c8eaa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.operation-start button {
+  padding: 12px 24px;
+  flex-shrink: 0;
+  border-color: #d8bb80;
+  color: #ffe5a9;
+}
+.operation-window button:focus-visible,
+.operation-window select:focus-visible {
+  outline: 2px solid #ffe59b;
+  outline-offset: 2px;
+}
+@media (max-width: 700px) {
+  .operation-window {
+    padding: 15px;
+  }
+  .operation-heading h2 {
+    font-size: 21px;
+  }
+  .operation-budget {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .operation-hiring,
+  .operation-shop ul {
+    grid-template-columns: 1fr;
+  }
+  .operation-positions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .operation-positions button {
+    min-width: 0;
+    padding: 8px;
+  }
+  .operation-start {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+}
+@media (max-width: 380px) {
+  .operation-positions {
+    grid-template-columns: 1fr;
+  }
+}

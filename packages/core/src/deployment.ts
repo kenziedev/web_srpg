@@ -2,6 +2,11 @@ import type { BattleState, Content, DeployCommand, Evaluation } from "./types";
 import { createBattle } from "./types";
 import { canStop, distance } from "./movement";
 import { effectiveMaxMp } from "./effective";
+import {
+  captureOperationCheckpoint,
+  materializeOperationHires,
+  restoreOperationPreparation,
+} from "./operation";
 
 /** A new practice sortie retains growth and the once-per-scenario reward ledger. */
 export function evaluateDeploy(
@@ -17,7 +22,7 @@ export function evaluateDeploy(
       ok: false,
       error: "전투 정산을 마친 뒤 성장을 유지하며 다시 출격할 수 있습니다.",
     };
-  const next = createBattle(content);
+  const next = createBattle(content, state.mode);
   next.revision = state.revision + 1;
   next.commands = [
     ...structuredClone(state.commands),
@@ -29,6 +34,8 @@ export function evaluateDeploy(
     ...state.progression.rewardedScenarioIds,
   ];
   next.progression.battleStartRevision = next.revision;
+  if (state.mode === "operation")
+    restoreOperationPreparation(content, state, next);
   for (let index = 0; index < next.units.length; index += 1) {
     const deployed = next.units[index]!;
     const veteran = next.progression.roster.find(
@@ -44,6 +51,7 @@ export function evaluateDeploy(
     };
     delete next.units[index]!.refreshedRound;
   }
+  if (state.mode === "operation") materializeOperationHires(content, next);
   for (const unit of next.units) {
     if (!canStop(content, next, unit, unit.pos)) {
       const origin = unit.pos;
@@ -71,6 +79,7 @@ export function evaluateDeploy(
   next.progression.roster = next.progression.roster.map((veteran) =>
     structuredClone(next.units.find((unit) => unit.id === veteran.id)!),
   );
+  if (state.mode === "operation") captureOperationCheckpoint(next);
   return {
     ok: true,
     nextState: next,

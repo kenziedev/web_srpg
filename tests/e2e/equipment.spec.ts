@@ -11,10 +11,10 @@ const content = contentSchema.parse(
 async function latest(page: Page): Promise<BattleSave> {
   return page.evaluate(async () => {
     const storePath = "/src/storage/battleSaveStore.ts";
-    const { createBattleSaveStore } = (await import(
+    const { createCurrentBattleSaveStore } = (await import(
       storePath
     )) as typeof import("../../apps/web/src/storage/battleSaveStore");
-    return createBattleSaveStore().readRaw("latest");
+    return createCurrentBattleSaveStore().readRaw("latest");
   }) as Promise<BattleSave>;
 }
 async function open(page: Page) {

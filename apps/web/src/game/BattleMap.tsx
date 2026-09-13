@@ -1,22 +1,41 @@
 import type { BattleAnimation } from "./BattleAnimation";
 import { playBattleAnimation } from "./playBattleAnimation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Phaser from "phaser";
 import { content } from "@orden/content";
 import {
   commandBonus,
-  effectiveUnit,
-  distance,
+  enemyPhysicalThreat,
+  key,
+  previewCommandRange,
+  terrainAt,
   escortForecast,
   type BattleState,
   type Position,
   type ReachableTile,
+  type PhysicalThreatTile,
 } from "@orden/core";
 
 import { drawTerrain } from "./pixelTerrain";
 import { drawUnit } from "./pixelUnits";
 
 const TILE = 48;
+const ZOOM_LEVELS = [0.5, 1, 1.5];
+export interface BattleMapView {
+  zoom: number;
+  cursor: Position | null;
+}
+export interface BattleMapControls {
+  zoomIn: () => void;
+  zoomOut: () => void;
+  resetZoom: () => void;
+  centerOn: (position?: Position) => void;
+  pan: (dxTiles: number, dyTiles: number) => void;
+  focusTile: (position?: Position) => void;
+  moveCursor: (dx: number, dy: number) => void;
+  selectCursor: () => void;
+  clearCursor: () => void;
+}
 interface MapProps {
   state: BattleState;
   animation: BattleAnimation | null;
@@ -26,6 +45,10 @@ interface MapProps {
   spellCenters: Position[];
   spellTiles: Position[];
   showCommand: boolean;
+  showThreat?: boolean;
+  inputDisabled?: boolean;
+  onControlsReady?: (controls: BattleMapControls | null) => void;
+  onViewChange?: (view: BattleMapView) => void;
   onTile: (position: Position) => void;
 }
 
@@ -34,10 +57,18 @@ export function BattleMap(props: MapProps) {
   const host = useRef<HTMLDivElement>(null);
   const latest = useRef(props);
   const sceneRef = useRef<BattleScene | null>(null);
+  const [cursor, setCursor] = useState<Position | null>(null);
   latest.current = props;
   useEffect(() => {
     if (!host.current) return;
-    const scene = new BattleScene(() => latest.current);
+    const scene = new BattleScene(
+      () => latest.current,
+      (view) => {
+        setCursor(view.cursor);
+        latest.current.onViewChange?.(view);
+      },
+      () => host.current?.focus({ preventScroll: true }),
+    );
     sceneRef.current = scene;
     const game = new Phaser.Game({
       type: Phaser.AUTO,
@@ -56,6 +87,7 @@ export function BattleMap(props: MapProps) {
     });
     return () => {
       sceneRef.current = null;
+      latest.current.onControlsReady?.(null);
       // Phaser destroys on its next frame. Remove its canvas from layout now so
       // a StrictMode remount cannot cache the position of a second, stacked canvas.
       game.canvas?.remove();
@@ -73,13 +105,23 @@ export function BattleMap(props: MapProps) {
     props.spellCenters,
     props.spellTiles,
     props.showCommand,
+    props.showThreat,
+    props.inputDisabled,
   ]);
   return (
     <div
       ref={host}
       className="map-canvas"
       role="img"
-      aria-label="두 개의 건널목 전술 지도. 오른쪽 부대 목록에서도 유닛을 선택할 수 있습니다."
+      tabIndex={props.inputDisabled ? -1 : 0}
+      data-map-keyboard="true"
+      aria-label={`전술 지도. ${cursor ? `선택 타일 (${cursor.x}, ${cursor.y}). ` : ""}방향키로 타일 이동, Space로 선택, WASD로 카메라 이동. 부대 목록에서도 선택할 수 있습니다.`}
+      onKeyDown={(event) => {
+        if (sceneRef.current?.handleKey(event.nativeEvent)) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      }}
     />
   );
 }
@@ -93,7 +135,14 @@ class BattleScene extends Phaser.Scene {
   private art!: Phaser.GameObjects.Graphics;
   private labels: Phaser.GameObjects.Text[] = [];
   private drag: { x: number; y: number; sx: number; sy: number } | null = null;
-  constructor(private read: () => MapProps) {
+  private cursor: Position | null = null;
+  private threatState: BattleState | null = null;
+  private threatTiles: PhysicalThreatTile[] = [];
+  constructor(
+    private read: () => MapProps,
+    private changed: (view: BattleMapView) => void,
+    private focusHost: () => void,
+  ) {
     super("battle");
   }
   create() {
@@ -105,13 +154,30 @@ class BattleScene extends Phaser.Scene {
       content.scenario.width * TILE,
       content.scenario.height * TILE,
     );
-    this.cameras.main.centerOn(10 * TILE, 8 * TILE);
+    this.centerMap();
     this.game.events.once(Phaser.Core.Events.POST_RENDER, () => {
       this.scale.updateBounds();
       this.game.canvas.dataset.ready = "true";
+      this.read().onControlsReady?.({
+        zoomIn: () => this.changeZoom(1),
+        zoomOut: () => this.changeZoom(-1),
+        resetZoom: () => this.setZoom(1),
+        centerOn: (position) => this.centerOnTile(position),
+        pan: (dx, dy) => this.pan(dx, dy),
+        focusTile: (position) => this.focusTile(position),
+        moveCursor: (dx, dy) => this.moveCursor(dx, dy),
+        selectCursor: () => this.selectCursor(),
+        clearCursor: () => this.clearCursor(),
+      });
+      this.notifyView();
     });
     this.input.on("pointerdown", (p: Phaser.Input.Pointer) => {
-      if (this.game.canvas.dataset.ready !== "true") return;
+      if (
+        this.game.canvas.dataset.ready !== "true" ||
+        this.read().inputDisabled
+      )
+        return;
+      this.clearCursor();
       this.drag = {
         x: p.x,
         y: p.y,
@@ -120,33 +186,202 @@ class BattleScene extends Phaser.Scene {
       };
     });
     this.input.on("pointermove", (p: Phaser.Input.Pointer) => {
-      if (!p.isDown || !this.drag) return;
+      if (!p.isDown || !this.drag || this.read().inputDisabled) return;
       this.cameras.main.setScroll(
-        Math.round(this.drag.sx + this.drag.x - p.x),
-        Math.round(this.drag.sy + this.drag.y - p.y),
+        Math.round(this.drag.sx + (this.drag.x - p.x) / this.cameras.main.zoom),
+        Math.round(this.drag.sy + (this.drag.y - p.y) / this.cameras.main.zoom),
       );
     });
     this.input.on("pointerup", (p: Phaser.Input.Pointer) => {
-      if (this.drag && Math.hypot(p.x - this.drag.x, p.y - this.drag.y) < 6) {
+      if (
+        !this.read().inputDisabled &&
+        this.drag &&
+        Math.hypot(p.x - this.drag.x, p.y - this.drag.y) < 6
+      ) {
         const point = this.cameras.main.getWorldPoint(p.x, p.y);
-        this.read().onTile({
+        const position = {
           x: Math.floor(point.x / TILE),
           y: Math.floor(point.y / TILE),
-        });
+        };
+        if (terrainAt(content, position, this.read().state))
+          this.read().onTile(position);
       }
       this.drag = null;
     });
     this.input.on(
       "wheel",
-      (_p: unknown, _objects: unknown, dx: number, dy: number) => {
+      (
+        pointer: Phaser.Input.Pointer,
+        _objects: unknown,
+        dx: number,
+        dy: number,
+        _dz: number,
+        event: WheelEvent,
+      ) => {
+        if (this.read().inputDisabled) return;
+        if (event.ctrlKey || event.metaKey) {
+          event.preventDefault();
+          if (dy) this.changeZoom(dy < 0 ? 1 : -1, pointer);
+          return;
+        }
         this.cameras.main.setScroll(
-          this.cameras.main.scrollX + dx,
-          this.cameras.main.scrollY + dy,
+          this.cameras.main.scrollX + dx / this.cameras.main.zoom,
+          this.cameras.main.scrollY + dy / this.cameras.main.zoom,
         );
       },
     );
     this.events.once("shutdown", () => this.stopAnimation?.());
     this.paint();
+  }
+  private centerMap() {
+    this.cameras.main.centerOn(
+      Math.ceil(content.scenario.width / 2) * TILE,
+      Math.ceil(content.scenario.height / 2) * TILE,
+    );
+  }
+  private selectedPosition(): Position {
+    const { state, selectedId, destination } = this.read();
+    return (
+      destination ??
+      state.units.find((unit) => unit.id === selectedId)?.pos ?? {
+        x: Math.floor(content.scenario.width / 2),
+        y: Math.floor(content.scenario.height / 2),
+      }
+    );
+  }
+  private notifyView() {
+    this.game.canvas.dataset.zoom = String(this.cameras.main.zoom);
+    this.game.canvas.dataset.cursor = this.cursor ? key(this.cursor) : "";
+    this.changed({
+      zoom: this.cameras.main.zoom,
+      cursor: this.cursor ? { ...this.cursor } : null,
+    });
+  }
+  private setZoom(zoom: number, pointer?: Phaser.Input.Pointer) {
+    if (this.read().inputDisabled) return;
+    const camera = this.cameras.main;
+    const x = pointer?.x ?? camera.width / 2;
+    const y = pointer?.y ?? camera.height / 2;
+    const anchor = camera.getWorldPoint(x, y);
+    camera.setZoom(zoom);
+    camera.centerOn(
+      anchor.x + (camera.width / 2 - x) / zoom,
+      anchor.y + (camera.height / 2 - y) / zoom,
+    );
+    this.notifyView();
+  }
+  private changeZoom(direction: number, pointer?: Phaser.Input.Pointer) {
+    const index = ZOOM_LEVELS.indexOf(this.cameras.main.zoom);
+    const next = Math.max(
+      0,
+      Math.min(ZOOM_LEVELS.length - 1, index + direction),
+    );
+    this.setZoom(ZOOM_LEVELS[next]!, pointer);
+  }
+  private centerOnTile(position = this.selectedPosition()) {
+    if (
+      this.read().inputDisabled ||
+      !terrainAt(content, position, this.read().state)
+    )
+      return;
+    this.cameras.main.centerOn(
+      (position.x + 0.5) * TILE,
+      (position.y + 0.5) * TILE,
+    );
+  }
+  private pan(dx: number, dy: number) {
+    if (
+      this.read().inputDisabled ||
+      !Number.isFinite(dx) ||
+      !Number.isFinite(dy)
+    )
+      return;
+    this.cameras.main.setScroll(
+      this.cameras.main.scrollX + dx * TILE,
+      this.cameras.main.scrollY + dy * TILE,
+    );
+  }
+  private focusTile(position = this.selectedPosition()) {
+    if (this.read().inputDisabled) return;
+    this.cursor = {
+      x: Math.max(
+        0,
+        Math.min(content.scenario.width - 1, Math.floor(position.x)),
+      ),
+      y: Math.max(
+        0,
+        Math.min(content.scenario.height - 1, Math.floor(position.y)),
+      ),
+    };
+    this.focusHost();
+    this.centerOnTile(this.cursor);
+    this.notifyView();
+    this.paint();
+  }
+  private moveCursor(dx: number, dy: number) {
+    if (this.read().inputDisabled) return;
+    const pos = this.cursor ?? this.selectedPosition();
+    this.focusTile({ x: pos.x + dx, y: pos.y + dy });
+  }
+  private selectCursor() {
+    if (!this.read().inputDisabled && this.cursor)
+      this.read().onTile({ ...this.cursor });
+  }
+  private clearCursor() {
+    if (!this.cursor) return;
+    this.cursor = null;
+    this.notifyView();
+    this.paint();
+  }
+  handleKey(event: KeyboardEvent): boolean {
+    if (
+      this.read().inputDisabled ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey
+    )
+      return false;
+    const arrows: Record<string, [number, number]> = {
+      ArrowLeft: [-1, 0],
+      ArrowRight: [1, 0],
+      ArrowUp: [0, -1],
+      ArrowDown: [0, 1],
+    };
+    const movement = arrows[event.key];
+    if (movement) {
+      if (event.shiftKey) this.pan(...movement);
+      else this.moveCursor(...movement);
+      return true;
+    }
+    const camera: Record<string, [number, number]> = {
+      a: [-1, 0],
+      d: [1, 0],
+      w: [0, -1],
+      s: [0, 1],
+    };
+    if (camera[event.key.toLowerCase()]) {
+      this.pan(...camera[event.key.toLowerCase()]!);
+      return true;
+    }
+    if (event.key === "+" || event.key === "=") {
+      this.changeZoom(1);
+      return true;
+    }
+    if (event.key === "-") {
+      this.changeZoom(-1);
+      return true;
+    }
+    if (event.key === "Home") {
+      this.centerOnTile();
+      return true;
+    }
+    if (event.key === " " || (event.key === "Enter" && this.cursor)) {
+      if (!this.cursor) this.focusTile();
+      this.selectCursor();
+      return true;
+    }
+    if (event.key === "Escape") this.clearCursor();
+    return false;
   }
   private paintTerrain(state: BattleState) {
     const signature = JSON.stringify(state.terrainChanges);
@@ -199,6 +434,7 @@ class BattleScene extends Phaser.Scene {
       spellCenters,
       spellTiles,
       showCommand,
+      showThreat,
       animation,
     } = this.read();
     this.paintTerrain(state);
@@ -209,21 +445,32 @@ class BattleScene extends Phaser.Scene {
         ? playBattleAnimation(this, animation)
         : null;
     }
-    if (state.revision === 0 && state !== this.lastState)
-      this.cameras.main.centerOn(10 * TILE, 8 * TILE);
+    if (state.revision === 0 && state !== this.lastState) {
+      this.centerMap();
+      this.cursor = null;
+      this.notifyView();
+    }
     this.lastState = state;
     const animatedId =
       animation?.command.type === "act"
         ? animation.command.unitId
         : animation?.events.find((e) => e.type === "moved")?.unitId;
-    const selected = state.units.find((u) => u.id === selectedId);
-    const rawLeader =
-      selected?.kind === "commander"
-        ? selected
-        : state.units.find((u) => u.id === selected?.commanderId);
-    const leader = rawLeader
-      ? effectiveUnit(content, state, rawLeader)
-      : undefined;
+    const command = showCommand
+      ? previewCommandRange(content, state, selectedId, destination)
+      : null;
+    const commandCells = new Set(command?.tiles.map(key));
+    if (showThreat && this.threatState !== state) {
+      this.threatState = state;
+      this.threatTiles = enemyPhysicalThreat(content, state);
+    }
+    const threatCells = new Set(
+      showThreat ? this.threatTiles.map((tile) => key(tile.pos)) : [],
+    );
+    this.game.canvas.dataset.threatCount = String(threatCells.size);
+    this.game.canvas.dataset.commandOrigin = command ? key(command.origin) : "";
+    this.game.canvas.dataset.commandRadius = command
+      ? String(command.radius)
+      : "";
     this.art.clear();
     this.labels.forEach((text) => text.destroy());
     this.labels = [];
@@ -232,13 +479,22 @@ class BattleScene extends Phaser.Scene {
       for (let x = 0; x < s.width; x++) {
         const px = x * TILE,
           py = y * TILE;
-        if (
-          showCommand &&
-          leader?.command &&
-          distance({ x, y }, leader.pos) <= leader.command.radius
-        )
+        if (threatCells.has(key({ x, y }))) {
           this.art
-            .lineStyle(2, 0xedcc81, 0.45)
+            .fillStyle(0xd34850, 0.13)
+            .fillRect(px + 2, py + 2, TILE - 4, TILE - 4)
+            .lineStyle(2, 0xff8d91, 0.62)
+            .lineBetween(px + 5, py + 22, px + 22, py + 5)
+            .lineBetween(px + 5, py + 42, px + 42, py + 5)
+            .lineBetween(px + 25, py + 42, px + 42, py + 25);
+        }
+        if (commandCells.has(key({ x, y })))
+          this.art
+            .lineStyle(
+              2,
+              destination ? 0xaaf2ca : 0xedcc81,
+              destination ? 0.8 : 0.45,
+            )
             .strokeRect(px + 2, py + 2, TILE - 4, TILE - 4);
         if (reachable.some((r) => r.pos.x === x && r.pos.y === y))
           this.art
@@ -330,7 +586,25 @@ class BattleScene extends Phaser.Scene {
           "#efcafa",
           12,
         );
+      const planned = destination
+        ? command?.bonuses.find((bonus) => bonus.unitId === unit.id)
+        : undefined;
       if (
+        planned &&
+        (planned.before.active !== planned.after.active ||
+          planned.before.at !== planned.after.at ||
+          planned.before.df !== planned.after.df)
+      ) {
+        this.label(
+          x + 1,
+          y - 10,
+          planned.after.active
+            ? `예정 AT+${planned.after.at} DF+${planned.after.df}`
+            : "예정 범위 밖",
+          planned.after.active ? "#aaf2ca" : "#ffaaa0",
+          9,
+        );
+      } else if (
         unit.kind === "mercenary" &&
         !commandBonus(state, unit, content).active
       )
@@ -354,6 +628,13 @@ class BattleScene extends Phaser.Scene {
         destination.y * TILE + TILE,
         "이동 예정",
       );
+    }
+    if (this.cursor) {
+      const { x, y } = this.cursor;
+      this.art
+        .lineStyle(3, 0x93faff, 1)
+        .strokeRect(x * TILE + 1, y * TILE + 1, TILE - 2, TILE - 2);
+      this.label(x * TILE + 3, y * TILE + 3, `${x},${y}`, "#b9fbff", 10);
     }
   }
 }

@@ -1359,3 +1359,88 @@ body {
   font-size: 10px;
   color: #d3c5ee;
 }
+.system-bar {
+  min-width: 0;
+  gap: 10px;
+}
+.system-bar nav {
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.system-bar nav button {
+  flex-shrink: 0;
+}
+.operation-banner {
+  position: absolute;
+  z-index: 9;
+  left: 12px;
+  top: 58px;
+  right: 184px;
+  padding: 10px;
+  border: 1px solid #c5bd8b;
+  background: #253851;
+  color: #fff2c4;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.operation-banner button {
+  margin-left: 8px;
+  padding: 5px 8px;
+  border: 1px solid #aeb29b;
+  background: #314761;
+}
+.map-tools {
+  display: flex;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  gap: 4px;
+  font-size: 11px;
+}
+.map-tools button {
+  flex-shrink: 0;
+  padding: 1px 5px;
+  min-height: 20px;
+  background: #233b51;
+  border: 1px solid #627987;
+}
+.map-tools button[aria-pressed="true"] {
+  color: #fff1a5;
+  background: #415569;
+}
+.map-help {
+  position: absolute;
+  z-index: 7;
+  left: 12px;
+  bottom: 110px;
+  max-width: calc(100% - 200px);
+  padding: 7px;
+  font-size: 11px;
+  line-height: 1.5;
+  pointer-events: none;
+}
+.map-help span {
+  display: block;
+}
+@media (max-width: 1100px) {
+  .system-bar h1 {
+    display: none;
+  }
+}
+@media (max-width: 600px) {
+  .system-bar nav {
+    width: 100%;
+  }
+  .map-help {
+    left: 6px;
+    max-width: calc(100% - 170px);
+    bottom: 120px;
+  }
+  .operation-banner {
+    left: 6px;
+    right: 160px;
+    top: 58px;
+    padding: 6px;
+  }
+}

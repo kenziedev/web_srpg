@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import type { StoredSaveSlot } from "../storage/battleSaveStore";
 
 interface Props {
@@ -13,6 +13,10 @@ interface Props {
   importSave: (file: File) => void;
   restorePrevious: () => void;
   retry: () => void;
+  exportLegacySave: (slot: "latest" | "previous") => void;
+  children?: ReactNode;
+  modeLabel: string;
+  commandCount: number;
 }
 
 export function SavePanel(props: Props) {
@@ -64,6 +68,10 @@ export function SavePanel(props: Props) {
       >
         <div className="window-caption">SAVE / RECOVERY</div>
         <h2 id="save-title">전투 저장 · 복구</h2>
+        <p>
+          {props.modeLabel} · 명령 {props.commandCount}/1024 · 모드와 실행
+          규칙별로 저장합니다.
+        </p>
         <p data-testid="save-panel-status" aria-live="polite">
           {props.status}
         </p>
@@ -115,6 +123,7 @@ export function SavePanel(props: Props) {
           파일로 내보내십시오. 손상되었거나 버전이 다른 파일은 저장을 바꾸지
           않습니다.
         </p>
+        {props.children}
         <details>
           <summary>기존 저장 원본 백업</summary>
           <p className="save-help">
@@ -134,6 +143,27 @@ export function SavePanel(props: Props) {
               disabled={props.locked}
             >
               기존 직전 저장 백업
+            </button>
+          </div>
+        </details>
+        <details>
+          <summary>이전 버전(0.7 이하) 원본 백업</summary>
+          <p>
+            이전 버전 기록은 별도로 보존됩니다. 진행 중 전투를 새 규칙으로 자동
+            변환하지 않습니다.
+          </p>
+          <div className="save-actions">
+            <button
+              onClick={() => props.exportLegacySave("latest")}
+              disabled={props.locked}
+            >
+              이전 버전 최신 저장 백업
+            </button>
+            <button
+              onClick={() => props.exportLegacySave("previous")}
+              disabled={props.locked}
+            >
+              이전 버전 직전 저장 백업
             </button>
           </div>
         </details>

@@ -8,6 +8,8 @@ import type {
   Unit,
 } from "./types";
 import { allied } from "./movement";
+import { unlockMasteries } from "./masteryEffects";
+import { settleOperation } from "./operation";
 
 const emptyContribution = (): ExperienceContribution => ({
   damage: 0,
@@ -233,6 +235,7 @@ export function gainExperience(
     }
   }
   progression.exp = Math.min(progression.level === 10 ? 100 : 99, available);
+  unlockMasteries(content, unit);
   return { unit, learnedSpellIds, statGains };
 }
 
@@ -302,4 +305,5 @@ export function settleExperience(
     duplicate,
     entries,
   };
+  settleOperation(content, state, events, rewarded);
 }

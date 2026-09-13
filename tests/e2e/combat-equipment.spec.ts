@@ -29,11 +29,9 @@ test("an arbalest with minimum range 1 uses projectiles at distance 4 and keeps 
   await page.getByRole("button", { name: "부대 목록", exact: true }).click();
   await page.getByRole("button", { name: "로엔 선택", exact: true }).click();
   const target = content.scenario.units.find((unit) => unit.id === "E11")!;
-  await page
-    .locator('canvas[data-ready="true"]')
-    .click({
-      position: { x: target.pos.x * 48 + 24, y: target.pos.y * 48 + 24 },
-    });
+  await page.locator('canvas[data-ready="true"]').click({
+    position: { x: target.pos.x * 48 + 24, y: target.pos.y * 48 + 24 },
+  });
   await expect(page.getByRole("button", { name: "행동 확정" })).toBeEnabled();
   await page.getByRole("button", { name: "행동 확정" }).click();
   const dialog = page.getByRole("dialog", { name: "상세 전투", exact: true });
@@ -54,10 +52,10 @@ test("an arbalest with minimum range 1 uses projectiles at distance 4 and keeps 
   });
   const save = (await page.evaluate(async () => {
     const storePath = "/src/storage/battleSaveStore.ts";
-    const { createBattleSaveStore } = (await import(
+    const { createCurrentBattleSaveStore } = (await import(
       storePath
     )) as typeof import("../../apps/web/src/storage/battleSaveStore");
-    return createBattleSaveStore().readRaw("latest");
+    return createCurrentBattleSaveStore().readRaw("latest");
   })) as BattleSave;
   let replay = createBattle(content);
   for (const command of save.commands) {

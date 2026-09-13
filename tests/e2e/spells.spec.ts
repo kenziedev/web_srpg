@@ -79,10 +79,10 @@ async function loadScene(page: Page, state: BattleState) {
     const { createSave } = (await import(
       formatPath
     )) as typeof import("../../apps/web/src/storage/saveFormat");
-    const { createBattleSaveStore } = (await import(
+    const { createCurrentBattleSaveStore } = (await import(
       storePath
     )) as typeof import("../../apps/web/src/storage/battleSaveStore");
-    await createBattleSaveStore().write(
+    await createCurrentBattleSaveStore().write(
       createSave(battle, { finishing: false, autoFollow: false }),
     );
   }, state);
@@ -94,10 +94,10 @@ async function loadScene(page: Page, state: BattleState) {
 async function latest(page: Page) {
   return page.evaluate(async () => {
     const storePath = "/src/storage/battleSaveStore.ts";
-    const { createBattleSaveStore } = (await import(
+    const { createCurrentBattleSaveStore } = (await import(
       storePath
     )) as typeof import("../../apps/web/src/storage/battleSaveStore");
-    return await createBattleSaveStore().readRaw("latest");
+    return await createCurrentBattleSaveStore().readRaw("latest");
   }) as Promise<BattleSave>;
 }
 

@@ -1,7 +1,8 @@
-import type { BattleState, Content, Unit } from "./types";
+import type { BattleState, Content, Unit, Position } from "./types";
 import { distance, terrainAt } from "./movement";
 import { effectiveUnit } from "./effective";
 import { hasStatus } from "./statuses";
+import { hasMastery } from "./masteryEffects";
 
 export function commandBonus(
   state: BattleState,
@@ -60,7 +61,14 @@ export function damage(
   state: BattleState,
   attacker: Unit,
   defender: Unit,
+  attackPath: Position[] = [],
 ) {
+  const charge =
+    hasMastery(content, attacker, "charge") &&
+    attackPath.length >= 3 &&
+    attackPath.every((pos) =>
+      terrainAt(content, pos, state)?.masteryTags?.includes("charge"),
+    );
   attacker = effectiveUnit(content, state, attacker);
   defender = effectiveUnit(content, state, defender);
   const ac = commandBonus(state, attacker, content);
@@ -69,7 +77,10 @@ export function damage(
   const dfTerrain = terrainAt(content, defender.pos, state);
   const waterAtk = attacker.unitType === "sailor" && atTerrain?.water ? 2 : 0;
   const waterDef = defender.unitType === "sailor" && dfTerrain?.water ? 2 : 0;
-  const a = Math.max(0, attacker.stats.at + ac.at + waterAtk);
+  const a = Math.max(
+    0,
+    attacker.stats.at + ac.at + waterAtk + (charge ? 1 : 0),
+  );
   const d = Math.max(
     0,
     defender.stats.df +
