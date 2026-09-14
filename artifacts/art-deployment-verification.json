@@ -1,0 +1,152 @@
+{
+  "checkedAt": "2026-09-14T00:58:31.288Z",
+  "status": "passed",
+  "url": "https://kenzie.kr/srpg/",
+  "sourceCommit": "c374765856785b0aa735872627fd746215fe5ea5",
+  "deploymentCommit": "bc0abfc3ae8b52429de429a4b7b286bce06305fe",
+  "rulesVersion": "0.8",
+  "local": {
+    "checkTests": 401,
+    "browserTests": 71,
+    "build": true,
+    "buildSrpg": true,
+    "noCoreContentSchemaChanges": true
+  },
+  "sourceCI": {
+    "run": "https://github.com/kenziedev/web_srpg/actions/runs/34794084932",
+    "status": "success",
+    "browserTests": 71,
+    "allThreeShardsPassed": true
+  },
+  "pagesCI": {
+    "run": "https://github.com/kenziedev/kenziedev.github.io/actions/runs/34794280275",
+    "status": "success"
+  },
+  "publishedAssets": {
+    "count": 58,
+    "httpMimeSha256AllMatched": true,
+    "manifest": {
+      "sourceRepository": "https://github.com/kenziedev/web_srpg",
+      "sourceCommit": "c374765856785b0aa735872627fd746215fe5ea5",
+      "rulesVersion": "0.8",
+      "basePath": "/srpg/",
+      "builtAt": "2026-09-14T00:53:43.119799+00:00",
+      "assets": {
+        "assets/armor-DLNlg_SP.png": "15113caba28d638a3e93ee19ecbd8337afa33945090f98fbcc269c81b3d71399",
+        "assets/beam-royal-2-C0hpf1ij.png": "962644485c4a1b08c32296bff087a9ec41b5aac1c1517c077114f0f554559fbc",
+        "assets/bow-Dsl5Vgnj.png": "308c7376656b8d4d03085f0fd4096dda17f435bf8e67f9f7f559e800484aaad2",
+        "assets/dagger-DCnnUC0B.png": "02a93d1a4dba173017e8d2bee94890af43a675f2d31a4c3398229b1fe880ee2b",
+        "assets/enchant-orange-3-DwUt1Igh.png": "0dd7631e9c16ee8f20d1107c7af69296cc67100a8537cf9bd03e71665088c4c2",
+        "assets/enchant-red-1-MocmXZjp.png": "78abbf72501e99a9252aa0b1d588eae9081a207ab9189d40948a7bc801aac43a",
+        "assets/enchant-red-3-BqtWxX7q.png": "dd67659ef177d846ae9b67522d183aea7f7211960e482e9b65c919e690e49f6c",
+        "assets/evil-eye-red-1-CBtr_3gO.png": "7c7ae5c359c68224e94cce098e1db5b6197e32a0adbc9602b123223278ddd778",
+        "assets/fire-arrows-sky-1-CNgpbeAq.png": "737e7455954489d9041a661529f82e196098df4f994eb246b4a5b7b0f535fe02",
+        "assets/fireball-red-2-DEWL1L4x.png": "da50fa9dc62160ff91b4bc3025890c26b0fce144c1d94b0df2d78abf5aca619f",
+        "assets/fireball-red-3-BSvXCRae.png": "cf3c0ad327dfa67110df4b8c9f1f1e38fd58217d7920abd5837c5c26e3388b40",
+        "assets/fog-magenta-1-C3T6nWbE.png": "b53c234790270a37e5267e5ef464f150b6413b9b1926233aec2bcc90f6d6a1da",
+        "assets/gemBlue-CS08EcNJ.png": "64ace0e660e5e880e24de073ca3ca8c599a0df3c9997be33be620b528d5ca01e",
+        "assets/gemGreen-KoBPzkMR.png": "1098afbd9649b0424b17e95b7cf1732135fdaf0133f43ef9ee1aa80e43185873",
+        "assets/gemRed-CBqQjuyX.png": "98405f53c94f7e9bd3f44a7495afd70de3305393329ddc30957e52a853bfb497",
+        "assets/hammer-ChkiAaoR.png": "e30f2aba9ab7fc8f272e7b9dc9837e1d7ff4f94a713b962d69dc5919fb4bbe3f",
+        "assets/haste-royal-3-DBB7ZoWc.png": "3517b70ad802c4cd2a7b25c06e2d322b62d093f7cc35ae1c0b74b78556fe2935",
+        "assets/haste-sky-2-DJUChUG1.png": "6a87f30e986761db78639ab6aec642310058ccdf8de11359159121200b289f05",
+        "assets/heal-royal-2-D8ztBQPU.png": "2a80447997dd56c989e7ceda232cace4dd64ec20517bae9eb3e5b59b0a9880fa",
+        "assets/heal-royal-3-DehKEorI.png": "6d6a65f9df6c3d3265525a3d12cba6e88995035b8b5d4819aab906a692ac20a9",
+        "assets/heal-sky-1-BOjy8mhQ.png": "6ab156e29a5b4ddd86a8f2448b621263ddea312d298f0b164ad924fe7598b5e5",
+        "assets/heal-sky-3-j390HoMw.png": "303ec3c25b358653e35adaafa8adfde3112d92a011ec708953ad153b2d505d5d",
+        "assets/horror-eerie-2-Dpudtf2Q.png": "4b94d64907d3a4e8d283a82c498c95002df95d53aa4f37359f117d1e7e23661a",
+        "assets/horror-red-3-CMThN6wn.png": "649c6eb41b1aaab07efb6941bb6fdf1dbae279f62d5f4d7f626df2e2415fb83b",
+        "assets/ice-blue-3-gDhYtVBs.png": "862850cc56fef9037a0428fcc35ce02af5b1e441c815aa09c260cdc2e48b0324",
+        "assets/index-D3Y2rXFy.css": "49a0132c2b6276e2ef6a79063b1565090ab9de4a969d5ec778296c4b05ea7b64",
+        "assets/index-YG5usFcw.js": "e7ef44cfc30cdf3b6fa1f113b8b9ed534e87e44f7ac57b1ea015ebcbcee161a9",
+        "assets/leaf-jade-3-BNaSU7wa.png": "39d821ae5c73126a72a59b504bec01501afcb6e920c68ed37e18152376f1b230",
+        "assets/light-royal-3-B_SXCOc7.png": "1c0dcdabd782793687ece4b3663633b8b26ce4e60e3c357d7943f01bea2694ae",
+        "assets/lighting-sky-3-3mWc1AXl.png": "42c403c898420f6b0478028adbb82e3de00b3c1cb9b4dbcd7d708ad0daaee94f",
+        "assets/link-spirit-1-DIYcCQ-F.png": "451ca8facf6c3dbdde7425abcde3e17c911c22c0f35d331620ea40e2a39374a4",
+        "assets/medieval-strategy-COvSaSde.png": "d39d3e776967ce5c055c26e0904de75cb062a876716fb0cbfc6913a3650ad4af",
+        "assets/portrait21-CFWAjg-C.png": "48c2b67f3d0b1cd0d060449d579c4e631d4601e0e96a7570339f8e66308d5c4a",
+        "assets/portrait24-m2ggHXgS.png": "d9c19e2de1eb5ba7e2d60fcd78a69e9f2e9c3e62180992095fbc331b76295b37",
+        "assets/portrait25-ClC8oJTH.png": "0c808efd866b5e5f98341b8b47048cebc6845d255e20f844b89126c1c4eff9f5",
+        "assets/protect-blue-1-CjPiM5Pn.png": "e21033accb4579f47bf3f6e77ea6aa11d870d4ce699792b779a0bb0d709d91d7",
+        "assets/protect-blue-3-R0t0-Fgi.png": "5390a141668b9deb2e2611950f19bb4817ee5ab4fa8556ae3669be7ab344424f",
+        "assets/rock-plain-3-BaEP0Ytf.png": "aecaaad0b1783af21424abbf1ef431d18567f5e567e8c63d785a4375432aaaa8",
+        "assets/runes-blue-2-Ds0pD4jG.png": "cbf6879ead6f61f36e116a3450b5d969618cb92a3ad04a08504f21e3cccc35de",
+        "assets/runes-magenta-3-C3vmCYWq.png": "dd222d55b07a23c3c0e1c8caeb44ae89d7e50e5f8c3add8ad0c94bd8ee5f3259",
+        "assets/runes-royal-2-BuNEwrXz.png": "c302b966ced6e040fe9551d43c26232996fe247d5bbd10a465d86be16f30e0ba",
+        "assets/runes-royal-3-m0vTzBFL.png": "55acec32825d2e48d59b7da1b9e597f87a2bb4661e108ccadcddeaa58a3a6163",
+        "assets/shield-BzEa2QkX.png": "662277c0559f33ffe2498f75f284d6dd98f32c5a0630813193f47f1fc1c87eb0",
+        "assets/shieldSmall-B0AlAuw9.png": "41f2c8c326696c7af9df698ceed4258594a29e07e6854549f239b83790167fbe",
+        "assets/shielding-spirit-2-DIUAMni_.png": "2fba2ccb917e8292b870089b91943e46bae0b8e6dddea1e744d11bdf4a2c7597",
+        "assets/sword-BBmBfy_9.png": "42236b6c7f49760def85dec19e653b1c8217bb3ebea23bb38af30a0f45b21ee1",
+        "assets/swordWood-MDSK-aVO.png": "811c91613bcbbedbd955fbe546c6ecd021b31241aecb2208da0f325661b9f399",
+        "assets/upg_armor-BVTI3miA.png": "709927e4247d3463443a1293eedb7d35846058f7f211dc2cbfbcf14a5bd92d82",
+        "assets/upg_axeDouble-BfB50aYf.png": "8a025aacc04e4851f8d7cada8c9535274a84f8df5614335ae0ab3d1a4bf476c7",
+        "assets/upg_bow-8oQY9zV6.png": "870b7be48cbb30e5fce3e25941118424634c6a39b63ad9829578651e6b999b22",
+        "assets/upg_shield-CTCafvc8.png": "4bc793f31f948d25a9c7ce4e2d72ebdfeaeac03466612a60abeb4311e5ede91d",
+        "assets/upg_spear-CIRMy7OE.png": "3a5c56e9ab4cc9a1fc52316d120c11ec8ac8386f7573e3d53a962b49eb31fce1",
+        "assets/upg_sword-Dd87DX7c.png": "0b348b415fb363e0022daa30fe5f9b6b785dc49575e14027052f67f6d32117ca",
+        "assets/upg_wand-BMWHAI8I.png": "ece66b0368c021981a7608f90acc16a2a80e50787a71d9ffa9a7fd432748604f",
+        "assets/wand-BlAw3a1F.png": "cb9cf9c228cd345631d89d45c761c020dfb2ebf9f65f808aa5602d5d244d297a",
+        "assets/wild-jade-3-BYB977Q7.png": "4b7e46100c47d1672b680f7fbc6c39b27a81b73644d4ec568ae709914293b8a9",
+        "assets/wind-blue-3-DJ0ORHxX.png": "e7b9e141bd37b7331a0b1ce40aff9933ce9c72d81329d5eb6cf1dfd3650d32a9",
+        "index.html": "9208538ae8a6b76d915273d37e0f922b5e317d6ba346f43fba56a75536e071bd"
+      }
+    }
+  },
+  "operation": {
+    "revision": 4,
+    "mode": "operation",
+    "phase": "battle",
+    "knifeOwned": 1,
+    "equipmentFunds": 250,
+    "hire": "pike",
+    "exactReloadMatch": true,
+    "preparationLocked": true
+  },
+  "older07Backup": {
+    "originalRules": "0.7",
+    "originalRevision": 1,
+    "originalChecksum": "43735fc0",
+    "rawPreserved": true,
+    "backupExactMatch": true,
+    "newRules": "0.8",
+    "newRecordSeparatelyStored": true
+  },
+  "same08Save": {
+    "slot": "0.8:practice:latest",
+    "originalSource": "7e3d1a606dfd75ab46283e6c411617443da803cd",
+    "newSource": "c374765856785b0aa735872627fd746215fe5ea5",
+    "rulesVersion": "0.8",
+    "revision": 1,
+    "checksum": "d3c4a288",
+    "kaielActed": true,
+    "deepEqual": true,
+    "secondReloadEqual": true,
+    "art": "toen",
+    "originalFileSHA256": "dfef0082d613e83eca397c94a69fc0845464e999900d9aa9d2f1dc81aa84d2ea"
+  },
+  "serviceWorker": {
+    "controller": "https://kenzie.kr/sw.min.js",
+    "scripts": [
+      "https://kenzie.kr/srpg/assets/index-YG5usFcw.js"
+    ],
+    "cachedGameFiles": []
+  },
+  "browserErrors": [],
+  "artwork": {
+    "sources": 5,
+    "originalPNGs": 57,
+    "commanderPortraits": 3,
+    "itemKinds": 34,
+    "spellKinds": 35
+  },
+  "visualChecks": [
+    "desktop battlefield and three portraits",
+    "desktop and 390px equipment, training and shop",
+    "desktop and 390px detailed combat",
+    "normal movement ghost and meteor terrain redraw",
+    "failed terrain image fallback and persisted wait"
+  ],
+  "performanceReport": "art-browser-performance.json",
+  "completedAt": "2026-09-14T01:07:47.353768+00:00"
+}
