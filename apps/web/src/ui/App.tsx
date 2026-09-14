@@ -21,6 +21,8 @@ import {
 } from "../game/BattleMap";
 import { MissionPanel, BattleResult } from "./MissionPanel";
 import { Portrait } from "./Portrait";
+import { SpellIcon } from "./SpellIcon";
+import { ArtCredits } from "./ArtCredits";
 import { useBattle } from "./useBattle";
 import { SavePanel } from "./SavePanel";
 import { SaveSlotsPanel } from "./SaveSlotsPanel";
@@ -364,7 +366,10 @@ export function App() {
                     key={spell.id}
                     onClick={() => battle.prepareSpell(spell.id)}
                   >
-                    <strong>{spell.name}</strong>
+                    <strong>
+                      <SpellIcon spellId={spell.id} />
+                      {spell.name}
+                    </strong>
                     <span>MP {spell.mpCost}</span>
                     <small>
                       {spellRangeLabel({
@@ -766,6 +771,7 @@ export function App() {
               aria-label="전투 안내"
             >
               <h2>전투 연습 안내</h2>
+              <ArtCredits />
               <p>
                 턴 종료 → 미행동 용병 추종·공격 → 적군 행동 → 다음 아군 턴
                 순서입니다. 직접 대기·공격한 용병은 자동 행동하지 않습니다. 아군

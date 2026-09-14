@@ -1,6 +1,160 @@
 import type Phaser from "phaser";
 import { terrainAt, type Content, type BattleState } from "@orden/core";
 
+type TerrainFrame = readonly [column: number, row: number];
+
+// Original sheet coordinates are zero based. Direction bits: N=1, E=2, S=4, W=8.
+const ROAD_FRAMES: Readonly<Record<number, TerrainFrame>> = {
+  0: [1, 10],
+  1: [0, 11],
+  2: [1, 10],
+  3: [0, 12],
+  4: [0, 11],
+  5: [0, 11],
+  6: [0, 10],
+  7: [0, 9],
+  8: [1, 10],
+  9: [2, 12],
+  10: [1, 10],
+  11: [2, 9],
+  12: [2, 10],
+  13: [1, 9],
+  14: [3, 9],
+  15: [1, 11],
+};
+const RIVER_FRAMES: Readonly<Record<number, TerrainFrame>> = {
+  0: [1, 14],
+  1: [0, 14],
+  2: [1, 13],
+  3: [0, 15],
+  4: [0, 14],
+  5: [0, 14],
+  6: [0, 13],
+  7: [4, 14],
+  8: [1, 13],
+  9: [2, 15],
+  10: [1, 13],
+  11: [4, 13],
+  12: [2, 13],
+  13: [3, 14],
+  14: [3, 13],
+  15: [1, 14],
+};
+
+/** Paint Toen's native 16px tiles at an exact 3× scale into a map-sized canvas. */
+export function drawAssetTerrain(
+  context: CanvasRenderingContext2D,
+  source: CanvasImageSource,
+  content: Content,
+  state?: BattleState,
+): void {
+  const scenario = content.scenario;
+  const tile = (x: number, y: number) =>
+    x < 0 || y < 0 || x >= scenario.width || y >= scenario.height
+      ? ""
+      : (terrainAt(content, { x, y }, state)?.id ?? "");
+  const isRiver = (id: string) =>
+    id === "water" || id === "shallow" || id === "bridge";
+  const isRoad = (id: string) =>
+    id === "road" || id === "bridge" || id === "village";
+  const connections = (
+    x: number,
+    y: number,
+    matches: (id: string) => boolean,
+  ) =>
+    (matches(tile(x, y - 1)) ? 1 : 0) |
+    (matches(tile(x + 1, y)) ? 2 : 0) |
+    (matches(tile(x, y + 1)) ? 4 : 0) |
+    (matches(tile(x - 1, y)) ? 8 : 0);
+
+  context.save();
+  context.setTransform(1, 0, 0, 1, 0, 0);
+  context.imageSmoothingEnabled = false;
+  context.clearRect(0, 0, scenario.width * 48, scenario.height * 48);
+  for (let y = 0; y < scenario.height; y++) {
+    for (let x = 0; x < scenario.width; x++) {
+      const id = tile(x, y);
+      const seed = (x * 71 + y * 137) % 97;
+      const draw = (frame: TerrainFrame) =>
+        context.drawImage(
+          source,
+          frame[0] * 16,
+          frame[1] * 16,
+          16,
+          16,
+          x * 48,
+          y * 48,
+          48,
+          48,
+        );
+      const fragment = (
+        frame: TerrainFrame,
+        sx: number,
+        sy: number,
+        width: number,
+        height: number,
+        dx: number,
+        dy: number,
+      ) =>
+        context.drawImage(
+          source,
+          frame[0] * 16 + sx,
+          frame[1] * 16 + sy,
+          width,
+          height,
+          x * 48 + dx * 3,
+          y * 48 + dy * 3,
+          width * 3,
+          height * 3,
+        );
+
+      // The matching plain/tufted pair shares a palette, avoiding checkerboard fields.
+      draw([seed % 5 < 2 ? 2 : 0, 0]);
+      if (isRiver(id)) {
+        draw(RIVER_FRAMES[connections(x, y, isRiver)] ?? [0, 14]);
+        if (id === "shallow") {
+          // Small pieces of the original rock tile make the ford readable without
+          // suggesting a road or changing the core's movement rules.
+          fragment([0, 34], 1, 8, 7, 5, 5, 6);
+          fragment([0, 34], 3, 9, 4, 3, 10, 9);
+        } else if (id === "bridge") {
+          const roadMask = connections(x, y, isRoad);
+          const vertical = (roadMask & 5) !== 0 && (roadMask & 10) === 0;
+          // The source's masonry crossings include their own parapets and water.
+          draw(vertical ? [5, 34] : [4, 34]);
+        }
+      } else if (id === "road") {
+        draw(ROAD_FRAMES[connections(x, y, isRoad)] ?? [1, 10]);
+      } else if (id === "forest") {
+        const forestMask = connections(
+          x,
+          y,
+          (neighbor) => neighbor === "forest",
+        );
+        const dense = forestMask === 15 || [7, 11, 13, 14].includes(forestMask);
+        draw([dense ? 6 : 4 + (seed % 2), 0]);
+      } else if (id === "hill" || id === "mountain") {
+        const ridge = connections(
+          x,
+          y,
+          (neighbor) => neighbor === "hill" || neighbor === "mountain",
+        );
+        draw([ridge === 15 || id === "mountain" ? 5 : 3 + (seed % 2), 1]);
+      } else if (id === "village") {
+        const beacon =
+          scenario.mission?.beacon.x === x && scenario.mission.beacon.y === y;
+        if (beacon) {
+          draw([3, 3]);
+          fragment([1, 33], 8, 3, 5, 5, 8, 0);
+        } else {
+          draw([2, 2]);
+        }
+      }
+    }
+  }
+  context.restore();
+}
+
 /** Original 24px terrain art, painted once at a crisp 2× scale. */
 export function drawTerrain(
   g: Phaser.GameObjects.Graphics,

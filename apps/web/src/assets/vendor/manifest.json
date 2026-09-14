@@ -1,0 +1,178 @@
+{
+  "portraits": {
+    "A1": "portrait24.png",
+    "A2": "portrait25.png",
+    "A3": "portrait21.png"
+  },
+  "items": {
+    "knife": "dagger",
+    "war-hammer": "hammer",
+    "great-sword": "sword",
+    "devil-axe": "upg_axeDouble",
+    "flame-lance": "upg_spear",
+    "dragon-slayer": "upg_sword",
+    "langrisser-sealed": "sword",
+    "langrisser": "upg_sword",
+    "alhazard-sealed": "sword",
+    "alhazard": "upg_sword",
+    "wand": "wand",
+    "orb": "gemBlue",
+    "holy-rod": "upg_wand",
+    "dark-rod": "wand",
+    "masayan-sword": "swordWood",
+    "longbow": "bow",
+    "arbalest": "upg_bow",
+    "small-shield": "shieldSmall",
+    "large-shield": "shield",
+    "chain-mail": "armor",
+    "plate-armor": "upg_armor",
+    "dragon-scale": "upg_armor",
+    "assault-suit": "armor",
+    "amulet": "gemGreen",
+    "necklace": "gemRed",
+    "runestone": "gemBlue",
+    "odins-shield": "upg_shield"
+  },
+  "spells": {
+    "heal-1": {
+      "part": 1,
+      "file": "heal-sky-1.png"
+    },
+    "heal-2": {
+      "part": 1,
+      "file": "heal-sky-3.png"
+    },
+    "force-heal-1": {
+      "part": 1,
+      "file": "heal-royal-2.png"
+    },
+    "force-heal-2": {
+      "part": 1,
+      "file": "heal-royal-3.png"
+    },
+    "magic-arrow": {
+      "part": 4,
+      "file": "fire-arrows-sky-1.png"
+    },
+    "blast": {
+      "part": 2,
+      "file": "beam-royal-2.png"
+    },
+    "thunder": {
+      "part": 2,
+      "file": "lighting-sky-3.png"
+    },
+    "fireball": {
+      "part": 1,
+      "file": "fireball-red-2.png"
+    },
+    "blizzard": {
+      "part": 2,
+      "file": "ice-blue-3.png"
+    },
+    "tornado": {
+      "part": 3,
+      "file": "wind-blue-3.png"
+    },
+    "meteor": {
+      "part": 1,
+      "file": "fireball-red-3.png"
+    },
+    "turn-undead": {
+      "part": 4,
+      "file": "light-royal-3.png"
+    },
+    "earthquake": {
+      "part": 2,
+      "file": "rock-plain-3.png"
+    },
+    "protection-1": {
+      "part": 1,
+      "file": "protect-blue-1.png"
+    },
+    "protection-2": {
+      "part": 1,
+      "file": "protect-blue-3.png"
+    },
+    "attack-1": {
+      "part": 1,
+      "file": "enchant-red-1.png"
+    },
+    "attack-2": {
+      "part": 1,
+      "file": "enchant-red-3.png"
+    },
+    "resist": {
+      "part": 4,
+      "file": "shielding-spirit-2.png"
+    },
+    "quick": {
+      "part": 2,
+      "file": "haste-sky-2.png"
+    },
+    "sleep": {
+      "part": 4,
+      "file": "fog-magenta-1.png"
+    },
+    "mute": {
+      "part": 4,
+      "file": "link-spirit-1.png"
+    },
+    "zone": {
+      "part": 3,
+      "file": "runes-blue-2.png"
+    },
+    "charm": {
+      "part": 1,
+      "file": "evil-eye-red-1.png"
+    },
+    "decline": {
+      "part": 3,
+      "file": "horror-eerie-2.png"
+    },
+    "teleport": {
+      "part": 3,
+      "file": "runes-magenta-3.png"
+    },
+    "again": {
+      "part": 3,
+      "file": "runes-royal-2.png"
+    },
+    "summon-valkyrie": {
+      "part": 3,
+      "file": "runes-royal-3.png"
+    },
+    "summon-freya": {
+      "part": 3,
+      "file": "leaf-jade-3.png"
+    },
+    "summon-white-dragon": {
+      "part": 2,
+      "file": "ice-blue-3.png"
+    },
+    "summon-salamander": {
+      "part": 1,
+      "file": "fireball-red-3.png"
+    },
+    "summon-iron-golem": {
+      "part": 2,
+      "file": "rock-plain-3.png"
+    },
+    "summon-demon-lord": {
+      "part": 3,
+      "file": "horror-red-3.png"
+    },
+    "summon-sleipnir": {
+      "part": 2,
+      "file": "haste-royal-3.png"
+    },
+    "summon-fenrir": {
+      "part": 3,
+      "file": "wild-jade-3.png"
+    },
+    "summon-aniki": {
+      "part": 1,
+      "file": "enchant-orange-3.png"
+    }
+  }
+}

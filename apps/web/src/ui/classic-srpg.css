@@ -1,0 +1,207 @@
+/* A shared royal-blue and ivory treatment for the licensed fantasy artwork. */
+:root {
+  color: #f8f3df;
+  background: #101525;
+  --srpg-gold: #d3ba79;
+  --srpg-ivory: #e6dfbc;
+  --srpg-blue: #142660;
+}
+body {
+  background:
+    repeating-linear-gradient(135deg, transparent 0 7px, #8f9cb604 7px 8px),
+    radial-gradient(ellipse at 50% 42%, #303b50, #171e31 64%, #0c1120);
+}
+.game-shell {
+  border-color: #ded6b3;
+  box-shadow:
+    0 0 0 1px #111725,
+    0 0 0 4px #6e777e,
+    0 0 0 5px #b8b7a2,
+    0 20px 65px #000a;
+}
+.system-bar {
+  background: linear-gradient(#6c7884, #3e526d 47%, #273d5f 49%, #1a2f51);
+  border-top-color: #eee7c9;
+  border-bottom-color: #a89462;
+  color: #fff4cf;
+}
+.system-bar h1 {
+  color: #fff2c3;
+  text-shadow: 1px 2px #10182e;
+  letter-spacing: 1.5px;
+}
+.system-bar h1::before {
+  content: "◆";
+  font-size: 10px;
+  color: #e7c572;
+  margin-right: 7px;
+}
+.system-bar button {
+  color: #f1e9cf;
+}
+.system-bar button:hover:not(:disabled) {
+  color: #fff4bf;
+  background: #8291a43b;
+  box-shadow: inset 0 -2px #e7c572;
+}
+.classic-window {
+  color: #f8f3df;
+  border: 3px ridge var(--srpg-ivory);
+  background:
+    radial-gradient(#a9c6ff0c 0.7px, transparent 0.8px) 0 0 / 4px 4px,
+    linear-gradient(125deg, #243c80, #112457 65%, #0d1c46);
+  box-shadow:
+    inset 0 0 0 1px #060c25,
+    inset 0 0 0 2px #7d8eac,
+    inset 0 0 14px #07123066,
+    2px 3px 0 #071020c9;
+  text-shadow: 1px 1px #040d2b;
+}
+.window-caption {
+  color: #e7d49c;
+  border-bottom-color: #7282a6;
+  text-shadow: 1px 1px #080c25;
+}
+.window-caption::before {
+  color: #f1d690;
+}
+.classic-window button:hover:not(:disabled),
+.classic-window button.selected,
+.classic-window button[aria-pressed="true"] {
+  color: #fff3bf;
+  background: linear-gradient(90deg, #7692c06b, #698aca22);
+  box-shadow: inset 2px 0 #e7ce87;
+}
+.command-window {
+  background:
+    linear-gradient(90deg, #31497b40, transparent 40%),
+    linear-gradient(#162d69, #102154);
+}
+.command-window .end-turn {
+  color: #ffe6a0;
+  border-top-color: #8b98b2;
+}
+.command-window button:disabled {
+  color: #a0a9bf;
+  opacity: 0.8;
+}
+.turn-window {
+  background: linear-gradient(110deg, #203b7b, #13235b);
+}
+.turn-window strong {
+  color: #ffe4a4;
+}
+.turn-window.enemy-turn {
+  background: linear-gradient(110deg, #70404f, #3c203d);
+}
+.bottom-hud {
+  background:
+    linear-gradient(90deg, #8f9fb91a, transparent 38%),
+    linear-gradient(120deg, #223d79, #102254 75%);
+}
+.unit-summary {
+  gap: 14px;
+}
+.portrait {
+  width: 90px;
+  height: 94px;
+  border-color: #f0dba3;
+  background:
+    radial-gradient(ellipse at 50% 35%, #607d95, #203659 75%), #243853;
+  box-shadow:
+    inset 0 0 0 1px #09172e,
+    2px 2px #050c25;
+}
+.portrait[data-art] svg,
+.portrait[data-art] image {
+  image-rendering: auto;
+}
+.unit-name h2 {
+  color: #ffe6a8;
+}
+.stats-line {
+  gap: 14px;
+}
+.stats-line b,
+.stats-line strong {
+  color: #fff3c9;
+}
+.order-panel {
+  border-left-color: #99a7bd;
+}
+.order-buttons button,
+.confirm-window button,
+.info-window > button {
+  background: linear-gradient(#344e85, #1d3364);
+  border-color: #c2c7bc;
+}
+.order-buttons button:not(:disabled):last-of-type {
+  color: #fff0b5;
+  border-color: #dbc68d;
+}
+.mission-panel {
+  background: linear-gradient(115deg, #1d3465f5, #0c1c42f5);
+}
+.mission-panel strong {
+  color: #ffe5a5;
+}
+.key-guide {
+  color: #c1cbe0;
+  background: #111d3c;
+  border-top-color: #9a9e9b;
+}
+.map-tools button {
+  border-color: #7f8fa7;
+  background: #223657;
+}
+.map-tools button:hover {
+  color: #ffebaa;
+  border-color: #d7bd80;
+}
+.duel-title {
+  color: #ead49d;
+  border-bottom-color: #a79977;
+}
+.duel-unit .portrait {
+  display: block;
+}
+.duel-fighter image {
+  image-rendering: pixelated;
+}
+.spell-menu button strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.spell-menu .spell-icon {
+  width: 30px;
+  height: 30px;
+  flex-basis: 30px;
+}
+.art-credits {
+  border-top: 1px solid #8490a5;
+  padding-top: 10px;
+  color: #d5dded;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.info-window .art-credits {
+  max-height: none;
+  overflow: visible;
+}
+.art-credits a {
+  color: #f2d794;
+  text-underline-offset: 3px;
+}
+.art-credits ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+@media (max-width: 950px) {
+  .unit-summary {
+    gap: 10px;
+  }
+  .stats-line {
+    gap: 12px;
+  }
+}

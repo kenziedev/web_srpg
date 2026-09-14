@@ -8,6 +8,7 @@ import {
   type BattleState,
 } from "@orden/core";
 import "./operation.css";
+import { ItemIcon } from "./ItemIcon";
 
 export interface OperationPanelProps {
   state: BattleState;
@@ -354,7 +355,10 @@ export function OperationPanel(props: OperationPanelProps) {
                   {offers.map((offer) => (
                     <li key={offer.item.id}>
                       <div className="operation-offer-heading">
-                        <strong>{offer.item.name}</strong>
+                        <strong className="asset-item-name">
+                          <ItemIcon itemId={offer.item.id} />
+                          {offer.item.name}
+                        </strong>
                         <span>
                           보유 {offer.owned} · 미장착 {offer.available}
                         </span>

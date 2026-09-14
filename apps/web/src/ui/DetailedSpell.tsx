@@ -1,14 +1,18 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import { content } from "@orden/content";
 import type { Unit } from "@orden/core";
 import type { BattleAnimation } from "../game/BattleAnimation";
 import { rider, soldier } from "../game/pixelUnits";
+import { toenUnitFrame } from "../game/toenArt";
 import { Portrait } from "./Portrait";
 import { spellShapeLabel } from "./spellLabels";
 import { magicEventText, statusNames } from "./magicText";
 import "./spell-animation.css";
 
 function SpellFighter({ unit }: { unit: Unit }) {
+  const clipId = useId();
+  const [artFailed, setArtFailed] = useState(false);
+  const art = artFailed ? null : toenUnitFrame(unit);
   const pattern = unit.moveType === "mounted" ? rider : soldier;
   const palette: Record<string, string> = {
     h: "#7f98b0",
@@ -20,21 +24,47 @@ function SpellFighter({ unit }: { unit: Unit }) {
     w: "#d2bd83",
   };
   return (
-    <svg viewBox="-2 -3 24 24" shapeRendering="crispEdges" aria-hidden="true">
+    <svg
+      viewBox="-2 -3 24 24"
+      shapeRendering="crispEdges"
+      aria-hidden="true"
+      data-art={art ? "toen" : undefined}
+    >
       <ellipse cx="8" cy="17" rx="9" ry="2" fill="#071423" opacity=".6" />
-      {pattern.flatMap((row, y) =>
-        [...row].map((pixel, x) =>
-          palette[pixel] ? (
-            <rect
-              key={`${x},${y}`}
-              x={x}
-              y={y}
-              width="1"
-              height="1"
-              fill={palette[pixel]}
+      {art ? (
+        <>
+          <defs>
+            <clipPath id={clipId}>
+              <rect width="16" height="16" />
+            </clipPath>
+          </defs>
+          <g clipPath={`url(#${clipId})`}>
+            <image
+              href={art.url}
+              x={-art.x}
+              y={-art.y}
+              width={art.sheetWidth}
+              height={art.sheetHeight}
+              style={{ imageRendering: "pixelated" }}
+              onError={() => setArtFailed(true)}
             />
-          ) : null,
-        ),
+          </g>
+        </>
+      ) : (
+        pattern.flatMap((row, y) =>
+          [...row].map((pixel, x) =>
+            palette[pixel] ? (
+              <rect
+                key={`${x},${y}`}
+                x={x}
+                y={y}
+                width="1"
+                height="1"
+                fill={palette[pixel]}
+              />
+            ) : null,
+          ),
+        )
       )}
       {unit.kind === "commander" && (
         <path d="M3-1h2v1h2v-2h2v2h2v-1h2v4H3z" fill="#e8c985" />

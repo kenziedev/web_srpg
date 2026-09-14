@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { content } from "@orden/content";
 import { canPrepare, effectiveUnit, type BattleState } from "@orden/core";
 import { spellShapeLabel, spellEffectLabel } from "./spellLabels";
+import { SpellIcon } from "./SpellIcon";
 
 /** The core validates the selected loadout against the current mode and learning. */
 export function SpellTraining({
@@ -87,7 +88,8 @@ export function SpellTraining({
                   )
                 }
               />
-              <span>
+              <SpellIcon spellId={spell.id} />
+              <span className="training-spell-description">
                 {spell.name}
                 <small>
                   MP {spell.mpCost} · {spellShapeLabel(spell)}

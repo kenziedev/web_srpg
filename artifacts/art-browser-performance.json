@@ -1,0 +1,456 @@
+{
+  "generatedAt": "2026-09-14T00:51:13.422Z",
+  "environment": {
+    "node": "v24.16.0",
+    "browser": "153.0.8010.12",
+    "headless": true,
+    "platform": "darwin",
+    "arch": "arm64",
+    "osRelease": "25.6.0",
+    "cpu": "Apple M2 Max",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "source": {
+    "head": "6bf70e04e568bdd537941be9d552f5f1227e62eb",
+    "dirty": true,
+    "rulesVersion": "0.8",
+    "productionIndexSha256": "9208538ae8a6b76d915273d37e0f922b5e317d6ba346f43fba56a75536e071bd",
+    "bundles": [
+      {
+        "urlPath": "/srpg/assets/index-YG5usFcw.js",
+        "bytes": 1913566,
+        "sha256": "e7ef44cfc30cdf3b6fa1f113b8b9ed534e87e44f7ac57b1ea015ebcbcee161a9"
+      },
+      {
+        "urlPath": "/srpg/assets/index-D3Y2rXFy.css",
+        "bytes": 41622,
+        "sha256": "49a0132c2b6276e2ef6a79063b1565090ab9de4a969d5ec778296c4b05ea7b64"
+      }
+    ]
+  },
+  "method": {
+    "url": "http://127.0.0.1:4174/srpg/",
+    "runs": 5,
+    "network": {
+      "downloadMbps": 10,
+      "uploadMbps": 10,
+      "latencyMs": 100,
+      "implementation": "Chromium CDP Network.emulateNetworkConditions"
+    },
+    "cold": "Fresh isolated context and cleared HTTP cache per sample; measured navigation through ready canvas, actual Kaiel selection with enabled wait command, and the displayed SVG portrait's completed network transfer (HTTP 200 and Network.loadingFinished). Document/script/style/image transfers, including image MIME responses loaded through XHR/fetch by Phaser, are counted and their cache flags verified false.",
+    "reload": "Same context, normal warm-cache reload after a confirmed and saved wait; measured through ready canvas, restored save, spent actor and selectable roster; stored revision and checksum then verified unchanged.",
+    "exclusions": [
+      "data/blob image URLs as separate transfers (source bytes are counted in their JS or PNG HTTP response)",
+      "portrait image decoding and paint completion",
+      "low-spec device qualification",
+      "FPS and animation benchmarks",
+      "remote hosting and TLS latency",
+      "long battle save restore",
+      "other browser engines"
+    ]
+  },
+  "coldStartup": {
+    "samples": 5,
+    "medianMs": 1793.196,
+    "maxMs": 1862.592,
+    "budgetMs": 5000,
+    "passed": true
+  },
+  "reloadRestore": {
+    "samples": 5,
+    "medianMs": 619.189,
+    "maxMs": 635.706,
+    "budgetMs": 2000,
+    "passed": true
+  },
+  "samples": [
+    {
+      "run": 1,
+      "coldSelectableMs": 1862.592,
+      "coldResources": [
+        {
+          "type": "Document",
+          "url": "http://127.0.0.1:4174/srpg/",
+          "status": 200,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 734
+        },
+        {
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-D3Y2rXFy.css",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 10639
+        },
+        {
+          "type": "Script",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-YG5usFcw.js",
+          "status": 200,
+          "mimeType": "text/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 517911
+        },
+        {
+          "type": "Image",
+          "url": "http://127.0.0.1:4174/srpg/assets/portrait25-ClC8oJTH.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 301979
+        },
+        {
+          "type": "XHR",
+          "url": "http://127.0.0.1:4174/srpg/assets/medieval-strategy-COvSaSde.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 51193
+        },
+        {
+          "type": "Image",
+          "url": "http://127.0.0.1:4174/srpg/assets/portrait24-m2ggHXgS.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 311354
+        }
+      ],
+      "coldTransferredBytes": 1193810,
+      "reloadRestoredMs": 615.629,
+      "savedRevision": 1,
+      "restoredWithoutDuplicateCommand": true,
+      "pageErrors": []
+    },
+    {
+      "run": 2,
+      "coldSelectableMs": 1793.196,
+      "coldResources": [
+        {
+          "type": "Document",
+          "url": "http://127.0.0.1:4174/srpg/",
+          "status": 200,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 734
+        },
+        {
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-D3Y2rXFy.css",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 10639
+        },
+        {
+          "type": "Script",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-YG5usFcw.js",
+          "status": 200,
+          "mimeType": "text/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 517911
+        },
+        {
+          "type": "Image",
+          "url": "http://127.0.0.1:4174/srpg/assets/portrait25-ClC8oJTH.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 301979
+        },
+        {
+          "type": "XHR",
+          "url": "http://127.0.0.1:4174/srpg/assets/medieval-strategy-COvSaSde.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 51193
+        },
+        {
+          "type": "Image",
+          "url": "http://127.0.0.1:4174/srpg/assets/portrait24-m2ggHXgS.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 311354
+        }
+      ],
+      "coldTransferredBytes": 1193810,
+      "reloadRestoredMs": 630.647,
+      "savedRevision": 1,
+      "restoredWithoutDuplicateCommand": true,
+      "pageErrors": []
+    },
+    {
+      "run": 3,
+      "coldSelectableMs": 1765.058,
+      "coldResources": [
+        {
+          "type": "Document",
+          "url": "http://127.0.0.1:4174/srpg/",
+          "status": 200,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 734
+        },
+        {
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-D3Y2rXFy.css",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 10639
+        },
+        {
+          "type": "Script",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-YG5usFcw.js",
+          "status": 200,
+          "mimeType": "text/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 517911
+        },
+        {
+          "type": "Image",
+          "url": "http://127.0.0.1:4174/srpg/assets/portrait25-ClC8oJTH.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 301979
+        },
+        {
+          "type": "XHR",
+          "url": "http://127.0.0.1:4174/srpg/assets/medieval-strategy-COvSaSde.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 51193
+        },
+        {
+          "type": "Image",
+          "url": "http://127.0.0.1:4174/srpg/assets/portrait24-m2ggHXgS.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 311354
+        }
+      ],
+      "coldTransferredBytes": 1193810,
+      "reloadRestoredMs": 635.706,
+      "savedRevision": 1,
+      "restoredWithoutDuplicateCommand": true,
+      "pageErrors": []
+    },
+    {
+      "run": 4,
+      "coldSelectableMs": 1821.468,
+      "coldResources": [
+        {
+          "type": "Document",
+          "url": "http://127.0.0.1:4174/srpg/",
+          "status": 200,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 734
+        },
+        {
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-D3Y2rXFy.css",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 10639
+        },
+        {
+          "type": "Script",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-YG5usFcw.js",
+          "status": 200,
+          "mimeType": "text/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 517911
+        },
+        {
+          "type": "Image",
+          "url": "http://127.0.0.1:4174/srpg/assets/portrait25-ClC8oJTH.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 301979
+        },
+        {
+          "type": "XHR",
+          "url": "http://127.0.0.1:4174/srpg/assets/medieval-strategy-COvSaSde.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 51193
+        },
+        {
+          "type": "Image",
+          "url": "http://127.0.0.1:4174/srpg/assets/portrait24-m2ggHXgS.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 311354
+        }
+      ],
+      "coldTransferredBytes": 1193810,
+      "reloadRestoredMs": 619.189,
+      "savedRevision": 1,
+      "restoredWithoutDuplicateCommand": true,
+      "pageErrors": []
+    },
+    {
+      "run": 5,
+      "coldSelectableMs": 1769.656,
+      "coldResources": [
+        {
+          "type": "Document",
+          "url": "http://127.0.0.1:4174/srpg/",
+          "status": 200,
+          "mimeType": "text/html",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 734
+        },
+        {
+          "type": "Stylesheet",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-D3Y2rXFy.css",
+          "status": 200,
+          "mimeType": "text/css",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 10639
+        },
+        {
+          "type": "Script",
+          "url": "http://127.0.0.1:4174/srpg/assets/index-YG5usFcw.js",
+          "status": 200,
+          "mimeType": "text/javascript",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "gzip",
+          "servedFromCache": false,
+          "transferredBytes": 517911
+        },
+        {
+          "type": "Image",
+          "url": "http://127.0.0.1:4174/srpg/assets/portrait25-ClC8oJTH.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 301979
+        },
+        {
+          "type": "XHR",
+          "url": "http://127.0.0.1:4174/srpg/assets/medieval-strategy-COvSaSde.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 51193
+        },
+        {
+          "type": "Image",
+          "url": "http://127.0.0.1:4174/srpg/assets/portrait24-m2ggHXgS.png",
+          "status": 200,
+          "mimeType": "image/png",
+          "fromDiskCache": false,
+          "fromServiceWorker": false,
+          "contentEncoding": "identity",
+          "servedFromCache": false,
+          "transferredBytes": 311354
+        }
+      ],
+      "coldTransferredBytes": 1193810,
+      "reloadRestoredMs": 616.652,
+      "savedRevision": 1,
+      "restoredWithoutDuplicateCommand": true,
+      "pageErrors": []
+    }
+  ]
+}

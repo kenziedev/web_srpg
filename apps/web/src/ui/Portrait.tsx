@@ -1,7 +1,21 @@
 import type { Unit } from "@orden/core";
+import kaiel from "../assets/vendor/zeneria29/portrait24.png";
+import roen from "../assets/vendor/zeneria29/portrait25.png";
+import mira from "../assets/vendor/zeneria29/portrait21.png";
 
-/** Original low-resolution character illustration. Integer coordinates preserve the pixel silhouette. */
+const illustrations: Record<string, string> = { A1: kaiel, A2: roen, A3: mira };
+
+/** Licensed commander portraits with the original unit-type illustration as fallback. */
 export function Portrait({ unit }: { unit: Unit | undefined }) {
+  const illustration = unit && illustrations[unit.id];
+  if (illustration)
+    return (
+      <div className="portrait" data-art="zeneria29" aria-hidden="true">
+        <svg viewBox="0 0 300 380" preserveAspectRatio="xMidYMin slice">
+          <image href={illustration} width="900" height="760" />
+        </svg>
+      </div>
+    );
   const archer = unit?.unitType === "archer";
   const knight = unit?.unitType === "pike";
   const enemy = unit?.side === "enemy";

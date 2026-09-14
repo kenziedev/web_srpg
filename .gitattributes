@@ -1,0 +1,2 @@
+# Preserve upstream license/readme bytes, including original endings and blanks.
+apps/web/src/assets/vendor/**/*.txt -text whitespace=cr-at-eol,-blank-at-eof

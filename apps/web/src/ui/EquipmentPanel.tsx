@@ -8,6 +8,7 @@ import {
   type EquipmentSlot,
 } from "@orden/core";
 import "./equipment.css";
+import { ItemIcon } from "./ItemIcon";
 
 export interface EquipmentPanelProps {
   content: Content;
@@ -134,7 +135,10 @@ export function EquipmentPanel(props: EquipmentPanelProps) {
                         <small>
                           {value === "weapon" ? "무기" : "방어구 · 장신구"}
                         </small>
-                        <strong>{item?.name ?? "미장착"}</strong>
+                        <strong className="asset-item-name">
+                          <ItemIcon itemId={item?.id} />
+                          {item?.name ?? "미장착"}
+                        </strong>
                       </button>
                       {item && (
                         <button
@@ -207,7 +211,10 @@ export function EquipmentPanel(props: EquipmentPanelProps) {
                 {options.map(({ item, owned, available, equipped, reason }) => (
                   <li key={item.id} className={equipped ? "equipped" : ""}>
                     <div className="equipment-item-top">
-                      <strong>{item.name}</strong>
+                      <strong className="asset-item-name">
+                        <ItemIcon itemId={item.id} />
+                        {item.name}
+                      </strong>
                       <span>
                         {equipped
                           ? "장착 중"

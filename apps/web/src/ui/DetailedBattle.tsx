@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import type { BattleAnimation } from "../game/BattleAnimation";
 import { canCounter, distance, type Unit } from "@orden/core";
 import { content } from "@orden/content";
 import { soldier, rider } from "../game/pixelUnits";
+import { toenUnitFrame } from "../game/toenArt";
 import { Portrait } from "./Portrait";
 
 type Pose = "ready" | "run" | "attack" | "hit" | "cast";
@@ -15,6 +16,9 @@ function Fighter({
   pose: Pose;
   frame: number;
 }) {
+  const clipId = useId();
+  const [artFailed, setArtFailed] = useState(false);
+  const art = artFailed ? null : toenUnitFrame(unit);
   const mounted = unit.moveType === "mounted";
   const pattern = mounted ? rider : soldier;
   const stride = frame % 2 === 0 ? -1 : 1;
@@ -42,7 +46,27 @@ function Fighter({
       shapeRendering="crispEdges"
       aria-hidden="true"
       data-pose={pose}
+      data-art={art ? "toen" : undefined}
     >
+      {art && (
+        <defs>
+          {/* Isolate the lower legs for stepping and leave room for our moving
+              weapon. Mounted frames keep their full horse silhouette. */}
+          <clipPath id={`${clipId}-body`}>
+            <rect
+              width={mounted || unit.moveType === "flying" ? 16 : 12}
+              height="12"
+            />
+          </clipPath>
+          <clipPath id={`${clipId}-legs`}>
+            <rect
+              y="12"
+              width={mounted || unit.moveType === "flying" ? 16 : 12}
+              height="4"
+            />
+          </clipPath>
+        </defs>
+      )}
       <ellipse cx="7" cy="15" rx="7" ry="1" fill="#233b36" opacity=".35" />
       <g transform={`translate(${pose === "hit" ? -2 : 0} ${bob})`}>
         {unit.moveType === "flying" && (
@@ -55,30 +79,53 @@ function Fighter({
             }
           />
         )}
-        {pattern.flatMap((row, y) =>
-          [...row].flatMap((ink, x) =>
-            ink === "." ||
-            y >= (mounted ? 12 : 11) ||
-            (!mounted && ink === "w") ? (
-              []
-            ) : (
-              <rect
-                key={`${x}/${y}`}
-                x={x}
-                y={y}
-                width="1"
-                height="1"
-                fill={palette[ink]}
-              />
+        {art ? (
+          <g clipPath={`url(#${clipId}-body)`}>
+            <image
+              href={art.url}
+              x={-art.x}
+              y={-art.y}
+              width={art.sheetWidth}
+              height={art.sheetHeight}
+              onError={() => setArtFailed(true)}
+            />
+          </g>
+        ) : (
+          pattern.flatMap((row, y) =>
+            [...row].flatMap((ink, x) =>
+              ink === "." ||
+              y >= (mounted ? 12 : 11) ||
+              (!mounted && ink === "w") ? (
+                []
+              ) : (
+                <rect
+                  key={`${x}/${y}`}
+                  x={x}
+                  y={y}
+                  width="1"
+                  height="1"
+                  fill={palette[ink]}
+                />
+              ),
             ),
-          ),
+          )
         )}
         <g
           className="fighter-legs"
           transform={`translate(${pose === "run" ? stride : 0} 0)`}
           fill="#4f3932"
         >
-          {mounted ? (
+          {art ? (
+            <g clipPath={`url(#${clipId}-legs)`}>
+              <image
+                href={art.url}
+                x={-art.x}
+                y={-art.y}
+                width={art.sheetWidth}
+                height={art.sheetHeight}
+              />
+            </g>
+          ) : mounted ? (
             <path
               d={
                 frame % 2 && pose === "run"

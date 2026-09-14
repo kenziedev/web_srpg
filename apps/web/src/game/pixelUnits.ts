@@ -1,5 +1,7 @@
 import type Phaser from "phaser";
 import type { Unit } from "@orden/core";
+import { toenUnitFrame } from "./toenArt";
+import { drawToenFrame, toenFrameSource } from "./toenTexture";
 
 export const soldier = [
   "....hhhh....",
@@ -71,6 +73,50 @@ export function drawUnit(
   x: number,
   y: number,
 ) {
+  const frame = toenUnitFrame(unit);
+  if (frame && toenFrameSource(g.scene, frame)) {
+    const uniform = unit.side === "enemy" ? 0xa64e49 : 0x416b9d;
+    const flip = unit.side === "enemy";
+    const mounted = unit.unitType === "cavalry" || unit.unitType === "flier";
+    const figures =
+      unit.kind === "commander"
+        ? [[8, 6]]
+        : mounted
+          ? [
+              [0, 0],
+              [16, 16],
+            ]
+          : [
+              [8, 0],
+              [0, 16],
+              [16, 16],
+            ];
+    g.fillStyle(0x203921, 0.3).fillEllipse(x + 24, y + 39, 36, 8);
+    if (unit.moveType === "flying") {
+      // The licensed pack has mounted knights but no winged cavalry.
+      // Keep the project's wings so this visual adaptation stays recognizable.
+      g.fillStyle(0x525e7b).fillRect(x + 1, y + 9, 46, 14);
+      g.fillStyle(0xe9e3c5)
+        .fillRect(x + 1, y + 6, 9, 12)
+        .fillRect(x + 38, y + 6, 9, 12);
+      g.fillStyle(0xc7ccbb)
+        .fillRect(x + 5, y + 17, 10, 7)
+        .fillRect(x + 33, y + 17, 10, 7);
+    }
+    let drawn = false;
+    for (const [dx, dy] of figures)
+      drawn =
+        drawToenFrame(g, frame, x + dx!, y + dy!, 2, unit.acted, flip) || drawn;
+    if (drawn) {
+      if (unit.kind === "commander") {
+        g.fillStyle(0xe1d69c).fillRect(x + 4, y + 2, 2, 21);
+        g.fillStyle(uniform).fillRect(x + 6, y + 3, 12, 8);
+        g.fillStyle(0xffe9a4).fillRect(x + 6, y + 3, 12, 2);
+      }
+      return;
+    }
+  }
+  // Missing image, unsupported species and convoy retain the original art.
   const uniform = unit.side === "enemy" ? 0xa64e49 : 0x416b9d;
   const flip = unit.side === "enemy";
   g.fillStyle(0x203921, 0.3).fillEllipse(x + 24, y + 38, 34, 9);

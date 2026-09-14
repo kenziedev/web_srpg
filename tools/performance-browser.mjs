@@ -130,15 +130,24 @@ try {
       if (stage === "cold") servedFromCache.add(requestId);
     });
     client.on("Network.responseReceived", ({ requestId, response, type }) => {
+      // Phaser loads PNG textures through XHR. Match their image MIME type,
+      // not a .png suffix: Vite's .png?import response is a JavaScript module.
+      const imageTransfer =
+        ["XHR", "Fetch"].includes(type) && /^image\//i.test(response.mimeType);
       if (
         stage === "cold" &&
-        ["Document", "Script", "Stylesheet"].includes(type)
+        // Embedded data and Phaser's blob decoding URLs do not transfer bytes.
+        // Their source bytes are already counted in the JS or PNG XHR response.
+        /^https?:\/\//.test(response.url) &&
+        (["Document", "Script", "Stylesheet", "Image"].includes(type) ||
+          imageTransfer)
       )
         responses.push({
           requestId,
           type,
           url: response.url,
           status: response.status,
+          mimeType: response.mimeType,
           fromDiskCache: !!response.fromDiskCache,
           fromServiceWorker: !!response.fromServiceWorker,
           contentEncoding:
@@ -173,6 +182,25 @@ try {
       await expect(
         page.getByRole("button", { name: "대기", exact: true }),
       ).toBeEnabled();
+      const portrait = page.locator(".portrait[data-art] image");
+      await expect(portrait).toBeVisible();
+      const portraitUrl = await portrait.evaluate(
+        (image) => new URL(image.href.baseVal, document.baseURI).href,
+      );
+      // Wait for the displayed portrait's completed network transfer, even if
+      // it arrived before canvas readiness. This does not measure decoding or
+      // paint completion. No second Image/fetch warms the cache.
+      await expect
+        .poll(() =>
+          responses.some(
+            (resource) =>
+              resource.type === "Image" &&
+              resource.url === portraitUrl &&
+              resource.status === 200 &&
+              transferred.has(resource.requestId),
+          ),
+        )
+        .toBe(true);
       sample.coldSelectableMs = round(performance.now() - started);
       stage = "between";
       sample.coldResources = responses.map(({ requestId, ...resource }) => ({
@@ -194,6 +222,10 @@ try {
       ).toBe(true);
       expect(
         sample.coldResources.filter((resource) => resource.type === "Script")
+          .length,
+      ).toBeGreaterThan(0);
+      expect(
+        sample.coldResources.filter((resource) => resource.type === "Image")
           .length,
       ).toBeGreaterThan(0);
       await page.getByRole("button", { name: "대기", exact: true }).click();
@@ -278,10 +310,12 @@ const report = {
       latencyMs: 100,
       implementation: "Chromium CDP Network.emulateNetworkConditions",
     },
-    cold: "Fresh isolated context and cleared HTTP cache per sample; measured navigation through ready canvas and actual Kaiel selection with enabled wait command. All document/script/style cache flags verified false.",
+    cold: "Fresh isolated context and cleared HTTP cache per sample; measured navigation through ready canvas, actual Kaiel selection with enabled wait command, and the displayed SVG portrait's completed network transfer (HTTP 200 and Network.loadingFinished). Document/script/style/image transfers, including image MIME responses loaded through XHR/fetch by Phaser, are counted and their cache flags verified false.",
     reload:
       "Same context, normal warm-cache reload after a confirmed and saved wait; measured through ready canvas, restored save, spent actor and selectable roster; stored revision and checksum then verified unchanged.",
     exclusions: [
+      "data/blob image URLs as separate transfers (source bytes are counted in their JS or PNG HTTP response)",
+      "portrait image decoding and paint completion",
       "low-spec device qualification",
       "FPS and animation benchmarks",
       "remote hosting and TLS latency",

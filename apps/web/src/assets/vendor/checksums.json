@@ -1,0 +1,287 @@
+[
+  {
+    "file": "painterly/beam-royal-2.png",
+    "sha256": "962644485c4a1b08c32296bff087a9ec41b5aac1c1517c077114f0f554559fbc",
+    "bytes": 99322
+  },
+  {
+    "file": "painterly/enchant-orange-3.png",
+    "sha256": "0dd7631e9c16ee8f20d1107c7af69296cc67100a8537cf9bd03e71665088c4c2",
+    "bytes": 77919
+  },
+  {
+    "file": "painterly/enchant-red-1.png",
+    "sha256": "78abbf72501e99a9252aa0b1d588eae9081a207ab9189d40948a7bc801aac43a",
+    "bytes": 54488
+  },
+  {
+    "file": "painterly/enchant-red-3.png",
+    "sha256": "dd67659ef177d846ae9b67522d183aea7f7211960e482e9b65c919e690e49f6c",
+    "bytes": 78173
+  },
+  {
+    "file": "painterly/evil-eye-red-1.png",
+    "sha256": "7c7ae5c359c68224e94cce098e1db5b6197e32a0adbc9602b123223278ddd778",
+    "bytes": 65517
+  },
+  {
+    "file": "painterly/fire-arrows-sky-1.png",
+    "sha256": "737e7455954489d9041a661529f82e196098df4f994eb246b4a5b7b0f535fe02",
+    "bytes": 74331
+  },
+  {
+    "file": "painterly/fireball-red-2.png",
+    "sha256": "da50fa9dc62160ff91b4bc3025890c26b0fce144c1d94b0df2d78abf5aca619f",
+    "bytes": 67585
+  },
+  {
+    "file": "painterly/fireball-red-3.png",
+    "sha256": "cf3c0ad327dfa67110df4b8c9f1f1e38fd58217d7920abd5837c5c26e3388b40",
+    "bytes": 80891
+  },
+  {
+    "file": "painterly/fog-magenta-1.png",
+    "sha256": "b53c234790270a37e5267e5ef464f150b6413b9b1926233aec2bcc90f6d6a1da",
+    "bytes": 40958
+  },
+  {
+    "file": "painterly/haste-royal-3.png",
+    "sha256": "3517b70ad802c4cd2a7b25c06e2d322b62d093f7cc35ae1c0b74b78556fe2935",
+    "bytes": 83920
+  },
+  {
+    "file": "painterly/haste-sky-2.png",
+    "sha256": "6a87f30e986761db78639ab6aec642310058ccdf8de11359159121200b289f05",
+    "bytes": 76370
+  },
+  {
+    "file": "painterly/heal-royal-2.png",
+    "sha256": "2a80447997dd56c989e7ceda232cace4dd64ec20517bae9eb3e5b59b0a9880fa",
+    "bytes": 70565
+  },
+  {
+    "file": "painterly/heal-royal-3.png",
+    "sha256": "6d6a65f9df6c3d3265525a3d12cba6e88995035b8b5d4819aab906a692ac20a9",
+    "bytes": 75737
+  },
+  {
+    "file": "painterly/heal-sky-1.png",
+    "sha256": "6ab156e29a5b4ddd86a8f2448b621263ddea312d298f0b164ad924fe7598b5e5",
+    "bytes": 58555
+  },
+  {
+    "file": "painterly/heal-sky-3.png",
+    "sha256": "303ec3c25b358653e35adaafa8adfde3112d92a011ec708953ad153b2d505d5d",
+    "bytes": 77708
+  },
+  {
+    "file": "painterly/horror-eerie-2.png",
+    "sha256": "4b94d64907d3a4e8d283a82c498c95002df95d53aa4f37359f117d1e7e23661a",
+    "bytes": 61860
+  },
+  {
+    "file": "painterly/horror-red-3.png",
+    "sha256": "649c6eb41b1aaab07efb6941bb6fdf1dbae279f62d5f4d7f626df2e2415fb83b",
+    "bytes": 74337
+  },
+  {
+    "file": "painterly/ice-blue-3.png",
+    "sha256": "862850cc56fef9037a0428fcc35ce02af5b1e441c815aa09c260cdc2e48b0324",
+    "bytes": 118869
+  },
+  {
+    "file": "painterly/leaf-jade-3.png",
+    "sha256": "39d821ae5c73126a72a59b504bec01501afcb6e920c68ed37e18152376f1b230",
+    "bytes": 82205
+  },
+  {
+    "file": "painterly/light-royal-3.png",
+    "sha256": "1c0dcdabd782793687ece4b3663633b8b26ce4e60e3c357d7943f01bea2694ae",
+    "bytes": 62834
+  },
+  {
+    "file": "painterly/lighting-sky-3.png",
+    "sha256": "42c403c898420f6b0478028adbb82e3de00b3c1cb9b4dbcd7d708ad0daaee94f",
+    "bytes": 122056
+  },
+  {
+    "file": "painterly/link-spirit-1.png",
+    "sha256": "451ca8facf6c3dbdde7425abcde3e17c911c22c0f35d331620ea40e2a39374a4",
+    "bytes": 65874
+  },
+  {
+    "file": "painterly/protect-blue-1.png",
+    "sha256": "e21033accb4579f47bf3f6e77ea6aa11d870d4ce699792b779a0bb0d709d91d7",
+    "bytes": 85310
+  },
+  {
+    "file": "painterly/protect-blue-3.png",
+    "sha256": "5390a141668b9deb2e2611950f19bb4817ee5ab4fa8556ae3669be7ab344424f",
+    "bytes": 110230
+  },
+  {
+    "file": "painterly/rock-plain-3.png",
+    "sha256": "aecaaad0b1783af21424abbf1ef431d18567f5e567e8c63d785a4375432aaaa8",
+    "bytes": 74227
+  },
+  {
+    "file": "painterly/runes-blue-2.png",
+    "sha256": "cbf6879ead6f61f36e116a3450b5d969618cb92a3ad04a08504f21e3cccc35de",
+    "bytes": 80698
+  },
+  {
+    "file": "painterly/runes-magenta-3.png",
+    "sha256": "dd222d55b07a23c3c0e1c8caeb44ae89d7e50e5f8c3add8ad0c94bd8ee5f3259",
+    "bytes": 85262
+  },
+  {
+    "file": "painterly/runes-royal-2.png",
+    "sha256": "c302b966ced6e040fe9551d43c26232996fe247d5bbd10a465d86be16f30e0ba",
+    "bytes": 78302
+  },
+  {
+    "file": "painterly/runes-royal-3.png",
+    "sha256": "55acec32825d2e48d59b7da1b9e597f87a2bb4661e108ccadcddeaa58a3a6163",
+    "bytes": 91221
+  },
+  {
+    "file": "painterly/shielding-spirit-2.png",
+    "sha256": "2fba2ccb917e8292b870089b91943e46bae0b8e6dddea1e744d11bdf4a2c7597",
+    "bytes": 64299
+  },
+  {
+    "file": "painterly/wild-jade-3.png",
+    "sha256": "4b7e46100c47d1672b680f7fbc6c39b27a81b73644d4ec568ae709914293b8a9",
+    "bytes": 75612
+  },
+  {
+    "file": "painterly/wind-blue-3.png",
+    "sha256": "e7b9e141bd37b7331a0b1ce40aff9933ce9c72d81329d5eb6cf1dfd3650d32a9",
+    "bytes": 69126
+  },
+  {
+    "file": "ravenmore/armor.png",
+    "sha256": "15113caba28d638a3e93ee19ecbd8337afa33945090f98fbcc269c81b3d71399",
+    "bytes": 7248
+  },
+  {
+    "file": "ravenmore/bow.png",
+    "sha256": "308c7376656b8d4d03085f0fd4096dda17f435bf8e67f9f7f559e800484aaad2",
+    "bytes": 7614
+  },
+  {
+    "file": "ravenmore/dagger.png",
+    "sha256": "02a93d1a4dba173017e8d2bee94890af43a675f2d31a4c3398229b1fe880ee2b",
+    "bytes": 5004
+  },
+  {
+    "file": "ravenmore/gemBlue.png",
+    "sha256": "64ace0e660e5e880e24de073ca3ca8c599a0df3c9997be33be620b528d5ca01e",
+    "bytes": 4243
+  },
+  {
+    "file": "ravenmore/gemGreen.png",
+    "sha256": "1098afbd9649b0424b17e95b7cf1732135fdaf0133f43ef9ee1aa80e43185873",
+    "bytes": 4258
+  },
+  {
+    "file": "ravenmore/gemRed.png",
+    "sha256": "98405f53c94f7e9bd3f44a7495afd70de3305393329ddc30957e52a853bfb497",
+    "bytes": 4268
+  },
+  {
+    "file": "ravenmore/hammer.png",
+    "sha256": "e30f2aba9ab7fc8f272e7b9dc9837e1d7ff4f94a713b962d69dc5919fb4bbe3f",
+    "bytes": 7957
+  },
+  {
+    "file": "ravenmore/shield.png",
+    "sha256": "662277c0559f33ffe2498f75f284d6dd98f32c5a0630813193f47f1fc1c87eb0",
+    "bytes": 6976
+  },
+  {
+    "file": "ravenmore/shieldSmall.png",
+    "sha256": "41f2c8c326696c7af9df698ceed4258594a29e07e6854549f239b83790167fbe",
+    "bytes": 6182
+  },
+  {
+    "file": "ravenmore/sword.png",
+    "sha256": "42236b6c7f49760def85dec19e653b1c8217bb3ebea23bb38af30a0f45b21ee1",
+    "bytes": 6382
+  },
+  {
+    "file": "ravenmore/swordWood.png",
+    "sha256": "811c91613bcbbedbd955fbe546c6ecd021b31241aecb2208da0f325661b9f399",
+    "bytes": 5879
+  },
+  {
+    "file": "ravenmore/upg_armor.png",
+    "sha256": "709927e4247d3463443a1293eedb7d35846058f7f211dc2cbfbcf14a5bd92d82",
+    "bytes": 8472
+  },
+  {
+    "file": "ravenmore/upg_axeDouble.png",
+    "sha256": "8a025aacc04e4851f8d7cada8c9535274a84f8df5614335ae0ab3d1a4bf476c7",
+    "bytes": 9579
+  },
+  {
+    "file": "ravenmore/upg_bow.png",
+    "sha256": "870b7be48cbb30e5fce3e25941118424634c6a39b63ad9829578651e6b999b22",
+    "bytes": 7715
+  },
+  {
+    "file": "ravenmore/upg_shield.png",
+    "sha256": "4bc793f31f948d25a9c7ce4e2d72ebdfeaeac03466612a60abeb4311e5ede91d",
+    "bytes": 7057
+  },
+  {
+    "file": "ravenmore/upg_spear.png",
+    "sha256": "3a5c56e9ab4cc9a1fc52316d120c11ec8ac8386f7573e3d53a962b49eb31fce1",
+    "bytes": 6914
+  },
+  {
+    "file": "ravenmore/upg_sword.png",
+    "sha256": "0b348b415fb363e0022daa30fe5f9b6b785dc49575e14027052f67f6d32117ca",
+    "bytes": 6421
+  },
+  {
+    "file": "ravenmore/upg_wand.png",
+    "sha256": "ece66b0368c021981a7608f90acc16a2a80e50787a71d9ffa9a7fd432748604f",
+    "bytes": 7285
+  },
+  {
+    "file": "ravenmore/wand.png",
+    "sha256": "cb9cf9c228cd345631d89d45c761c020dfb2ebf9f65f808aa5602d5d244d297a",
+    "bytes": 7161
+  },
+  {
+    "file": "toen-characters/hermit.png",
+    "sha256": "4850e1f2a999de6d86e46f5ad70b3c73377061464c9aa06a181630bdae7625a6",
+    "bytes": 2098
+  },
+  {
+    "file": "toen-characters/uran.png",
+    "sha256": "33fdf8b252b827c22e8c573b0f48d3e8156f717c73b6cfdeac346475930c4fe3",
+    "bytes": 719
+  },
+  {
+    "file": "toen/medieval-strategy.png",
+    "sha256": "d39d3e776967ce5c055c26e0904de75cb062a876716fb0cbfc6913a3650ad4af",
+    "bytes": 50926
+  },
+  {
+    "file": "zeneria29/portrait21.png",
+    "sha256": "48c2b67f3d0b1cd0d060449d579c4e631d4601e0e96a7570339f8e66308d5c4a",
+    "bytes": 414057
+  },
+  {
+    "file": "zeneria29/portrait24.png",
+    "sha256": "d9c19e2de1eb5ba7e2d60fcd78a69e9f2e9c3e62180992095fbc331b76295b37",
+    "bytes": 311085
+  },
+  {
+    "file": "zeneria29/portrait25.png",
+    "sha256": "0c808efd866b5e5f98341b8b47048cebc6845d255e20f844b89126c1c4eff9f5",
+    "bytes": 301710
+  }
+]

@@ -16,8 +16,9 @@ import {
   type PhysicalThreatTile,
 } from "@orden/core";
 
-import { drawTerrain } from "./pixelTerrain";
+import { drawAssetTerrain, drawTerrain } from "./pixelTerrain";
 import { drawUnit } from "./pixelUnits";
+import { preloadToen, toenSource } from "./toenTexture";
 
 const TILE = 48;
 const ZOOM_LEVELS = [0.5, 1, 1.5];
@@ -132,6 +133,7 @@ class BattleScene extends Phaser.Scene {
   private stopAnimation: (() => void) | null = null;
   private terrainImage?: Phaser.GameObjects.Image;
   private terrainSignature = "";
+  private terrainBuilds = 0;
   private art!: Phaser.GameObjects.Graphics;
   private labels: Phaser.GameObjects.Text[] = [];
   private drag: { x: number; y: number; sx: number; sy: number } | null = null;
@@ -144,6 +146,9 @@ class BattleScene extends Phaser.Scene {
     private focusHost: () => void,
   ) {
     super("battle");
+  }
+  preload() {
+    preloadToen(this);
   }
   create() {
     this.paintTerrain(this.read().state);
@@ -389,19 +394,36 @@ class BattleScene extends Phaser.Scene {
     this.terrainImage?.destroy();
     if (this.textures.exists("battle-terrain"))
       this.textures.remove("battle-terrain");
-    const terrain = this.add.graphics();
-    drawTerrain(terrain, content, state);
-    terrain.generateTexture(
-      "battle-terrain",
-      content.scenario.width * TILE,
-      content.scenario.height * TILE,
-    );
-    terrain.destroy();
+    const source = toenSource(this);
+    if (source) {
+      const terrain = this.textures.createCanvas(
+        "battle-terrain",
+        content.scenario.width * TILE,
+        content.scenario.height * TILE,
+      );
+      if (terrain) {
+        drawAssetTerrain(terrain.context, source, content, state);
+        terrain.refresh();
+        terrain.setFilter(Phaser.Textures.FilterMode.NEAREST);
+      }
+    }
+    if (!this.textures.exists("battle-terrain")) {
+      const terrain = this.add.graphics();
+      drawTerrain(terrain, content, state);
+      terrain.generateTexture(
+        "battle-terrain",
+        content.scenario.width * TILE,
+        content.scenario.height * TILE,
+      );
+      terrain.destroy();
+    }
     this.terrainImage = this.add
       .image(0, 0, "battle-terrain")
       .setOrigin(0)
       .setDepth(-1);
     this.terrainSignature = signature;
+    this.game.canvas.dataset.art = source ? "toen" : "original";
+    this.game.canvas.dataset.terrainBuilds = String(++this.terrainBuilds);
   }
   private label(
     x: number,
