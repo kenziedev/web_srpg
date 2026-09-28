@@ -1,0 +1,301 @@
+{
+  "version": 1,
+  "alphaThreshold": 8,
+  "framePadding": 2,
+  "assets": {
+    "infantry-blue": {
+      "url": "/assets/units/infantry-blue.webp",
+      "width": 1254,
+      "height": 1254,
+      "frame": {
+        "x": 77,
+        "y": 86,
+        "width": 1102,
+        "height": 1125
+      },
+      "bytes": 160838,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparentPixels": 911210,
+        "visiblePixels": 653026,
+        "cornerMax": 0
+      },
+      "sourceSha256": "fc905d4bd12129fb2dd39687815c0c194ca30cd9767c34c5f588d59d2fc9b2e4",
+      "webpSha256": "0eca56c959f4cf962ed51645f00f99ece145b1e07a09a0e1c076341d87926450"
+    },
+    "pike-blue": {
+      "url": "/assets/units/pike-blue.webp",
+      "width": 1254,
+      "height": 1254,
+      "frame": {
+        "x": 231,
+        "y": 15,
+        "width": 870,
+        "height": 1220
+      },
+      "bytes": 158264,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparentPixels": 997612,
+        "visiblePixels": 565791,
+        "cornerMax": 0
+      },
+      "sourceSha256": "404464caf4d2595587deaf77cd407df1515e77367caaac85dab9bd1f736a558d",
+      "webpSha256": "8cfa02bc704402092724932cb2ba20cb2a493a92735a49fe3bd0836413a1388b"
+    },
+    "archer-blue": {
+      "url": "/assets/units/archer-blue.webp",
+      "width": 1254,
+      "height": 1254,
+      "frame": {
+        "x": 187,
+        "y": 57,
+        "width": 1018,
+        "height": 1164
+      },
+      "bytes": 202436,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparentPixels": 934614,
+        "visiblePixels": 621285,
+        "cornerMax": 0
+      },
+      "sourceSha256": "622c84b9c779dcf7e42fc3ae2a2ffa7fdfb334cc4787b6c2dfa0ea140c08baf3",
+      "webpSha256": "e0b8ece86dee5949b974141413ce86f16f5be7f3e052fb04e2a3df390e03ad85"
+    },
+    "archer-red": {
+      "url": "/assets/units/archer-red.webp",
+      "width": 1254,
+      "height": 1254,
+      "frame": {
+        "x": 187,
+        "y": 57,
+        "width": 1020,
+        "height": 1165
+      },
+      "bytes": 200814,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparentPixels": 929422,
+        "visiblePixels": 627595,
+        "cornerMax": 0
+      },
+      "sourceSha256": "6cfb159b1ac331d28d8c961597cb9763950f95145d9754f6c24d28addfa2439a",
+      "webpSha256": "16c630ecf6f759bc4f31576e89453424ecda59cf46c7726b93d308d054fd5531"
+    },
+    "infantry-red": {
+      "url": "/assets/units/infantry-red.webp",
+      "width": 1254,
+      "height": 1254,
+      "frame": {
+        "x": 77,
+        "y": 84,
+        "width": 1103,
+        "height": 1127
+      },
+      "bytes": 163858,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparentPixels": 911222,
+        "visiblePixels": 653613,
+        "cornerMax": 0
+      },
+      "sourceSha256": "3f751da8ba6a664d9ead93c830eac15ae1e5dded3ab23ebb4067839552493360",
+      "webpSha256": "440779db8d795ff8f39a7ed37225484cbfbe2f33b916bf2fc081d1139847c465"
+    },
+    "cavalry-red": {
+      "url": "/assets/units/cavalry-red.webp",
+      "width": 1254,
+      "height": 1254,
+      "frame": {
+        "x": 85,
+        "y": 16,
+        "width": 1132,
+        "height": 1216
+      },
+      "bytes": 198258,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparentPixels": 832974,
+        "visiblePixels": 725629,
+        "cornerMax": 0
+      },
+      "sourceSha256": "b148a5e6ccde7bec929742e80d6cd194d0375d2305f29c5f9e0b616e554dc46d",
+      "webpSha256": "16c8bffe40bcf0120a5391c839768223e8111c7aecf094f51788fcf2f0f2115e"
+    },
+    "flier-red": {
+      "url": "/assets/units/flier-red.webp",
+      "width": 1254,
+      "height": 1254,
+      "frame": {
+        "x": 91,
+        "y": 34,
+        "width": 1089,
+        "height": 1182
+      },
+      "bytes": 198828,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparentPixels": 828880,
+        "visiblePixels": 730041,
+        "cornerMax": 0
+      },
+      "sourceSha256": "4e5e6575e38e01870298b8dcffa63e73dcfc06c23bae1406cb6483df5739d4b0",
+      "webpSha256": "1b619c6bc254b2b3fca0ce7ad4985ea76910c4e40e09ea6d1e8246e71679f93d"
+    },
+    "escort": {
+      "url": "/assets/units/escort.webp",
+      "width": 1254,
+      "height": 1254,
+      "frame": {
+        "x": 129,
+        "y": 130,
+        "width": 1047,
+        "height": 1039
+      },
+      "bytes": 178020,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparentPixels": 800609,
+        "visiblePixels": 763626,
+        "cornerMax": 0
+      },
+      "sourceSha256": "4460a27808c545d6d53cbda92f05aa71c60962380b6bcc1908a0a228778be186",
+      "webpSha256": "7980e127c9e39356ef3d0f3711965109fefe806f55dc226227d46148cdc08126"
+    },
+    "undead-purple": {
+      "url": "/assets/units/undead-purple.webp",
+      "width": 1254,
+      "height": 1254,
+      "frame": {
+        "x": 76,
+        "y": 105,
+        "width": 1107,
+        "height": 1098
+      },
+      "bytes": 180794,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparentPixels": 1002142,
+        "visiblePixels": 555121,
+        "cornerMax": 0
+      },
+      "sourceSha256": "027ef57e63408ede7d8c6db12c25cc08525abbdc0b7ee2a27042c45ea83b210e",
+      "webpSha256": "8152c826a3c50e016bf4454bbb391ac7c851ba69114c6b11c17f4997793163f6"
+    },
+    "mage-blue": {
+      "url": "/assets/units/mage-blue.webp",
+      "width": 1254,
+      "height": 1254,
+      "frame": {
+        "x": 247,
+        "y": 85,
+        "width": 901,
+        "height": 1121
+      },
+      "bytes": 166672,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparentPixels": 989831,
+        "visiblePixels": 572839,
+        "cornerMax": 0
+      },
+      "sourceSha256": "969e8f1d44c6d5a25adf7ffc7eed8607e937ea0739154f22359739f28278c2bf",
+      "webpSha256": "b401f60822091936f773214b1424225611dbd89c541c66c6bdf499a3462da673"
+    },
+    "cleric-ivory": {
+      "url": "/assets/units/cleric-ivory.webp",
+      "width": 1254,
+      "height": 1254,
+      "frame": {
+        "x": 278,
+        "y": 87,
+        "width": 853,
+        "height": 1115
+      },
+      "bytes": 180650,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparentPixels": 991424,
+        "visiblePixels": 571050,
+        "cornerMax": 0
+      },
+      "sourceSha256": "3aa010fbfe567395bd6db483b8b71d35a3b38d15ada8ca30a25424b6c07d0143",
+      "webpSha256": "89aa78c6874da6272540ffec5130a3f37cf5befd7b160646b158b939750c2c96"
+    },
+    "cavalry-blue": {
+      "url": "/assets/units/cavalry-blue.webp",
+      "width": 1254,
+      "height": 1254,
+      "frame": {
+        "x": 86,
+        "y": 16,
+        "width": 1133,
+        "height": 1216
+      },
+      "bytes": 209334,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparentPixels": 833178,
+        "visiblePixels": 726862,
+        "cornerMax": 0
+      },
+      "sourceSha256": "e803543428cb5a9881463e522d89c1119a5d6e6a87e1e3802610685b79036a98",
+      "webpSha256": "c3c322bd20d84d4f2647dd0d1a985193c0cf279074a7df9a9f5be58f9acdfba3"
+    },
+    "pike-red": {
+      "url": "/assets/units/pike-red.webp",
+      "width": 1254,
+      "height": 1254,
+      "frame": {
+        "x": 230,
+        "y": 15,
+        "width": 873,
+        "height": 1221
+      },
+      "bytes": 156080,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparentPixels": 994120,
+        "visiblePixels": 569441,
+        "cornerMax": 0
+      },
+      "sourceSha256": "6bcae1a149987c9d070934d916a119ffcc062f3a7fcb47d697e3b81a00b78fa4",
+      "webpSha256": "af89cffc038a1949c0e7f32d45c2c0f8e7ade7f717ab6f989b42f84c186de728"
+    },
+    "mage-red": {
+      "url": "/assets/units/mage-red.webp",
+      "width": 1254,
+      "height": 1254,
+      "frame": {
+        "x": 248,
+        "y": 85,
+        "width": 901,
+        "height": 1122
+      },
+      "bytes": 165144,
+      "alpha": {
+        "min": 0,
+        "max": 255,
+        "transparentPixels": 989151,
+        "visiblePixels": 574430,
+        "cornerMax": 0
+      },
+      "sourceSha256": "462456a4c80432ff9927c372748caf10aa4945f93bdfff77dea58242e15286ff",
+      "webpSha256": "f4dbffe468d3c0efdfcc5a578b58134ae481a801d59f09598cdd02ab951f5fb7"
+    }
+  }
+}
